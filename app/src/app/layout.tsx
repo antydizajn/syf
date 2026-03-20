@@ -75,6 +75,8 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
 };
 
+import { Footer } from "@/components/Footer";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -83,32 +85,26 @@ export default function RootLayout({
   return (
     <html lang="pl" className={`${jetbrainsMono.variable} ${orbitron.variable}`}>
       <head>
-        {/* Preconnect to Google Fonts for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        
-        {/* Theme color for mobile browsers */}
-        <meta name="theme-color" content="#000000" />
-        <meta name="msapplication-TileColor" content="#ff00ff" />
+        <meta name="theme-color" content="#ffffff" />
       </head>
-      <body>
-        {/* SKIP LINK - Accessibility */}
+      <body className="bg-white text-black min-h-screen flex flex-col">
         <a href="#main-content" className="skip-link">
           Przejdź do treści
         </a>
         
-        {/* SCANLINES OVERLAY */}
-        <ScanlineOverlay />
+        {/* 1-BIT SCANLINES */}
+        <div className="fixed inset-0 pointer-events-none z-[1001] opacity-[0.03] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%]" />
         
         {/* NOISE OVERLAY */}
-        <div className="noise" aria-hidden="true" />
+        <div className="noise opacity-[0.05]" aria-hidden="true" />
         
-        {/* GLOW ORBS */}
-        <div className="glow-orb glow-orb-1" aria-hidden="true" />
-        <div className="glow-orb glow-orb-2" aria-hidden="true" />
-        <div className="glow-orb glow-orb-3" aria-hidden="true" />
-        
-        {children}
+        <main id="main-content" className="flex-1">
+          {children}
+        </main>
+
+        <Footer />
       </body>
     </html>
   );

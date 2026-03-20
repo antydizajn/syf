@@ -6,228 +6,171 @@ import Link from 'next/link';
 import { RGBShift } from "@/components/hud/RGBShift";
 import { ItemData } from "@/lib/files";
 
-const DitherFilter = () => (
-  <svg style={{ position: 'absolute', width: 0, height: 0 }}>
-    <filter id="extreme-dither">
-      <feColorMatrix type="saturate" values="0" />
-      <feComponentTransfer>
-        <feFuncR type="discrete" tableValues="0 1" />
-        <feFuncG type="discrete" tableValues="0 1" />
-        <feFuncB type="discrete" tableValues="0 1" />
-      </feComponentTransfer>
-    </filter>
-  </svg>
-);
 
-const Sector = ({ item, index, laserY }: { item: ItemData; index: number; laserY: any }) => {
-  const [status, setStatus] = useState<"NORMAL" | "CORRUPTED" | "SCANNING">("NORMAL");
-  const sectorRef = useRef<HTMLDivElement>(null);
-  const displayName = item.type === 'folder' ? item.name : item.title;
-  const displaySize = item.type === 'folder' ? `${item.itemCount} items` : item.size;
-  const href = item.type === 'folder' ? `/folder/${item.slug}` : `/file/${item.slug}`;
-
-  const ty = useTransform(laserY, (v) => {
-    const val = v as number;
-    if (!sectorRef.current) return 0;
-    const rect = sectorRef.current.getBoundingClientRect();
-    const dist = val - (rect.top + rect.height / 2);
-    if (Math.abs(dist) < 200) return (dist / 200) * 10;
-    return 0;
-  });
-
-  useEffect(() => {
-    const checkScan = () => {
-      if (!sectorRef.current) return;
-      const rect = sectorRef.current.getBoundingClientRect();
-      const mid = rect.top + rect.height / 2;
-      const currentLaser = (laserY as any).get();
-      if (Math.abs(mid - currentLaser) < 100) {
-        setStatus("SCANNING");
-        if (Math.random() > 0.9997) setStatus("CORRUPTED");
-      } else if (status === "SCANNING") {
-        setStatus("NORMAL");
-      }
-    };
-    let frame = requestAnimationFrame(function loop() {
-      checkScan();
-      frame = requestAnimationFrame(loop);
-    });
-    return () => cancelAnimationFrame(frame);
-  }, [laserY, status]);
-
-  return (
-    <motion.div 
-      ref={sectorRef}
-      style={{ y: ty }}
-      className={`border border-white/20 p-3 h-24 mb-px flex flex-col justify-between group cursor-crosshair relative overflow-hidden transition-colors duration-75 ${
-        status === "SCANNING" ? "border-white bg-white/10 z-10" : "bg-black"
-      } ${status === "CORRUPTED" ? "bg-white text-black z-20" : ""}`}
-    >
-      <Link href={href} className="absolute inset-0 z-30" />
-      
-      {status === "CORRUPTED" && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white z-50">
-          <span className="text-black font-black text-xs tracking-widest -rotate-12">SECTOR_LOST</span>
-        </div>
-      )}
-
-      <div className="text-[9px] font-black uppercase tracking-tighter truncate opacity-70 group-hover:opacity-100 flex justify-between relative z-10">
-        <span>{displayName}</span>
-        {status === "SCANNING" && (
-          <motion.span animate={{ opacity: [0, 1, 0] }} transition={{ duration: 0.1, repeat: Infinity }} className="bg-white text-black px-1 text-[7px]">
-            SCANNING
-          </motion.span>
-        )}
-      </div>
-
-      <div className="flex justify-between items-end relative z-10">
-        <span className="text-[7px] font-mono opacity-20">[{item.type.toUpperCase()}]</span>
-        <div className="flex gap-1 h-3 items-end">
-          {status === "SCANNING" ? (
-             <span className="text-[7px] font-mono">{displaySize}</span>
-          ) : (
-            <span className="text-xs font-black italic opacity-20 group-hover:opacity-100">SYF</span>
-          )}
-        </div>
-      </div>
-    </motion.div>
-  );
-};
+const PAGE_SIZE = 30;
 
 export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSize: string }) {
   const [mounted, setMounted] = useState(false);
-  const [isCritical, setIsCritical] = useState(false);
+  const [page, setPage] = useState(0);
   const [isCollapsing, setIsCollapsing] = useState(false);
   const [collapseX, setCollapseX] = useState(0);
-  
   const laserY = useSpring(0, { stiffness: 100, damping: 20 });
-  const mouseX = useSpring(0, { stiffness: 40, damping: 15 });
-  const mouseY = useSpring(0, { stiffness: 40, damping: 15 });
 
   useEffect(() => {
     setMounted(true);
     const handleMouseMove = (e: MouseEvent) => {
       laserY.set(e.clientY);
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
     };
-    
-    // Concept 50 'Rozjeżdżanie' (Void Collapse) Timer
+
     const collapseInterval = setInterval(() => {
-      if (Math.random() > 0.8) {
+      if (Math.random() > 0.9) {
         setIsCollapsing(true);
-        setCollapseX((Math.random() - 0.5) * 150);
+        setCollapseX((Math.random() - 0.5) * 40);
         setTimeout(() => {
           setIsCollapsing(false);
           setCollapseX(0);
-        }, 150 + Math.random() * 400);
+        }, 100 + Math.random() * 200);
       }
-      
-      // Concept 52 Critical State
-      if (Math.random() > 0.98) {
-        setIsCritical(true);
-        setTimeout(() => setIsCritical(false), 500);
-      }
-    }, 2000);
+    }, 3000);
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       clearInterval(collapseInterval);
     };
-  }, [laserY, mouseX, mouseY]);
+  }, [laserY]);
 
   if (!mounted) return null;
 
+  // Sorting: Folders first, then by name
+  const sortedItems = [...items].sort((a, b) => {
+    if (a.type === 'folder' && b.type !== 'folder') return -1;
+    if (a.type !== 'folder' && b.type === 'folder') return 1;
+    const nameA = a.type === 'folder' ? a.name : a.title;
+    const nameB = b.type === 'folder' ? b.name : b.title;
+    return (nameA || "").localeCompare(nameB || "");
+  });
+
+  const totalPages = Math.ceil(sortedItems.length / PAGE_SIZE);
+  const paginatedItems = sortedItems.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
+
   return (
-    <div className={`relative min-h-screen ${isCritical ? 'bg-white text-black' : 'bg-black text-white'} font-mono selection:bg-white selection:text-black overflow-hidden transition-colors duration-75`}>
-      <DitherFilter />
-      
-      <RGBShift 
-        intensity={isCritical ? 30 : (isCollapsing ? 15 : 2)} 
-        className="w-full h-full absolute inset-0 pointer-events-none z-50"
+    <div className="min-h-screen bg-white text-black p-4 md:p-10 font-mono selection:bg-black selection:text-white overflow-hidden relative">
+      <motion.div 
+        animate={{ x: collapseX }}
+        className="max-w-7xl mx-auto flex flex-col min-h-screen"
       >
-        <motion.div 
-          animate={{ x: collapseX }}
-          transition={{ type: "spring", stiffness: 1000, damping: 10 }}
-          className="relative z-10 grid grid-cols-1 md:grid-cols-4 gap-4 p-4 md:p-12 h-screen"
-        >
-          {/* COLUMN 1: SYSTEM LOG / STATS */}
-          <div className="md:col-span-1 border-r border-white/10 pr-4 space-y-4 overflow-hidden flex flex-col">
-            <header className="shrink-0 space-y-2">
-              <div className="bg-white text-black px-4 py-2 font-black text-2xl skew-x-[-12deg] inline-block">SYF_V5.1</div>
-              <div className="text-[10px] opacity-40 leading-tight space-y-1">
-                <p>MEMORY_TOTAL: {totalSize}</p>
-                <p>NODE_COUNT: {items.length} UNITS</p>
-                <p>POGROM_PROTOCOL: ACTIVE</p>
-              </div>
-            </header>
+        {/* HEADER: CONCEPT 03 STYLE */}
+        <header className="border-b-[12px] border-black pb-8 mb-12 relative shrink-0">
+          <div className="absolute top-0 right-0 text-right opacity-80 text-[12px] hidden md:block uppercase font-bold antialiased leading-tight">
+            [ SYSTEM_VERSION: V2.0 ]<br/>
+            [ TOTAL_CAPACITY: {totalSize} ]<br/>
+            [ NODE_COUNT: {items.length} ]
+          </div>
+          
+          <h1 className="font-[1000] leading-[0.85] tracking-tighter uppercase mb-6 flex flex-col items-start">
+            <span className="text-[min(7.8vw,100px)] whitespace-nowrap block border-b-4 border-black pb-2 mb-2 w-full">
+              SYF.ANTYDIZAJN.PL
+            </span>
+            <div className="flex flex-col items-start gap-1">
+              <span className="bg-black text-white px-4 py-1 text-[9.5vw] md:text-[9.8vw] transform -skew-x-2 block leading-[0.9] w-fit">
+                PUBLICZNY
+              </span>
+              <span className="bg-black text-white px-4 py-1 text-[7.8vw] md:text-[8vw] transform -skew-x-2 block leading-[0.9] w-fit">
+                DUMP PLIKÓW
+              </span>
+            </div>
+          </h1>
+
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+            <div className="bg-black text-white px-6 py-2 text-xl font-black italic tracking-widest uppercase mb-2">
+              Wrzucasz .md → dostępne pod /NAZWA
+            </div>
             
-            <div className="flex-1 overflow-y-auto scrollbar-hide space-y-1">
-              <div className="text-[9px] font-black opacity-20 mb-2">// RECENT_ACTIVITY</div>
-              {items.slice(0, 50).map((f, i) => (
-                <div key={i} className="flex justify-between text-[10px] border-b border-white/5 pb-1 hover:bg-white/10 transition-colors">
-                  <span className="opacity-40">{f.type === 'folder' ? 'DIR' : 'FILE'}</span>
-                  <span className="font-bold truncate max-w-[150px]">{f.type === 'folder' ? f.name : f.title}</span>
-                </div>
+            <nav className="grid grid-cols-2 md:grid-cols-4 gap-2 w-full md:w-auto">
+              {['PLIKI', 'O SYFIE', 'ANTYDIZAJN', 'GNIEWKA'].map((btn) => (
+                <Link 
+                  key={btn}
+                  href={btn === 'PLIKI' ? '/' : btn === 'O SYFIE' ? '/about' : btn === 'ANTYDIZAJN' ? 'https://antydizajn.pl' : '/gniewka'}
+                  className="border-4 border-black px-4 py-2 font-black text-sm uppercase hover:bg-black hover:text-white transition-all active:translate-y-1 block text-center"
+                >
+                  [  {btn}  ]
+                </Link>
               ))}
-            </div>
+            </nav>
           </div>
+        </header>
 
-          {/* COLUMN 2-3: MAIN FILE CONSOLE */}
-          <div className="md:col-span-2 flex flex-col gap-4 relative">
-             <div className="flex justify-between items-center bg-white text-black px-4 py-1">
-                <span className="text-[9px] font-black italic">FILE_CONSOLE_V2</span>
-                <span className="text-[9px] font-mono">$ ls -la /syf/</span>
-             </div>
-             
-             <div className="flex-1 border-2 border-white/40 relative overflow-y-auto scrollbar-hide bg-black/40 backdrop-blur-3xl p-1">
-                <div className="grid grid-cols-2 lg:grid-cols-3 gap-px">
-                  {items.map((item, i) => (
-                    <Sector key={i} item={item} index={i} laserY={laserY} />
-                  ))}
+        {/* MAIN CONTENT: FILE EXPLORER */}
+        <div className="flex-1 min-h-0 flex flex-col gap-8">
+           <div className="flex justify-between items-center border-b-4 border-black pb-2 opacity-50 text-xs font-black italic">
+              <span>$ ls -la /root/syf/ --page {page + 1}</span>
+              <span>INDEX_OF_BLOOD_AND_INK</span>
+           </div>
+
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-1 overflow-y-auto pr-4 scrollbar-hide">
+              {paginatedItems.map((item, i) => {
+                const displayName = item.type === 'folder' ? item.name : item.title;
+                const href = `/${item.slug}`;
+                const globalIndex = page * PAGE_SIZE + i + 1;
+                
+                return (
+                  <motion.div 
+                    key={item.slug}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.01 }}
+                    className="group border-b border-black/10 py-2 flex items-center gap-4 hover:bg-black hover:text-white px-2 transition-colors cursor-crosshair relative"
+                  >
+                    <span className="text-[10px] font-black opacity-20 group-hover:opacity-100 min-w-[2.5rem]">
+                      {globalIndex.toString().padStart(3, '0')}
+                    </span>
+                    <span className={`text-sm font-black uppercase tracking-tighter truncate flex-1 ${item.type === 'folder' ? 'underline decoration-4 underline-offset-4' : ''}`}>
+                      {displayName}
+                    </span>
+                    <span className="text-[9px] opacity-20 font-bold shrink-0">
+                      {item.type === 'folder' ? 'DIR' : item.size}
+                    </span>
+                    <Link href={href} className="absolute inset-0 z-10" />
+                  </motion.div>
+                );
+              })}
+           </div>
+
+           {/* PAGINATION */}
+           {totalPages > 1 && (
+             <div className="mt-auto py-8 flex items-center justify-center gap-4 font-black">
+                <button 
+                  onClick={() => setPage(p => Math.max(0, p - 1))}
+                  disabled={page === 0}
+                  className="border-4 border-black px-4 py-2 disabled:opacity-10 hover:bg-black hover:text-white"
+                >
+                  {`<< PREV`}
+                </button>
+                <div className="bg-black text-white px-4 py-2">
+                   PAGE {page + 1} // {totalPages}
                 </div>
+                <button 
+                  onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
+                  disabled={page === totalPages - 1}
+                  className="border-4 border-black px-4 py-2 disabled:opacity-10 hover:bg-black hover:text-white"
+                >
+                  {`NEXT >>`}
+                </button>
              </div>
-          </div>
+           )}
+        </div>
+      </motion.div>
 
-          {/* COLUMN 4: DATA METRICS & BUTTONS */}
-          <div className="md:col-span-1 border-l border-white/10 pl-4 space-y-8 flex flex-col justify-between">
-            <div className="space-y-8">
-              <div className="space-y-2">
-                <div className="text-[10px] opacity-40 uppercase tracking-[0.3em]">VOID_PRESSURE</div>
-                <div className="h-20 flex gap-0.5 items-end">
-                  {[...Array(20)].map((_, i) => (
-                    <motion.div 
-                      key={i}
-                      animate={{ height: isCollapsing ? [2, 80, 2] : [Math.random() * 40 + 5, 5, Math.random() * 40 + 5] }}
-                      transition={{ duration: 0.1, delay: i * 0.02, repeat: Infinity }}
-                      className="flex-1 bg-white"
-                    />
-                  ))}
-                </div>
-              </div>
-              <div className="space-y-4">
-                 <Link href="/concepts" className="block p-4 border-2 border-white font-black italic text-xl hover:bg-white hover:text-black transition-all">ALL_CONCEPTS</Link>
-                 <Link href="/AI_ARTISTS_REAL_DESIGN" className="block p-4 border border-white/20 font-black italic text-sm opacity-60 hover:opacity-100 transition-opacity">AI_RESEARCH_BARE</Link>
-              </div>
-            </div>
-            
-            <footer className="text-[8px] font-mono leading-tight uppercase opacity-40">
-              <div>ANTDIZAJN // RE-STYLED // {new Date().getFullYear()}</div>
-              <div>SCAN_ACTIVE: {mounted.toString().toUpperCase()}</div>
-            </footer>
-          </div>
-        </motion.div>
-      </RGBShift>
-
-      {/* GLOBAL OVERLAYS */}
-      <div className="fixed inset-0 pointer-events-none opacity-[0.05] z-[60] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat" />
-      <div className="fixed inset-0 pointer-events-none opacity-[0.05] z-[60] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.4)_50%),linear-gradient(90deg,rgba(255,0,0,0.1),rgba(0,255,0,0.05),rgba(0,0,255,0.1))] bg-[length:100%_2px,8px_100%]" />
+      {/* SCANLINE INDICATOR */}
+      <motion.div 
+        style={{ y: laserY }}
+        className="fixed left-0 w-full h-[1px] bg-black/10 z-[60] pointer-events-none"
+      />
 
       <style jsx global>{`
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-        body { background: #000; overflow: hidden; }
       `}</style>
     </div>
   );

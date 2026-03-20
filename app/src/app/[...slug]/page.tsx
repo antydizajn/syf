@@ -1,76 +1,38 @@
 import { notFound } from 'next/navigation';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import DownloadBar from '@/components/DownloadBar';
 import FileList from '@/components/FileList';
+import Link from 'next/link';
 import { 
   getFileBySlug, 
   getAllSlugs, 
   getAdjacentFiles, 
   getAllItems, 
-  getTotalSize,
-  isFolder,
-  getBreadcrumb
+  getTotalSize, 
+  getBreadcrumb 
 } from '@/lib/files';
 import { renderMarkdown } from '@/lib/markdown';
-import Link from 'next/link';
 
-interface PageProps {
-  params: Promise<{ slug: string[] }>;
-}
-
-// Static generation dla wszystkich plikow i folderow
 export async function generateStaticParams() {
   const slugs = getAllSlugs();
-  return slugs.map((slug) => ({ slug: slug.split('/') }));
+  return slugs.map((slug) => ({
+    slug: slug.split('/'),
+  }));
 }
 
-// Dynamic metadata
-export async function generateMetadata({ params }: PageProps) {
-  const { slug: slugArray } = await params;
-  const slug = slugArray.join('/');
-  const ogImageUrl = `https://syf.antydizajn.pl/api/og?slug=${encodeURIComponent(slug)}`;
-  
-  // Sprawdź czy to folder
-  if (isFolder(slug)) {
-    return {
-      title: `${slug} | SYF.ANTYDIZAJN.PL`,
-      description: `Zawartość folderu ${slug}`,
-      openGraph: {
-        title: `📁 ${slug} | SYF`,
-        description: `Zawartość folderu ${slug}`,
-        url: `https://syf.antydizajn.pl/${slug}`,
-        images: [ogImageUrl],
-      },
-    };
-  }
-  
-  const file = getFileBySlug(slug);
-  
-  if (!file) {
-    return { title: 'Nie znaleziono | SYF' };
-  }
-  
-  return {
-    title: `${file.title} | SYF.ANTYDIZAJN.PL`,
-    description: file.preview,
-    openGraph: {
-      title: `${file.title} | SYF`,
-      description: file.preview,
-      url: `https://syf.antydizajn.pl/${slug}`,
-      type: 'article',
-      images: [ogImageUrl],
-    },
-  };
-}
+type Props = {
+  params: Promise<{ slug: string[] }>;
+};
 
-export default async function FilePage({ params }: PageProps) {
+export default async function CatchAllPage({ params }: Props) {
   const { slug: slugArray } = await params;
   const slug = slugArray.join('/');
   
-  // Sprawdź czy to folder
-  if (isFolder(slug)) {
-    const items = getAllItems(slug);
+  // Check if it's a folder
+  const allItems = getAllItems();
+  const items = allItems.filter(item => item.slug.startsWith(slug + '/') && !item.slug.slice(slug.length + 1).includes('/'));
+  
+  if (items.length > 0 || (allItems.some(item => item.slug === slug && item.type === 'folder'))) {
     const totalSize = getTotalSize();
     const breadcrumb = getBreadcrumb(slug);
     const folderName = slug.split('/').pop() || slug;
@@ -79,58 +41,48 @@ export default async function FilePage({ params }: PageProps) {
       <>
         <Header />
         
-        <main className="main">
+        <main className="max-w-7xl mx-auto px-4 md:px-10 py-12 flex flex-col gap-8 min-h-screen">
           {/* BREADCRUMB */}
-          <nav className="breadcrumb">
-            <Link href="/" className="breadcrumb-link">SYF</Link>
+          <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest opacity-50">
+            <Link href="/" className="hover:underline">SYF</Link>
             {breadcrumb.map((item, i) => (
-              <span key={item.slug}>
-                <span className="breadcrumb-sep"> / </span>
+              <span key={item.slug} className="flex items-center gap-2">
+                <span>/</span>
                 {i === breadcrumb.length - 1 ? (
-                  <span className="breadcrumb-current">{item.name}</span>
+                  <span className="text-black">{item.name}</span>
                 ) : (
-                  <Link href={`/${item.slug}`} className="breadcrumb-link">{item.name}</Link>
+                  <Link href={`/${item.slug}`} className="hover:underline">{item.name}</Link>
                 )}
               </span>
             ))}
           </nav>
 
           {/* FOLDER HEADER */}
-          <section className="folder-header">
-            <h1 className="folder-title">{folderName.toUpperCase()}/</h1>
-            <p className="folder-meta">drwxr-xr-x • {items.length} elementów</p>
-          </section>
-
-          {/* COMMAND LINE */}
-          <div className="cmd-line">
-            <span className="cmd-prompt">$</span>
-            <span className="cmd-text">ls -la /syf/{slug}/ --sort=date</span>
-            <span className="cmd-cursor">_</span>
-          </div>
-
-          {/* SEPARATOR */}
-          <div className="separator">
-            <span className="separator-text">{'//'} FOLDER</span>
-            <span className="separator-line"></span>
-            <span className="separator-count">[{items.length}]</span>
-          </div>
+          <header className="border-b-[12px] border-black pb-8 sticky top-[64px] bg-white z-50">
+            <h1 className="text-6xl md:text-8xl font-[1000] tracking-tighter uppercase break-words leading-[0.8]">
+              {folderName}/
+            </h1>
+            <p className="mt-4 bg-black text-white px-4 py-1 inline-block text-xs font-black uppercase">
+              {items.length} ELEMENTÓW // DIRECTORY_NODE
+            </p>
+          </header>
 
           {/* FILE LIST */}
-          {items.length > 0 ? (
-            <FileList items={items} />
-          ) : (
-            <div className="empty-state">
-              <p>Pusty folder</p>
-            </div>
-          )}
+          <div className="flex-1">
+            {items.length > 0 ? (
+              <FileList items={items} />
+            ) : (
+              <div className="border-4 border-black border-dashed p-12 text-center">
+                <p className="font-black uppercase opacity-20">FOLDER_IS_EMPTY</p>
+              </div>
+            )}
+          </div>
         </main>
-
-        <Footer fileCount={items.length} totalSize={totalSize} />
       </>
     );
   }
   
-  // To jest plik
+  // Check if it's a file
   const file = getFileBySlug(slug);
   
   if (!file || !file.content) {
@@ -139,8 +91,6 @@ export default async function FilePage({ params }: PageProps) {
   
   const htmlContent = await renderMarkdown(file.content);
   const { prev, next } = getAdjacentFiles(slug);
-  const allItems = getAllItems();
-  const totalSize = getTotalSize();
   const breadcrumb = getBreadcrumb(slug);
 
   return (
@@ -148,37 +98,37 @@ export default async function FilePage({ params }: PageProps) {
       <Header />
       <DownloadBar slug={slug} />
       
-      <main className="main file-page">
+      <main className="max-w-5xl mx-auto px-4 md:px-10 py-20 flex flex-col gap-12 min-h-screen font-mono">
         {/* BREADCRUMB */}
         {breadcrumb.length > 1 && (
-          <nav className="breadcrumb">
-            <Link href="/" className="breadcrumb-link">SYF</Link>
+          <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest opacity-50">
+            <Link href="/" className="hover:underline">SYF</Link>
             {breadcrumb.slice(0, -1).map((item) => (
-              <span key={item.slug}>
-                <span className="breadcrumb-sep"> / </span>
-                <Link href={`/${item.slug}`} className="breadcrumb-link">{item.name}</Link>
+              <span key={item.slug} className="flex items-center gap-2">
+                <span>/</span>
+                <Link href={`/${item.slug}`} className="hover:underline">{item.name}</Link>
               </span>
             ))}
           </nav>
         )}
 
         {/* FILE HEADER */}
-        <header className="file-header">
-          <h1 className="file-title">{file.title}</h1>
-          <div className="file-metadata">
-            <div className="meta-item">
-              <span className="meta-label">ZMODYFIKOWANY</span>
-              <span className="meta-value">{file.modifiedDate}</span>
+        <header className="border-b-[12px] border-black pb-8">
+          <h1 className="text-5xl md:text-7xl font-[1000] tracking-tighter uppercase leading-[0.9] break-words mb-6">
+            {file.title}
+          </h1>
+          <div className="flex flex-wrap gap-x-8 gap-y-2 text-[10px] font-black uppercase opacity-50">
+            <div className="flex gap-2">
+              <span>MODIFIED:</span>
+              <span className="text-black">{file.modifiedDate}</span>
             </div>
-            <span className="meta-sep">|</span>
-            <div className="meta-item">
-              <span className="meta-label">UTWORZONY</span>
-              <span className="meta-value">{file.date}</span>
+            <div className="flex gap-2">
+              <span>CREATED:</span>
+              <span className="text-black">{file.date}</span>
             </div>
-            <span className="meta-sep">|</span>
-            <div className="meta-item">
-              <span className="meta-label">ROZMIAR</span>
-              <span className="meta-value">{file.size}</span>
+            <div className="flex gap-2">
+              <span>SIZE:</span>
+              <span className="text-black">{file.size}</span>
             </div>
           </div>
         </header>
@@ -191,19 +141,23 @@ export default async function FilePage({ params }: PageProps) {
 
         {/* FILE NAVIGATION */}
         {(prev || next) && (
-          <nav className="file-navigation">
+          <nav className="grid grid-cols-1 md:grid-cols-2 border-t-[12px] border-black pt-12 gap-4">
             {prev ? (
-              <Link href={`/${prev.slug}`} className="file-nav-link file-nav-prev">
-                <span className="nav-direction">← POPRZEDNI</span>
-                <span className="nav-filename">{prev.slug}</span>
+              <Link href={`/${prev.slug}`} className="border-4 border-black p-6 hover:bg-black hover:text-white transition-all group">
+                <span className="block text-[10px] font-black mb-2 opacity-50 uppercase tracking-widest">← PREVIOUS_FILE</span>
+                <span className="text-2xl font-[1000] tracking-tighter uppercase leading-none break-words block">
+                  {prev.slug.split('/').pop()}
+                </span>
               </Link>
             ) : (
               <div />
             )}
             {next ? (
-              <Link href={`/${next.slug}`} className="file-nav-link file-nav-next">
-                <span className="nav-direction">NASTĘPNY →</span>
-                <span className="nav-filename">{next.slug}</span>
+              <Link href={`/${next.slug}`} className="border-4 border-black p-6 hover:bg-black hover:text-white transition-all group text-right">
+                <span className="block text-[10px] font-black mb-2 opacity-50 uppercase tracking-widest text-right">NEXT_FILE →</span>
+                <span className="text-2xl font-[1000] tracking-tighter uppercase leading-none break-words block">
+                  {next.slug.split('/').pop()}
+                </span>
               </Link>
             ) : (
               <div />
@@ -211,8 +165,6 @@ export default async function FilePage({ params }: PageProps) {
           </nav>
         )}
       </main>
-
-      <Footer fileCount={allItems.length} totalSize={totalSize} />
     </>
   );
 }

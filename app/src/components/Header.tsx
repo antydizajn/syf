@@ -1,126 +1,53 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import { TacticalButton } from './TacticalButton';
 
-interface HeaderProps {
-  activePage?: 'files' | 'about';
-}
-
-export default function Header({ activePage = 'files' }: HeaderProps) {
+export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // ESC closes menu
-  useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setMenuOpen(false);
-      }
-    };
-    document.addEventListener('keydown', handleEsc);
-    return () => document.removeEventListener('keydown', handleEsc);
-  }, []);
-
-  // Prevent scroll when menu open
-  useEffect(() => {
-    if (menuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [menuOpen]);
-
   return (
-    <>
-      {/* STATUS BAR - ENHANCED HUD */}
-      <div className="hud-status-bar">
-        <div className="status-bar-left">
-          <span className="pulse-dot">●</span> SYS_READY
-        </div>
-        <div className="status-bar-center">
-          <span>LINK_ESTABLISHED</span>
-          <span className="blink-red">● REC_MODE</span>
-        </div>
-        <div className="status-bar-right">
-          <span>{new Date().toISOString().split('T')[0].replace(/-/g, '.')}</span>
-          <span className="version-pill">V2.0_AGI</span>
-        </div>
+    <header className="border-b-8 border-black bg-white sticky top-0 z-[1000] p-4 md:px-10 flex justify-between items-center font-mono">
+      <Link href="/" className="text-2xl font-[1000] tracking-tighter uppercase group transition-all">
+        SYF<span className="group-hover:translate-x-1 inline-block">.</span>OS
+      </Link>
+      
+      <div className="flex gap-4 items-center">
+        <nav className="hidden md:flex gap-1">
+          {['PLIKI', 'O SYFIE', 'ANTYDIZAJN', 'GNIEWKA'].map((btn) => (
+            <Link 
+              key={btn}
+              href={btn === 'PLIKI' ? '/' : btn === 'O SYFIE' ? '/about' : btn === 'ANTYDIZAJN' ? 'https://antydizajn.pl' : '/gniewka'}
+              className="border-2 border-black px-3 py-1 font-black text-[10px] uppercase hover:bg-black hover:text-white transition-all"
+            >
+              [  {btn}  ]
+            </Link>
+          ))}
+        </nav>
+        
+        <button 
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="md:hidden border-2 border-black px-3 py-1 font-black text-[10px] uppercase"
+        >
+          {menuOpen ? '[CLOSE]' : '[MENU]'}
+        </button>
       </div>
 
-      {/* HEADER - HUD SHELL */}
-      <header className="hud-header">
-        <Link href="/" className="hud-logo-link glitch-hover">
-          {"<"}SYF_OS{">"}
-        </Link>
-        
-        <TacticalButton variant="magenta" onClick={() => setMenuOpen(true)}>
-          <span className="label-access">ACCESS_MENU</span>
-        </TacticalButton>
-      </header>
-
-      {/* FULLSCREEN MENU OVERLAY */}
-      <nav className={`hud-menu-overlay ${menuOpen ? 'open' : ''}`}>
-        <button 
-          className="hud-menu-close" 
-          onClick={() => setMenuOpen(false)}
-          aria-label="Zamknij menu"
-        >
-          ×
-        </button>
-        
-        <div className="hud-menu-list">
-          <Link 
-            href="/" 
-            className={`hud-menu-item ${activePage === 'files' ? 'active' : ''}`}
-            onClick={() => setMenuOpen(false)}
-          >
-            <span className="menu-num">01</span>
-            <span className="menu-name">PLIKI</span>
-            {activePage === 'files' && (
-              <div className="menu-corners">
-                <span className="corner-tl"></span>
-                <span className="corner-tr"></span>
-                <span className="corner-bl"></span>
-                <span className="corner-br"></span>
-              </div>
-            )}
-          </Link>
-          <Link 
-            href="/about" 
-            className={`hud-menu-item ${activePage === 'about' ? 'active' : ''}`}
-            onClick={() => setMenuOpen(false)}
-          >
-            <span className="menu-num">02</span>
-            <span className="menu-name">INFO</span>
-            {activePage === 'about' && (
-              <div className="menu-corners">
-                <span className="corner-tl"></span>
-                <span className="corner-tr"></span>
-                <span className="corner-bl"></span>
-                <span className="corner-br"></span>
-              </div>
-            )}
-          </Link>
-          <a 
-            href="https://antydizajn.pl" 
-            className="hud-menu-item exit"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span className="menu-num">03</span>
-            <span className="menu-name">EXIT</span>
-          </a>
+      {/* MOBILE MENU */}
+      {menuOpen && (
+        <div className="fixed inset-0 top-[64px] bg-white z-[999] p-8 flex flex-col gap-4 border-t-8 border-black animate-in slide-in-from-top duration-300">
+           {['PLIKI', 'O SYFIE', 'ANTYDIZAJN', 'GNIEWKA'].map((btn) => (
+            <Link 
+              key={btn}
+              href={btn === 'PLIKI' ? '/' : btn === 'O SYFIE' ? '/about' : btn === 'ANTYDIZAJN' ? 'https://antydizajn.pl' : '/gniewka'}
+              onClick={() => setMenuOpen(false)}
+              className="text-4xl font-[1000] tracking-tighter uppercase border-b-4 border-black pb-2 hover:bg-black hover:text-white px-2 transition-all"
+            >
+              [  {btn}  ]
+            </Link>
+          ))}
         </div>
-
-        <div className="hud-menu-footer">
-          <span>SYSTEM STATUS: <span className="status-online">ONLINE</span></span>
-          <span>ANTYDIZAJN PROTOCOL V2.0</span>
-        </div>
-      </nav>
-    </>
+      )}
+    </header>
   );
 }
