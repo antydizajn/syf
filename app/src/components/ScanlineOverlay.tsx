@@ -2,10 +2,12 @@
 
 import React, { useEffect } from "react";
 import { initConsoleFlex } from "@/lib/consoleFlex";
+import { initTypographyGuardian } from "@/lib/typographyGuardian";
 
 export const ScanlineOverlay: React.FC = () => {
   useEffect(() => {
     initConsoleFlex();
+    initTypographyGuardian();
   }, []);
 
   return (
