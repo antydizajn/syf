@@ -1,5 +1,4 @@
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { getAllFiles } from '@/lib/files';
 
 export default async function GniewkaPage() {
@@ -84,7 +83,6 @@ export default async function GniewkaPage() {
            </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

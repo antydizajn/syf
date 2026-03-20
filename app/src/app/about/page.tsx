@@ -1,5 +1,4 @@
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { getAllFiles } from '@/lib/files';
 
 export default async function AboutPage() {
@@ -89,7 +88,6 @@ export default async function AboutPage() {
            </p>
         </section>
       </main>
-      <Footer />
     </>
   );
 }
