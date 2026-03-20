@@ -76,7 +76,6 @@ export const metadata: Metadata = {
 };
 
 import { Footer } from "@/components/Footer";
-import { DottedSurface } from "@/components/ui/DottedSurface";
 
 export default function RootLayout({
   children,
@@ -91,7 +90,6 @@ export default function RootLayout({
         <meta name="theme-color" content="#ffffff" />
       </head>
       <body className="bg-white text-black min-h-screen flex flex-col relative">
-        <DottedSurface />
         <a href="#main-content" className="skip-link">
           Przejdź do treści
         </a>
