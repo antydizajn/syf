@@ -43,7 +43,7 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
           [ NODE_COUNT: {items.length} ]
         </div>
         
-        <h1 className="font-black text-4xl md:text-7xl leading-[0.85] tracking-tighter uppercase mb-6 text-black border-b-4 border-black pb-2">
+        <h1 className="font-black text-4xl md:text-7xl leading-[0.85] tracking-tighter uppercase mb-6 text-black border-b-4 border-black pb-2 drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]">
           SYF.ANTYDIZAJN.PL
         </h1>
 
