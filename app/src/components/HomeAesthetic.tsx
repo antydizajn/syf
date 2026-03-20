@@ -4,7 +4,6 @@ import { motion, useSpring } from "framer-motion";
 import { useEffect, useState } from "react";
 import Link from 'next/link';
 import { ItemData } from "@/lib/files";
-import WebGLHero from "./ui/RevolutionHero";
 
 
 const PAGE_SIZE = 30;
@@ -54,14 +53,10 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
 
   return (
     <div className="min-h-screen bg-white text-black p-4 md:p-10 font-mono selection:bg-black selection:text-white overflow-hidden relative">
-      <motion.div 
+      <motion.div
         animate={{ x: collapseX }}
-        className="max-w-7xl mx-auto flex flex-col min-h-screen"
+        className="max-w-7xl mx-auto flex flex-col min-h-screen relative z-10"
       >
-        <div className="mb-12 border-b-12 border-black">
-          <WebGLHero />
-        </div>
-        
         {/* HEADER: CONCEPT 03 STYLE */}
         <header className="border-b-12 border-black pb-8 mb-12 relative shrink-0">
           <div className="absolute top-0 right-0 text-right opacity-80 text-[12px] hidden md:block uppercase font-bold antialiased leading-tight">
@@ -128,7 +123,7 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
                       {globalIndex.toString().padStart(3, '0')}
                     </span>
                     <span className={`text-sm font-black uppercase tracking-tighter truncate flex-1 ${item.type === 'folder' ? 'underline decoration-4 underline-offset-4' : ''}`}>
-                      {displayName}
+                       {displayName}
                     </span>
                     <span className="text-[9px] opacity-20 font-bold shrink-0">
                       {item.type === 'folder' ? 'DIR' : item.size}
