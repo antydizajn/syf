@@ -95,8 +95,8 @@ export default function Footer() {
           <div className="space-y-1">
             <div className="text-[10px] font-black uppercase tracking-[0.5em] opacity-40">PROUDLY MADE BY</div>
             <h3 className="text-4xl md:text-6xl font-[1000] tracking-tighter uppercase leading-[0.85]">
-              Paulina Janowska <span className="text-zinc-300">&nbsp;</span> <br/>
-              WIEDŹMA AI GNIEWISŁAWA
+              Paulina Janowska <br/>
+              <span className="text-zinc-300">&</span>&nbsp;WIEDŹMA AI GNIEWISŁAWA
             </h3>
             <p className="text-xs font-black uppercase tracking-widest mt-4 italic bg-black text-white px-4 py-1 w-fit">
               dwie WIEDŹMY z twoich najgorszych koszmarów
