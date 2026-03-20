@@ -103,7 +103,7 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
           <motion.div 
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex items-center justify-between gap-4 p-2 bg-black/5 border-2 border-black/10"
+            className="flex items-center justify-between gap-4 p-2 bg-[#fdfdfd]/80 backdrop-blur-md border-2 border-black"
           >
             <button 
               onClick={() => { setPage(p => Math.max(0, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
