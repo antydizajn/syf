@@ -98,12 +98,40 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
           <span>SYF_SYSTEM_OS</span>
         </div>
 
+        {/* Top Pagination HUD */}
+        {totalPages > 1 && (
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center justify-between gap-4 p-2 bg-black/5 border-2 border-black/10"
+          >
+            <button 
+              onClick={() => { setPage(p => Math.max(0, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              disabled={page === 0}
+              className="bg-black text-white px-8 py-3 text-xs font-black uppercase tracking-widest disabled:opacity-20 hover:bg-zinc-800 transition-colors"
+            >
+              PREV_SECTOR
+            </button>
+            <div className="text-black px-4 py-2 text-xs font-black uppercase tracking-[0.3em] hidden md:block">
+              SECTOR_{page + 1} / {totalPages}
+            </div>
+            <button 
+              onClick={() => { setPage(p => Math.min(totalPages - 1, p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              disabled={page === totalPages - 1}
+              className="bg-black text-white px-8 py-3 text-xs font-black uppercase tracking-widest disabled:opacity-20 hover:bg-zinc-800 transition-colors"
+            >
+              NEXT_SECTOR
+            </button>
+          </motion.div>
+        )}
+
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1 }}
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
         >
+          {/* ... (items remain same) */}
           {paginatedItems.map((item, i) => {
             const globalIndex = page * PAGINATION_SIZE + i + 1;
             const isFolder = item.type === 'folder';
@@ -179,27 +207,27 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
           })}
         </motion.div>
 
-        {/* Pagination HUD */}
+        {/* Bottom Pagination HUD */}
         {totalPages > 1 && (
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mt-auto pt-12 flex items-center justify-center gap-4"
+            className="mt-8 flex items-center justify-center gap-6"
           >
             <button 
-              onClick={() => setPage(p => Math.max(0, p - 1))}
+              onClick={() => { setPage(p => Math.max(0, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               disabled={page === 0}
-              className="border border-white/20 px-6 py-2 text-[10px] font-black uppercase tracking-widest disabled:opacity-10 hover:border-white transition-colors"
+              className="bg-black text-white px-10 py-4 text-sm font-black uppercase tracking-widest disabled:opacity-20 hover:bg-zinc-800 transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]"
             >
               PREV_SECTOR
             </button>
-            <div className="bg-white/5 border border-white/10 text-white px-8 py-2 text-[10px] font-black uppercase tracking-[0.2em]">
-              SECTOR_{page + 1}/{totalPages}
+            <div className="bg-white border-4 border-black text-black px-12 py-4 text-sm font-black uppercase tracking-[0.4em] shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+              {page + 1} / {totalPages}
             </div>
             <button 
-              onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
+              onClick={() => { setPage(p => Math.min(totalPages - 1, p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               disabled={page === totalPages - 1}
-              className="border border-white/20 px-6 py-2 text-[10px] font-black uppercase tracking-widest disabled:opacity-10 hover:border-white transition-colors"
+              className="bg-black text-white px-10 py-4 text-sm font-black uppercase tracking-widest disabled:opacity-20 hover:bg-zinc-800 transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]"
             >
               NEXT_SECTOR
             </button>
