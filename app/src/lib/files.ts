@@ -14,6 +14,7 @@ export interface ItemData {
     preview?: string;
     date: string;
     modifiedDate: string;
+    itemCount?: number;
 }
 
 export async function getAllItems(): Promise<ItemData[]> {
@@ -40,19 +41,30 @@ export async function getAllFiles(): Promise<ItemData[]> {
                 const formatDate = (date: Date) => {
                     return date.toISOString().split('T')[0];
                 };
+
+                let itemCount: number | undefined;
+                if (stats.isDirectory()) {
+                    try {
+                        const subFiles = await fs.readdir(fullPath);
+                        itemCount = subFiles.filter(f => !f.startsWith('.')).length;
+                    } catch (e) {
+                        itemCount = 0;
+                    }
+                }
                 
                 return {
                     name: file,
                     path: file,
-                    size: `${(stats.size / 1024).toFixed(1)} KB`,
+                    size: stats.isDirectory() ? '--' : `${(stats.size / 1024).toFixed(1)} KB`,
                     type: stats.isDirectory() ? 'folder' : 'file',
                     title: baseName.replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
                     slug: baseName,
                     content,
-                    preview: content ? content.slice(0, 200) : '',
+                    preview: content ? content.trim().split(/[.!?\n]/)[0] + '.' : '',
                     date: formatDate(stats.birthtime),
-                    modifiedDate: formatDate(stats.mtime)
-                } as ItemData;
+                    modifiedDate: formatDate(stats.mtime),
+                    itemCount
+                } as ItemData & { itemCount?: number };
             })
         );
         return items;

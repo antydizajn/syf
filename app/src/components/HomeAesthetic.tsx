@@ -92,47 +92,91 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
       </motion.header>
 
       {/* Grid Explorer */}
-      <div className="flex-1 min-h-0 flex flex-col gap-6">
-        <div className="flex justify-between items-center text-[10px] font-bold tracking-widest text-zinc-500 uppercase border-b border-white/5 pb-2">
-          <span>{"//"} DIRECTORY_LISTING_ROOT (PAGE_{page + 1})</span>
-          <span>SYF_V5_STABLE</span>
+      <div className="flex-1 min-h-0 flex flex-col gap-6 px-4 md:px-0 mt-8">
+        <div className="flex justify-between items-center text-[10px] font-black tracking-[0.3em] text-black/40 uppercase border-b-2 border-black/10 pb-2">
+          <span>{"//"} DIRECTORY_EXPLORER_V2.0 (PAGE_{page + 1})</span>
+          <span>SYF_SYSTEM_OS</span>
         </div>
 
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"
+          transition={{ delay: 0.1 }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
         >
-          {paginatedItems.map((item, i) => (
-            <motion.div
-              key={item.slug}
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: i * 0.01 }}
-            >
-              <Link 
-                href={`/${item.slug}`}
-                className="hud-glass p-4 group hover:bg-white hover:text-black transition-all relative overflow-hidden flex flex-col justify-between h-32"
+          {paginatedItems.map((item, i) => {
+            const globalIndex = page * PAGINATION_SIZE + i + 1;
+            const isFolder = item.type === 'folder';
+            
+            return (
+              <motion.div
+                key={item.slug}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.02 }}
+                className="h-full"
               >
-                <div className="scanlines absolute inset-0 opacity-5 pointer-events-none" />
-                <div className="dither-grid absolute inset-0 text-white pointer-events-none opacity-[0.05]" />
-                
-                <div className="flex justify-between items-start">
-                  <span className="text-[9px] font-black opacity-30 uppercase tracking-widest group-hover:opacity-100">
-                    {item.type === 'folder' ? 'DIR' : 'FILE'}
-                  </span>
-                  <span className="text-[9px] font-bold opacity-30 group-hover:opacity-100">
-                    {item.size}
-                  </span>
-                </div>
-                
-                <h3 className="text-xl font-black tracking-tighter uppercase leading-none wrap-break-word line-clamp-2">
-                  {item.type === 'folder' ? item.name : item.title}
-                </h3>
-              </Link>
-            </motion.div>
-          ))}
+                <Link 
+                  href={`/${item.slug}`}
+                  className={`group relative flex flex-col h-full min-h-[220px] transition-all duration-300 border-2 border-black overflow-hidden ${
+                    isFolder 
+                      ? "bg-black text-white hover:bg-zinc-900" 
+                      : "bg-[#fdfdfd] text-black hover:bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:-translate-x-1 hover:-translate-y-1"
+                  }`}
+                >
+                  {/* Visual Polish Elements */}
+                  <div className={`scanlines absolute inset-0 pointer-events-none opacity-[0.03] ${isFolder ? 'invert' : ''}`} />
+                  
+                  {/* Header Row */}
+                  <div className={`flex justify-between items-start p-4 border-b ${isFolder ? 'border-white/10' : 'border-black/5'}`}>
+                    <div className="flex flex-col">
+                      <span className="text-[10px] font-black tracking-widest opacity-50">
+                        NO_{globalIndex.toString().padStart(3, '0')}
+                      </span>
+                      <span className="text-[10px] font-mono opacity-50 mt-1">
+                        {item.date}
+                      </span>
+                    </div>
+                    <div className="text-right">
+                      <span className={`text-[10px] font-black px-2 py-0.5 uppercase tracking-tighter ${
+                        isFolder ? 'bg-white text-black' : 'bg-black text-white'
+                      }`}>
+                        {isFolder ? 'FOLDER' : 'FILE_MD'}
+                      </span>
+                      {isFolder && item.itemCount !== undefined && (
+                        <div className="text-[10px] font-bold mt-1 opacity-60">
+                          [ {item.itemCount}_OBJECTS ]
+                        </div>
+                      )}
+                      {!isFolder && (
+                        <div className="text-[10px] font-bold mt-1 opacity-60 uppercase">
+                          SIZE: {item.size}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  
+                  {/* Content Area */}
+                  <div className="p-6 flex-1 flex flex-col justify-center">
+                    <h3 className={`text-3xl md:text-4xl font-black tracking-tighter uppercase leading-[0.9] mb-4 wrap-break-word transition-transform duration-300 group-hover:scale-[1.02] origin-left ${
+                      isFolder ? 'text-white' : 'text-black'
+                    }`}>
+                      {isFolder ? item.name : item.title}
+                    </h3>
+                    
+                    {!isFolder && item.preview && (
+                      <p className="text-xs font-medium leading-relaxed opacity-60 line-clamp-3 md:line-clamp-4">
+                        {item.preview}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Footer Decoration */}
+                  <div className={`h-1 w-full ${isFolder ? 'bg-white/20' : 'bg-black/5'}`} />
+                </Link>
+              </motion.div>
+            );
+          })}
         </motion.div>
 
         {/* Pagination HUD */}
