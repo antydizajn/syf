@@ -83,8 +83,6 @@ export default async function GniewkaPage() {
               </p>
            </div>
         </section>
-
-        </section>
       </main>
       <Footer />
     </>

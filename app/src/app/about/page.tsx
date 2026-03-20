@@ -88,8 +88,6 @@ export default async function AboutPage() {
              W morzu wypolerowanych interfejsów, wybieramy brud.
            </p>
         </section>
-
-        </section>
       </main>
       <Footer />
     </>
