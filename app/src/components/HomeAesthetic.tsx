@@ -84,7 +84,7 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
             <Link 
               key={btn}
               href={btn === 'PLIKI' ? '/' : btn === 'O SYFIE' ? '/about' : btn === 'ANTYDIZAJN' ? 'https://antydizajn.pl' : '/gniewka'}
-              className="flex-1 border-2 border-black bg-white/5 backdrop-blur-sm px-4 py-3 font-black text-[11px] md:text-sm uppercase hover:bg-black hover:text-white transition-all text-center group"
+              className="flex-1 border-2 border-black bg-white/60 backdrop-blur-sm px-4 py-3 font-black text-[11px] md:text-sm uppercase hover:bg-black hover:text-white transition-all text-center group"
             >
               <span className="opacity-0 group-hover:opacity-100 transition-opacity">{"["}</span>
               <span className="mx-2">{btn}</span>
