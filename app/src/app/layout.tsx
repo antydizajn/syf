@@ -105,6 +105,7 @@ export default function RootLayout({
         </main>
 
         <Footer />
+        <ScanlineOverlay />
       </body>
     </html>
   );
