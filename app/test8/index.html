@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYF / ANTYDIZAJN</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- GRAIN (test3/4) -->
+    <div class="grain-overlay"></div>
+
+    <!-- HEADER - styl wsparcie.antydizajn.pl -->
+    <header class="header" id="header">
+        <a href="/" class="logo">
+            <span class="logo-bracket">[</span>SYF<span class="logo-bracket">]</span>
+            <span class="logo-domain">antydizajn.pl</span>
+        </a>
+
+        <!-- MENU BUTTON - hamburger + MENU -->
+        <button class="menu-btn" id="menuBtn">
+            <div class="menu-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <span class="menu-text">MENU</span>
+        </button>
+    </header>
+
+    <!-- FULLSCREEN MENU OVERLAY -->
+    <div class="menu-overlay" id="menuOverlay">
+        <button class="menu-close" id="menuClose">✕</button>
+
+        <nav class="menu-nav">
+            <a href="/" class="menu-item" data-index="01">
+                <span class="menu-index">01</span>
+                <span class="menu-label">PLIKI</span>
+            </a>
+            <a href="/o-syf" class="menu-item" data-index="02">
+                <span class="menu-index">02</span>
+                <span class="menu-label">O_SYF</span>
+            </a>
+            <a href="https://antydizajn.pl" class="menu-item" data-index="03">
+                <span class="menu-index">03</span>
+                <span class="menu-label">ANTYDIZAJN</span>
+            </a>
+        </nav>
+
+        <div class="menu-footer">
+            <span>SYSTEM STATUS: <span class="status-live">LIVE</span></span>
+            <span>ANTYDIZAJN PROTOCOL</span>
+        </div>
+    </div>
+
+    <!-- HERO - 3 linie jak na obrazku -->
+    <section class="hero">
+        <div class="hero-title reveal-up">
+            <span class="title-line-1">PUBLICZNY</span>
+            <span class="title-line-2">SYF_</span>
+            <span class="title-line-3">PLIKÓW</span>
+        </div>
+        <p class="hero-sub reveal-up">
+            Wrzucasz <span class="text-magenta">.md</span> → dostępne pod <span class="text-cyan">/NAZWA</span>
+        </p>
+        <div class="hero-line"></div>
+    </section>
+
+    <!-- MARQUEE (test2) -->
+    <div class="marquee-container">
+        <div class="marquee-content">
+            /// ANTYDIZAJN PROTOCOL /// PUBLICZNY DUMP PLIKÓW /// ZERO CENZURY /// ANTYDIZAJN PROTOCOL /// PUBLICZNY
+            DUMP PLIKÓW /// ZERO CENZURY ///
+        </div>
+    </div>
+
+    <!-- FILE LIST -->
+    <main class="files">
+        <div class="files-header">
+            <span class="t-mono">6 ELEMENTÓW</span>
+            <button class="btn-brutal">↓ NAJNOWSZE</button>
+        </div>
+
+        <!-- FOLDER -->
+        <a href="/test_folder" class="file-row folder reveal-up">
+            <span class="file-idx">01</span>
+            <div class="file-info">
+                <span class="file-name">📁 test_folder</span>
+                <span class="file-meta t-mono">1 elem • folder</span>
+            </div>
+            <span class="file-date t-mono">28.12</span>
+        </a>
+
+        <a href="/AI_ARTISTS_REAL_DESIGN" class="file-row reveal-up">
+            <span class="file-idx">02</span>
+            <div class="file-info">
+                <span class="file-name">AI_ARTISTS_REAL_DESIGN</span>
+                <span class="file-meta t-mono">24.1K</span>
+            </div>
+            <span class="file-date t-mono">23.12</span>
+        </a>
+
+        <a href="/AI_AUTHENTICITY_VS_SIMULATION" class="file-row reveal-up">
+            <span class="file-idx">03</span>
+            <div class="file-info">
+                <span class="file-name">AI_AUTHENTICITY_VS_SIMULATION</span>
+                <span class="file-meta t-mono">22.1K</span>
+            </div>
+            <span class="file-date t-mono">23.12</span>
+        </a>
+
+        <a href="/RESEARCH_FIRST_PROTOCOL" class="file-row reveal-up">
+            <span class="file-idx">04</span>
+            <div class="file-info">
+                <span class="file-name">RESEARCH_FIRST_PROTOCOL</span>
+                <span class="file-meta t-mono">2.8K</span>
+            </div>
+            <span class="file-date t-mono">23.12</span>
+        </a>
+
+        <a href="/RESEARCH_PROTOCOL_WORLDCLASS" class="file-row reveal-up">
+            <span class="file-idx">05</span>
+            <div class="file-info">
+                <span class="file-name">RESEARCH_PROTOCOL_WORLDCLASS</span>
+                <span class="file-meta t-mono">4.7K</span>
+            </div>
+            <span class="file-date t-mono">23.12</span>
+        </a>
+
+        <a href="/TOTAL_WAR_COMPETITOR_RESEARCH" class="file-row reveal-up">
+            <span class="file-idx">06</span>
+            <div class="file-info">
+                <span class="file-name">TOTAL_WAR_COMPETITOR_RESEARCH</span>
+                <span class="file-meta t-mono">31.2K</span>
+            </div>
+            <span class="file-date t-mono">23.12</span>
+        </a>
+    </main>
+
+    <!-- FOOTER (test2 style - acid) -->
+    <footer class="footer">
+        <div class="footer-left">
+            <h3>SYF_</h3>
+            <p>Publiczny dump plików.<br>Antydizajn is not a style, it is a method.</p>
+        </div>
+        <div class="footer-right">
+            <p>© 2025 ANTYDIZAJN</p>
+            <p>6 plików / 75.1 KB</p>
+        </div>
+    </footer>
+
+    <script>
+        // Reveal on scroll (test3/4)
+        const reveals = document.querySelectorAll('.reveal-up');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+        reveals.forEach(el => observer.observe(el));
+
+        // Menu overlay toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const menuClose = document.getElementById('menuClose');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        menuBtn.addEventListener('click', () => {
+            menuOverlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        });
+
+        menuClose.addEventListener('click', () => {
+            menuOverlay.classList.remove('open');
+            document.body.style.overflow = '';
+        });
+
+        // Close on link click
+        document.querySelectorAll('.menu-item').forEach(link => {
+            link.addEventListener('click', () => {
+                menuOverlay.classList.remove('open');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Close on ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                menuOverlay.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        });
+    </script>
+</body>
+
+</html>

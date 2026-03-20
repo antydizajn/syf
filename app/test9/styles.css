@@ -1,0 +1,322 @@
+/* ========================================
+   SYF - TEST 9: RESEARCH SYNTHESIS
+   
+   Inspiracje:
+   - VANA/AX1: Gigantyczna typografia, minimalizm
+   - ID NÉON: Transparentny header, elegancja
+   - NORTH: Backdrop blur
+   - NEONPLUS: Delikatny glow
+   
+   Filozofia: "Typografia JEST designem"
+   ======================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+    /* Czyste kolory jak VANA/AX1 */
+    --bg: #000000;
+    --text: #FFFFFF;
+    --text-dim: rgba(255, 255, 255, 0.4);
+    
+    /* Akcenty jak ID NÉON + NORTH */
+    --magenta: #FF00FF;
+    --magenta-glow: rgba(255, 0, 255, 0.4);
+    --cyan: #00CCCC;
+    --cyan-glow: rgba(0, 204, 204, 0.4);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+    background: var(--magenta);
+    color: var(--bg);
+}
+
+/* ========================================
+   HEADER - transparentny jak ID NÉON
+   ======================================== */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 3rem;
+    /* Transparentny z blur jak NORTH */
+    background: transparent;
+    transition: all 0.4s ease;
+}
+
+.header:hover {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(20px);
+}
+
+/* LOGO */
+.logo {
+    font-size: 1.25rem;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.logo-bracket {
+    color: var(--magenta);
+    transition: text-shadow 0.3s;
+}
+
+.logo:hover .logo-bracket {
+    text-shadow: 0 0 20px var(--magenta-glow);
+}
+
+/* NAV - minimalna jak VANA */
+.nav {
+    display: flex;
+    gap: 3rem;
+}
+
+.nav-link {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 0.25rem;
+    transition: color 0.3s;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--magenta);
+    transition: width 0.4s ease;
+}
+
+.nav-link:hover {
+    color: var(--text);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+.nav-link.active {
+    color: var(--text);
+}
+
+/* ========================================
+   HERO - GIGANTYCZNA typografia jak VANA/AX1
+   ======================================== */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 2rem;
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 0.85;
+}
+
+.hero-small {
+    font-size: clamp(1rem, 3vw, 2rem);
+    font-weight: 300;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+}
+
+.hero-title {
+    font-size: clamp(10rem, 30vw, 25rem);
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+    color: var(--text);
+    /* Subtelny glow jak NEONPLUS */
+    text-shadow: 
+        0 0 60px var(--magenta-glow),
+        0 0 120px rgba(255, 0, 255, 0.2);
+}
+
+.hero-desc {
+    margin-top: 4rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+}
+
+.accent {
+    color: var(--magenta);
+}
+
+.accent-alt {
+    color: var(--cyan);
+}
+
+/* ========================================
+   FILES - czyste, minimalne
+   ======================================== */
+.files {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 2rem 6rem;
+}
+
+.files-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+}
+
+.files-sort {
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.files-sort:hover {
+    color: var(--text);
+}
+
+/* FILE ROW */
+.file {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.2s;
+}
+
+.file:hover {
+    padding-left: 1rem;
+}
+
+.file:hover .file-name {
+    color: var(--magenta);
+}
+
+.file-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.file-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+}
+
+/* FOLDER */
+.file.folder {
+    border-left: 2px solid var(--cyan);
+    padding-left: 1rem;
+    background: rgba(0, 204, 204, 0.03);
+}
+
+.file.folder .file-name {
+    color: var(--cyan);
+}
+
+.file.folder:hover .file-name {
+    color: var(--text);
+}
+
+.file.folder .file-meta {
+    color: var(--cyan);
+}
+
+/* ========================================
+   FOOTER - minimal
+   ======================================== */
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 3rem;
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 768px) {
+    .header {
+        padding: 1.5rem;
+    }
+    
+    .nav {
+        gap: 1.5rem;
+    }
+    
+    .nav-link {
+        font-size: 0.65rem;
+    }
+    
+    .hero-small {
+        letter-spacing: 0.2em;
+    }
+    
+    .files {
+        padding: 3rem 1.5rem 4rem;
+    }
+    
+    .footer {
+        padding: 1.5rem;
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+}

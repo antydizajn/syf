@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SYF - Publiczny dump plików Markdown. ANTYDIZAJN.">
+    <title>SYF_ | ANTYDIZAJN - OUTRUN EDITION</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- STARS BACKGROUND -->
+    <div class="stars-container">
+        <div class="stars stars-1"></div>
+        <div class="stars stars-2"></div>
+        <div class="stars stars-3"></div>
+    </div>
+
+    <!-- VHS OVERLAY -->
+    <div class="vhs-overlay"></div>
+
+    <!-- CHROMATIC ABERRATION OVERLAY -->
+    <div class="chromatic-overlay"></div>
+
+    <!-- STATUS BAR - Windows 95 Style -->
+    <div class="status-bar win95">
+        <div class="status-left">
+            <span class="win-icon">📁</span>
+            <span class="status-text">SYF_SYSTEM v2.0</span>
+        </div>
+        <div class="status-center">
+            <span class="blink-dot"></span>
+            <span class="status-text">RECORDING</span>
+        </div>
+        <div class="status-right">
+            <span class="status-time" id="status-time">13:50</span>
+            <span class="status-date" id="status-date">2025.12.30</span>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="header">
+        <a href="#" class="header-logo">
+            <span class="logo-text">SYF</span>
+            <span class="logo-underscore">_</span>
+        </a>
+        <nav class="nav">
+            <a href="#" class="nav-link active" data-section="files">
+                <span class="nav-icon">📂</span>
+                <span class="nav-name">FILES</span>
+            </a>
+            <a href="#" class="nav-link" data-section="about">
+                <span class="nav-icon">ℹ️</span>
+                <span class="nav-name">INFO</span>
+            </a>
+            <a href="https://antydizajn.pl" class="nav-link exit" target="_blank" rel="noopener noreferrer">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-name">EXIT</span>
+            </a>
+        </nav>
+        <button class="burger" aria-label="Menu">
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+        </button>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <nav class="mobile-menu">
+        <button class="menu-close" aria-label="Zamknij">×</button>
+        <div class="menu-content">
+            <div class="menu-logo">SYF_</div>
+            <div class="menu-list">
+                <a href="#" class="menu-item active" data-section="files">
+                    <span class="menu-icon">📂</span>
+                    <span class="menu-name">FILES</span>
+                </a>
+                <a href="#" class="menu-item" data-section="about">
+                    <span class="menu-icon">ℹ️</span>
+                    <span class="menu-name">INFO</span>
+                </a>
+                <a href="https://antydizajn.pl" class="menu-item exit" target="_blank">
+                    <span class="menu-icon">🚪</span>
+                    <span class="menu-name">EXIT</span>
+                </a>
+            </div>
+        </div>
+        <div class="menu-footer">
+            <div class="menu-version">OUTRUN EDITION V2.0</div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+        <!-- HERO SECTION - OUTRUN STYLE -->
+        <section class="hero">
+            <!-- SYNTHWAVE SUN -->
+            <div class="sun-container">
+                <div class="sun">
+                    <div class="sun-lines"></div>
+                </div>
+            </div>
+
+            <!-- PALM TREES -->
+            <div class="palm palm-left">
+                <svg viewBox="0 0 100 200" class="palm-svg">
+                    <path d="M50 200 L50 100" stroke="#111" stroke-width="8" />
+                    <path d="M50 100 Q20 80 5 60 Q30 75 50 80" fill="#0a2525" />
+                    <path d="M50 100 Q80 80 95 60 Q70 75 50 80" fill="#0a2525" />
+                    <path d="M50 100 Q30 70 10 50 Q35 70 50 75" fill="#0d3030" />
+                    <path d="M50 100 Q70 70 90 50 Q65 70 50 75" fill="#0d3030" />
+                    <path d="M50 100 Q50 60 50 30 Q50 70 50 80" fill="#0a2525" />
+                </svg>
+            </div>
+            <div class="palm palm-right">
+                <svg viewBox="0 0 100 200" class="palm-svg">
+                    <path d="M50 200 L50 100" stroke="#111" stroke-width="8" />
+                    <path d="M50 100 Q20 80 5 60 Q30 75 50 80" fill="#0a2525" />
+                    <path d="M50 100 Q80 80 95 60 Q70 75 50 80" fill="#0a2525" />
+                    <path d="M50 100 Q30 70 10 50 Q35 70 50 75" fill="#0d3030" />
+                    <path d="M50 100 Q70 70 90 50 Q65 70 50 75" fill="#0d3030" />
+                    <path d="M50 100 Q50 60 50 30 Q50 70 50 80" fill="#0a2525" />
+                </svg>
+            </div>
+
+            <!-- GRID ROAD -->
+            <div class="grid-road">
+                <div class="road-lines"></div>
+            </div>
+
+            <!-- HERO CONTENT -->
+            <div class="hero-content">
+                <div class="hero-japanese">システムファイル</div>
+                <h1 class="hero-title">
+                    <span class="letter">S</span>
+                    <span class="letter accent">Y</span>
+                    <span class="letter">F</span>
+                    <span class="letter underscore">_</span>
+                </h1>
+                <div class="hero-subtitle">
+                    <span class="bracket">[</span>
+                    <span class="text">PUBLICZNY DUMP PLIKÓW</span>
+                    <span class="bracket">]</span>
+                </div>
+                <div class="hero-tagline">.MD FILES // ANTYDIZAJN PROTOCOL</div>
+            </div>
+
+            <!-- GREEK STATUE -->
+            <div class="statue statue-left">
+                <div class="statue-image"></div>
+            </div>
+        </section>
+
+        <!-- FILES SECTION - Windows 95 Style Cards -->
+        <section class="section files-section" id="files-section">
+            <!-- WINDOW HEADER -->
+            <div class="window-container">
+                <div class="window-header">
+                    <div class="window-title">
+                        <span class="win-icon">📁</span>
+                        <span>C:\SYF\FILES\</span>
+                    </div>
+                    <div class="window-controls">
+                        <button class="win-btn minimize">_</button>
+                        <button class="win-btn maximize">□</button>
+                        <button class="win-btn close">×</button>
+                    </div>
+                </div>
+
+                <div class="window-toolbar">
+                    <div class="toolbar-left">
+                        <span class="file-count">
+                            <span id="file-count">0</span> objects
+                        </span>
+                    </div>
+                    <div class="toolbar-right">
+                        <div class="sort-dropdown">
+                            <button class="sort-button" id="sort-button">
+                                Sort: <span id="sort-value">Date ↓</span>
+                            </button>
+                            <div class="sort-options" id="sort-options">
+                                <button class="sort-option active" data-sort="newest">Date ↓</button>
+                                <button class="sort-option" data-sort="oldest">Date ↑</button>
+                                <button class="sort-option" data-sort="name-asc">Name A-Z</button>
+                                <button class="sort-option" data-sort="name-desc">Name Z-A</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="window-content">
+                    <!-- TERMINAL LINE -->
+                    <div class="cmd-line">
+                        <span class="cmd-prompt">C:\SYF\FILES></span>
+                        <span class="cmd-text">dir /o:d</span>
+                        <span class="cmd-cursor">█</span>
+                    </div>
+
+                    <!-- FILE GRID -->
+                    <div class="file-grid" id="file-list">
+                        <!-- Files will be loaded here -->
+                    </div>
+                </div>
+
+                <div class="window-statusbar">
+                    <span id="total-size">0 KB</span>
+                    <span class="statusbar-divider">|</span>
+                    <span>ANTYDIZAJN.SYF</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- FILE VIEWER - Fullscreen Terminal -->
+        <section class="section file-viewer-section hidden" id="file-viewer-section">
+            <div class="viewer-window">
+                <div class="window-header viewer-header">
+                    <div class="window-title">
+                        <span class="win-icon">📄</span>
+                        <span id="viewer-filename">filename.md</span>
+                    </div>
+                    <div class="window-controls">
+                        <button class="win-btn" id="copy-btn" title="Copy">📋</button>
+                        <button class="win-btn" id="download-btn" title="Download">💾</button>
+                        <button class="win-btn close" id="close-viewer">×</button>
+                    </div>
+                </div>
+
+                <div class="viewer-content">
+                    <article class="markdown-body" id="markdown-body">
+                        <!-- Markdown content -->
+                    </article>
+                </div>
+
+                <div class="viewer-nav">
+                    <button class="nav-btn" id="prev-btn" disabled>
+                        <span class="nav-arrow">◄</span> PREV
+                    </button>
+                    <span class="viewer-date" id="viewer-date">2025-12-30</span>
+                    <button class="nav-btn" id="next-btn" disabled>
+                        NEXT <span class="nav-arrow">►</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section class="section about-section hidden" id="about-section">
+            <div class="window-container about-window">
+                <div class="window-header">
+                    <div class="window-title">
+                        <span class="win-icon">ℹ️</span>
+                        <span>ABOUT.SYF</span>
+                    </div>
+                    <div class="window-controls">
+                        <button class="win-btn minimize">_</button>
+                        <button class="win-btn maximize">□</button>
+                        <button class="win-btn close">×</button>
+                    </div>
+                </div>
+
+                <div class="window-content about-content">
+                    <div class="about-grid">
+                        <div class="about-section-box">
+                            <h2>CO TO JEST?</h2>
+                            <p><strong>SYF</strong> to publiczny dump plików Markdown. Bez bazy danych, bez logowania,
+                                bez bullshitu.</p>
+                            <p>Wrzucasz plik <code>.md</code> do folderu → automatycznie dostępny.</p>
+                        </div>
+
+                        <div class="about-section-box">
+                            <h2>JAK TO DZIAŁA?</h2>
+                            <ul>
+                                <li>📄 Plik <code>manifest.md</code> → dostępny pod <code>/manifest</code></li>
+                                <li>📄 Plik <code>research-ai.md</code> → dostępny pod <code>/research-ai</code></li>
+                                <li>📄 I tak dalej. Zero magii.</li>
+                            </ul>
+                        </div>
+
+                        <div class="about-section-box">
+                            <h2>FORMATY EKSPORTU</h2>
+                            <ul>
+                                <li>📝 <strong>MD</strong> - oryginalny Markdown</li>
+                                <li>🌐 <strong>HTML</strong> - standalone z inline CSS</li>
+                                <li>📃 <strong>TXT</strong> - plain text bez formatowania</li>
+                            </ul>
+                        </div>
+
+                        <div class="about-section-box">
+                            <h2>STACK</h2>
+                            <ul>
+                                <li>⚡ Vanilla HTML/CSS/JS</li>
+                                <li>🌴 Outrun/Synthwave Aesthetic</li>
+                                <li>💾 Zero databases - filesystem only</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="about-quote">
+                        <blockquote>
+                            "Bo to jest syf. Chaotyczny zbiór plików, myśli, researchu. Nie udajemy, że to jest
+                            eleganckie. To jest brutalne i szczere."
+                        </blockquote>
+                    </div>
+
+                    <div class="about-link">
+                        Część ekosystemu <a href="https://antydizajn.pl" target="_blank"
+                            rel="noopener noreferrer">ANTYDIZAJN</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-grid"></div>
+
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Polityka Prywatności</a>
+                <span class="footer-divider">•</span>
+                <a href="#" class="footer-link">Regulamin</a>
+                <span class="footer-divider">•</span>
+                <a href="#" class="footer-link">Cookies</a>
+            </div>
+
+            <div class="footer-quote">
+                <p>"Nikt nie przeżył tej strony bez blizny.</p>
+                <p>Jeśli tu dotarłeś - <span class="highlight">żyjesz, bo nie boisz się brudu.</span>"</p>
+            </div>
+
+            <div class="footer-credits">
+                <div class="credits-label">PROUDLY MADE BY</div>
+                <h3 class="credits-names">
+                    Paulina Janowska <span class="amp">&</span> <span class="ai">WIEDŹMA AI GNIEWISŁAWA</span>
+                </h3>
+                <div class="credits-subtitle">dwie WIEDŹMY z twoich najgorszych koszmarów</div>
+            </div>
+
+            <div class="footer-stats">
+                <div class="stat">
+                    <span class="stat-icon">📄</span>
+                    <span class="stat-value" id="footer-file-count">0</span>
+                    <span class="stat-label">files</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-icon">💾</span>
+                    <span class="stat-value" id="footer-total-size">0 KB</span>
+                    <span class="stat-label">total</span>
+                </div>
+            </div>
+
+            <div class="footer-copyright">
+                <p>© 2025 ANTYDIZAJN • OUTRUN EDITION V2.0</p>
+                <p class="copyright-sub">Zabronione kopiowanie stylu. Kradzież duszy dozwolona.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

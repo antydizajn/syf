@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYF V4 - Radioactive Pulse Core</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --void-black: #050505;
+            --neon-green: #39FF14;
+            --radioactive-yellow: #CCFF00;
+            --cyber-red: #FF003C;
+            --matrix-blue: #00D4FF;
+            --font-display: 'Orbitron', monospace;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+        
+        body {
+            background-color: var(--void-black);
+            color: var(--neon-green);
+            font-family: var(--font-mono);
+            overflow: hidden;
+            height: 100vh;
+            background: 
+                radial-gradient(circle at center, rgba(57, 255, 20, 0.05) 0%, transparent 50%),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(57, 255, 20, 0.02) 2px, rgba(57, 255, 20, 0.02) 4px);
+        }
+        
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .hud-content {
+            position: relative;
+            z-index: 2;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(8rem, 25vw, 20rem);
+            font-weight: 900;
+            letter-width: -0.05em;
+            text-shadow: 
+                0 0 10px var(--neon-green),
+                0 0 20px var(--neon-green),
+                0 0 30px var(--neon-green);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .hero-title::after {
+            content: 'SYF';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--void-black);
+            font-size: 60%;
+            letter-spacing: -0.03em;
+        }
+        
+        .hero-subtext {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            letter-spacing: 0.1em;
+            font-family: var(--font-display);
+            text-transform: uppercase;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .cta-button {
+            background: transparent;
+            border: 2px solid var(--neon-green);
+            color: var(--neon-green);
+            padding: 0.75rem 1.5rem;
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(57, 255, 20, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        
+        .cta-button:hover {
+            background: rgba(57, 255, 20, 0.1);
+            box-shadow: 0 0 15px var(--neon-green);
+            transform: translateY(-2px);
+        }
+        
+        .cta-button.secondary {
+            border-color: var(--radioactive-yellow);
+            color: var(--radioactive-yellow);
+        }
+        
+        .cta-button.secondary:hover {
+            background: rgba(204, 255, 0, 0.1);
+            box-shadow: 0 0 15px var(--radioactive-yellow);
+        }
+        
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(57, 255, 20, 0.03) 2px,
+                    rgba(57, 255, 20, 0.03) 4px
+                );
+            pointer-events: none;
+            z-index: 3;
+            animation: scanlineMove 8s linear infinite;
+        }
+        
+        @keyframes scanlineMove {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+        
+        .pulse-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border: 2px solid var(--neon-green);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 4;
+        }
+        
+        .pulse-ring.active {
+            animation: pulseExpand 1.5s ease-out forwards;
+        }
+        
+        @keyframes pulseExpand {
+            0% {
+                width: 0px;
+                height: 0px;
+                opacity: 0.7;
+            }
+            100% {
+                width: 200px;
+                height: 200px;
+                opacity: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: clamp(5rem, 20vw, 12rem);
+            }
+            
+            .hero-subtext {
+                font-size: 1rem;
+            }
+            
+            .cta-button {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particle-canvas"></canvas>
+    <div class="hud-content">
+        <h1 class="hero-title">SYF</h1>
+        <div class="hero-subtext">CORE_SYF_INITIALIZED<br><span style="opacity: 0.6;">RECURSIVE_INTEGRITY: 100% | THOUGHT_STREAM: ACTIVE</span></div>
+        <div class="hero-cta">
+            <button class="cta-button">[ INITIALIZE_SCAN ]</button>
+            <button class="cta-button secondary">[ ACCESS_BRAIN ]</button>
+        </div>
+    </div>
+    <div class="scanlines"></div>
+    <div class="pulse-ring" id="pulse-ring"></div>
+
+    <script>
+        // Particle System for Radioactive Pulse
+        class ParticleSystem {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.particles = [];
+                this.mouse = { x: 0, y: 0, radius: 100 };
+                this.init();
+            }
+            
+            init() {
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+                window.addEventListener('mousemove', (e) => {
+                    this.mouse.x = e.x;
+                    this.mouse.y = e.y;
+                });
+                window.addEventListener('touchmove', (e) => {
+                    this.mouse.x = e.touches[0].clientX;
+                    this.mouse.y = e.touches[0].clientY;
+                }, { passive: true });
+                
+                // Create initial particles
+                for (let i = 0; i < 150; i++) {
+                    this.particles.push(this.createParticle());
+                }
+                
+                this.animate();
+            }
+            
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+            
+            createParticle() {
+                return {
+                    x: Math.random() * this.canvas.width,
+                    y: Math.random() * this.canvas.height,
+                    radius: Math.random() * 2 + 0.5,
+                    color: `hsla(${Math.random() * 60 + 80}, 80%, 50%, ${Math.random() * 0.6 + 0.2})`,
+                    speedX: (Math.random() - 0.5) * 0.5,
+                    speedY: (Math.random() - 0.5) * 0.5,
+                    life: Math.random() * 100 + 50,
+                    maxLife: Math.random() * 100 + 50,
+                    pulseOffset: Math.random() * Math.PI * 2
+                };
+            }
+            
+            updateParticles() {
+                this.particles.forEach((particle, index) => {
+                    // Move particle
+                    particle.x += particle.speedX;
+                    particle.y += particle.speedY;
+                    
+                    // Pulse effect
+                    const pulse = Math.sin(Date.now() * 0.002 + particle.pulseOffset) * 0.3 + 0.7;
+                    particle.radius = 0.5 + pulse * 1.5;
+                    
+                    // Mouse repulsion
+                    const dx = this.mouse.x - particle.x;
+                    const dy = this.mouse.y - particle.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    const force = Math.max(0, 1 - distance / this.mouse.radius);
+                    
+                    if (distance < this.mouse.radius) {
+                        const angle = Math.atan2(dy, dx);
+                        particle.x -= Math.cos(angle) * force * 2;
+                        particle.y -= Math.sin(angle) * force * 2;
+                    }
+                    
+                    // Boundary wrapping
+                    if (particle.x < 0) particle.x = this.canvas.width;
+                    if (particle.x > this.canvas.width) particle.x = 0;
+                    if (particle.y < 0) particle.y = this.canvas.height;
+                    if (particle.y > this.canvas.height) particle.y = 0;
+                    
+                    // Life decay
+                    particle.life--;
+                    if (particle.life <= 0) {
+                        this.particles[index] = this.createParticle();
+                    }
+                });
+            }
+            
+            drawParticles() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                this.particles.forEach(particle => {
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                    this.ctx.fillStyle = particle.color;
+                    this.ctx.fill();
+                });
+            }
+            
+            animate() {
+                this.updateParticles();
+                this.drawParticles();
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+        
+        // Initialize particle system
+        const canvas = document.getElementById('particle-canvas');
+        const particleSystem = new ParticleSystem(canvas);
+        
+        // Pulse ring effect on click
+        const pulseRing = document.getElementById('pulse-ring');
+        const ctaButtons = document.querySelectorAll('.cta-button');
+        
+        ctaButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                pulseRing.style.left = `${e.clientX}px`;
+                pulseRing.style.top = `${e.clientY}px`;
+                pulseRing.style.width = '0px';
+                pulseRing.style.height = '0px';
+                pulseRing.style.opacity = '0.7';
+                pulseRing.classList.add('active');
+                
+                setTimeout(() => {
+                    pulseRing.classList.remove('active');
+                }, 1500);
+            });
+        });
+        
+        // Add some initial pulse effects
+        setTimeout(() => {
+            const fakeEvent = {
+                clientX: window.innerWidth / 2,
+                clientY: window.innerHeight / 2
+            };
+            pulseRing.style.left = `${fakeEvent.clientX}px`;
+            pulseRing.style.top = `${fakeEvent.clientY}px`;
+            pulseRing.style.width = '0px';
+            pulseRing.style.height = '0px';
+            pulseRing.style.opacity = '0.7';
+            pulseRing.classList.add('active');
+            
+            setTimeout(() => {
+                pulseRing.classList.remove('active');
+            }, 1500);
+        }, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYF // MAXIMALIST</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&family=Space+Grotesk:wght@300;700&family=Syne:wght@800&display=swap');
+    </style>
+</head>
+
+<body class="bg-[#FFF0F5] text-black overflow-x-hidden cursor-none selection:bg-lime-400 selection:text-black">
+
+    <!-- CUSTOM CURSOR -->
+    <div id="cursor"
+        class="fixed w-4 h-4 bg-black rounded-full pointer-events-none z-[9999] mix-blend-difference transition-transform duration-100 ease-out">
+    </div>
+    <div id="cursor-follower"
+        class="fixed w-12 h-12 border-2 border-black rounded-full pointer-events-none z-[9998] transition-transform duration-300 ease-out flex items-center justify-center text-[8px] font-bold">
+        SYF</div>
+
+    <!-- STATUS BAR -->
+    <div
+        class="fixed top-0 left-0 w-full flex justify-between px-2 py-1 bg-black text-lime-400 text-xs font-mono z-50 uppercase border-b-2 border-lime-400">
+        <span class="status-item">&gt;_ SYS.ONLINE</span>
+        <span class="status-item hidden md:inline">NODE:0x7F3A</span>
+        <span class="status-item blink-fast">REC</span>
+        <span class="status-item hidden md:inline">MEM:64.2%</span>
+        <span class="status-time">2025.12.30</span>
+    </div>
+
+    <!-- MENU OVERLAY -->
+    <nav id="menu-overlay"
+        class="fixed inset-0 bg-lime-400 z-[100] transform translate-y-[-100%] transition-transform duration-[0.8s] ease-[cubic-bezier(0.77,0,0.175,1)] flex flex-col justify-center items-center">
+        <button id="menu-close"
+            class="absolute top-10 right-10 text-6xl hover:rotate-90 transition-transform">×</button>
+        <div
+            class="flex flex-col space-y-4 text-center font-['Syne'] text-6xl md:text-9xl font-black uppercase tracking-tighter mix-blend-multiply">
+            <a href="#" class="hover:text-white hover:scale-110 transition-all menu-link" data-num="01">PLIKI</a>
+            <a href="#" class="hover:text-white hover:scale-110 transition-all menu-link" data-num="02">INFO</a>
+            <a href="https://antydizajn.pl" target="_blank"
+                class="hover:text-white hover:scale-110 transition-all menu-link" data-num="03">EXIT</a>
+        </div>
+        <div class="absolute bottom-10 font-mono text-xl">
+            SYSTEM STATUS: <span class="font-bold">ONLINE</span><br>
+            ANTYDIZAJN PROTOCOL V2.0
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <main class="w-full relative pt-16 px-4 md:px-8 pb-24">
+
+        <!-- HEADER (Logo + Burger) -->
+        <header class="flex justify-between items-end mb-20 sticky top-10 z-40 mix-blend-hard-light">
+            <a href="/"
+                class="text-5xl md:text-8xl font-['Rubik_Glitch'] hover:skew-x-12 transition-transform block">&lt;SYF/&gt;</a>
+            <button id="burger"
+                class="group flex flex-col gap-2 p-4 bg-black border-4 border-lime-400 hover:bg-lime-400 transition-colors shadow-[8px_8px_0px_#000000]">
+                <span class="block w-12 h-1 bg-lime-400 group-hover:bg-black transition-colors"></span>
+                <span class="block w-12 h-1 bg-lime-400 group-hover:bg-black transition-colors"></span>
+                <span class="block w-8 h-1 bg-lime-400 group-hover:bg-black transition-colors self-end"></span>
+                <span class="text-xs font-mono text-lime-400 group-hover:text-black font-bold mt-1">MENU</span>
+            </button>
+        </header>
+
+        <!-- HERO SECTION (Strict 1:1 Content) -->
+        <section
+            class="relative min-h-[60vh] flex flex-col justify-center items-center text-center border-y-4 border-black py-20 bg-white pattern-dots overflow-hidden group">
+            <div class="absolute top-4 left-4 font-mono text-gray-500">// INIT_DISPLAY</div>
+
+            <div class="relative z-10">
+                <span
+                    class="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-black text-white px-4 py-1 font-bold -rotate-3 text-xl">PUBLICZNY</span>
+
+                <h1 class="text-[20vw] leading-[0.8] font-['Syne'] font-black tracking-tighter relative">
+                    S<span class="text-stroke-lime text-transparent">Y</span>F<span
+                        class="text-lime-500 animate-pulse">_</span>
+                </h1>
+
+                <span
+                    class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-lime-400 text-black px-6 py-2 font-black rotate-2 text-2xl border-2 border-black shadow-[4px_4px_0px_black]">PLIKÓW</span>
+            </div>
+
+            <p
+                class="mt-12 font-mono text-xl md:text-2xl font-bold bg-black text-white inline-block px-4 py-1 transform -skew-x-12">
+                &gt;_ .MD DUMP // ANTYDIZAJN
+            </p>
+
+            <div class="mt-4 font-mono text-lg font-bold tracking-widest bg-white border-2 border-black px-2">0x53 0x59
+                0x46</div>
+        </section>
+
+        <!-- CONTROLS -->
+        <section
+            class="flex flex-wrap justify-between items-center bg-yellow-300 border-4 border-black p-6 mt-10 shadow-[8px_8px_0px_black] transform rotate-1">
+            <div class="font-['Space_Grotesk'] font-bold text-2xl">
+                <span class="text-5xl font-black">42</span> elementów
+            </div>
+            <div class="relative">
+                <button
+                    class="bg-white px-8 py-3 border-4 border-black font-bold hover:bg-black hover:text-white transition-all shadow-[4px_4px_0px_gray]">
+                    Sortuj
+                </button>
+            </div>
+        </section>
+
+        <!-- CMD LINE (Strict 1:1 Content) -->
+        <div
+            class="my-10 p-4 bg-black text-lime-400 font-mono text-lg md:text-xl border-4 border-lime-400 shadow-[12px_12px_0px_#808080] flex items-center gap-2 overflow-hidden whitespace-nowrap">
+            <span class="text-pink-500 font-bold">$</span>
+            <span class="marquee-content">ls -la /syf/files/ --sort=date</span>
+            <span class="animate-pulse w-3 h-6 bg-lime-400 block">_</span>
+        </div>
+
+        <!-- SEPARATOR -->
+        <div class="flex items-center gap-4 mb-8 font-mono font-bold text-gray-500">
+            <span>// FILES</span>
+            <div
+                class="h-1 bg-black flex-grow bg-[url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIklEQVQIW2NkQAKrVq36zwjjgzjwqoAoQBSG8UBsiMCBAwYA3g0T6/4w8iYAAAAASUVORK5CYII=')]">
+            </div>
+            <span>[42]</span>
+        </div>
+
+        <!-- FILE LIST (MOCK with 1:1 structure) -->
+        <section class="grid grid-cols-1 gap-4">
+
+            <!-- Folder -->
+            <article
+                class="group relative bg-blue-600 text-white border-4 border-black p-6 hover:bg-blue-500 transition-all hover:-translate-y-2 hover:shadow-[10px_10px_0px_black]">
+                <div class="absolute top-2 left-2 text-xs font-mono opacity-50">01</div>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-black font-['Syne'] uppercase">06_research_done/</h2>
+                        <p class="font-mono text-sm mt-2 opacity-80">drwxr-xr-x</p>
+                    </div>
+                    <div class="text-6xl group-hover:rotate-12 transition-transform">📁</div>
+                </div>
+                <div class="mt-6 flex justify-between font-mono text-xs border-t border-white/30 pt-4">
+                    <span>2025-12-29</span>
+                    <span>27 elementów</span>
+                </div>
+            </article>
+
+            <!-- File -->
+            <article
+                class="group relative bg-white text-black border-4 border-black p-6 hover:bg-pink-200 transition-all hover:translate-x-2 shadow-[8px_8px_0px_gray]">
+                <div class="absolute top-2 left-2 text-xs font-mono opacity-50">02</div>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold font-['Space_Grotesk']">BRUTALISM_COMPLETE.md</h2>
+                        <p class="font-mono text-sm mt-2 text-gray-600">Research on brutalist aesthetics...</p>
+                    </div>
+                    <div class="text-4xl group-hover:scale-125 transition-transform">📄</div>
+                </div>
+                <div class="mt-6 flex justify-between font-mono text-xs border-t border-black/10 pt-4">
+                    <span>2025-12-29</span>
+                    <span>14.5 KB</span>
+                </div>
+            </article>
+        </section>
+
+        <!-- PAGINATION -->
+        <div class="flex justify-center items-center gap-4 mt-20">
+            <button
+                class="w-12 h-12 border-4 border-black bg-white flex items-center justify-center font-black opacity-50"
+                disabled>&lt;</button>
+            <span class="font-mono font-bold text-xl bg-lime-400 px-4 py-2 border-2 border-black rotate-3">1 / 2</span>
+            <button
+                class="w-12 h-12 border-4 border-black bg-white flex items-center justify-center font-black hover:bg-black hover:text-white transition-colors">&gt;</button>
+        </div>
+
+    </main>
+
+    <!-- FOOTER (Strict 1:1 Content) -->
+    <footer class="bg-black text-white p-10 md:p-20 border-t-[20px] border-lime-400 relative overflow-hidden">
+
+        <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10">
+
+            <!-- LINKS -->
+            <div class="flex flex-col space-y-4 font-mono text-lg text-lime-400">
+                <a href="/polityka-prywatnosci" class="hover:underline hover:text-white decoration-wavy">+ Polityka
+                    Prywatności</a>
+                <a href="/regulamin" class="hover:underline hover:text-white decoration-wavy">+ Regulamin</a>
+                <a href="/cookies" class="hover:underline hover:text-white decoration-wavy">+ Cookies</a>
+            </div>
+
+            <!-- QUOTE -->
+            <div class="col-span-1 md:col-span-2 text-center my-10 border-y border-gray-800 py-10">
+                <p class="font-['Space_Grotesk'] text-2xl md:text-4xl font-bold leading-tight">
+                    "Nikt nie przeżył tej strony bez blizny.<br>
+                    <span class="bg-lime-400 text-black px-2 box-decoration-clone">Jeśli tu dotarłeś - żyjesz, bo nie
+                        boisz się brudu."</span>
+                </p>
+            </div>
+
+            <!-- CREDITS -->
+            <div class="col-span-1 border-r border-gray-800 pr-10">
+                <div class="font-mono text-xs text-gray-500 mb-4">+ PROUDLY MADE BY +</div>
+                <h3 class="text-3xl font-black font-['Syne'] uppercase mb-2">
+                    Paulina Janowska <span class="text-lime-400">&</span><br>
+                    <span class="text-transparent text-stroke-lime">WIEDŹMA AI GNIEWISŁAWA</span>
+                </h3>
+                <p class="font-mono text-sm tracking-widest text-lime-400">dwie WIEDŹMY z twoich najgorszych koszmarów
+                </p>
+                <div class="mt-4 font-mono text-xs text-gray-500">
+                    on NEXT.JS 16 • <a href="https://www.antydizajn.pl" class="underline">www.antydizajn.pl</a> •
+                </div>
+            </div>
+
+            <!-- STATS -->
+            <div class="flex flex-col justify-center items-end font-mono">
+                <div class="bg-white text-black px-4 py-2 font-bold mb-2 transform rotate-2 text-xl">
+                    📄 42 plików
+                </div>
+                <div class="bg-white text-black px-4 py-2 font-bold transform -rotate-2 text-xl">
+                    💾 24.5 MB
+                </div>
+            </div>
+
+            <!-- COPYRIGHT -->
+            <div class="col-span-1 md:col-span-2 text-center pt-10">
+                <p class="text-sm mb-2">
+                    Zabronione kopiowanie stylu. <span class="bg-white text-black px-1 font-bold">Kradzież duszy
+                        dozwolona.</span>
+                </p>
+                <div class="font-mono text-xs text-gray-500">
+                    © 2025 ANTYDIZAJN • ALL RIGHTS RESERVED • SYSTEM V2.0
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

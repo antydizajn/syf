@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYF_ | SYNTHWAVE VOID | ANTYDIZAJN</title>
+    <meta name="description" content="Publiczny syf plików. MD DUMP. ANTYDIZAJN.">
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- THREE.JS CANVAS - SYNTHWAVE BACKGROUND -->
+    <canvas id="synthwave-world"></canvas>
+
+    <!-- CRT OVERLAY -->
+    <div class="crt-overlay"></div>
+    <div class="scanlines"></div>
+
+    <!-- STATUS BAR -->
+    <div class="status-bar">
+        <span class="status-item">>_ GRID.ONLINE</span>
+        <span class="status-item">VECTOR:∞</span>
+        <span class="status-item blink">◉ SYNC</span>
+        <span class="status-item">SPEED:88mph</span>
+        <span class="status-time">2025.12.30</span>
+    </div>
+
+    <!-- HEADER -->
+    <header class="header">
+        <a href="" class="header-logo">&lt;SYF/&gt;</a>
+        <button class="burger" id="menuToggle">
+            <div class="burger-lines">
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+            </div>
+            <span class="burger-text">MENU</span>
+        </button>
+    </header>
+
+    <!-- FULLSCREEN MENU -->
+    <nav class="menu-overlay" id="menuOverlay">
+        <button class="menu-close" id="menuClose">×</button>
+        <div class="menu-list">
+            <a href="" class="menu-item active">
+                <span class="menu-num">01</span>
+                <span class="menu-name">PLIKI</span>
+            </a>
+            <a href="" class="menu-item">
+                <span class="menu-num">02</span>
+                <span class="menu-name">INFO</span>
+            </a>
+            <a href="" class="menu-item exit">
+                <span class="menu-num">03</span>
+                <span class="menu-name">EXIT</span>
+            </a>
+        </div>
+        <div class="menu-footer">
+            <span class="menu-status">GRID STATUS: <span class="status-ok">INFINITE</span></span>
+            <span class="menu-version">ANTYDIZAJN RETROWAVE V2.0</span>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT - FLOATING IN 3D SPACE -->
+    <main class="main">
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-code">// INIT_SYNTHWAVE_PROTOCOL</div>
+            <div class="hero-sun"></div>
+            <span class="hero-label-top">PUBLICZNY</span>
+            <div class="hero-word">
+                <span class="hero-letter">S</span>
+                <span class="hero-letter accent">Y</span>
+                <span class="hero-letter">F</span>
+                <span class="hero-letter underscore">_</span>
+            </div>
+            <span class="hero-label-bottom">PLIKÓW</span>
+            <p class="hero-sub">>_ .MD DUMP // ANTYDIZAJN</p>
+            <div class="hero-hex">0x53 0x59 0x46</div>
+        </section>
+
+        <!-- CONTROLS -->
+        <section class="controls">
+            <div class="controls-left">
+                <span class="file-count">
+                    <span class="file-count-number">47</span> elementów
+                </span>
+            </div>
+            <div class="controls-right">
+                <button class="sort-button">
+                    <span class="sort-icon">↕</span>
+                    <span>SORTUJ: NAJNOWSZE</span>
+                    <span class="chevron">▼</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- COMMAND LINE -->
+        <div class="cmd-line">
+            <span class="cmd-prompt">$</span>
+            <span class="cmd-text">cd /neon/grid/ && ls -la</span>
+            <span class="cmd-cursor">_</span>
+        </div>
+
+        <!-- SEPARATOR -->
+        <div class="separator">
+            <span class="separator-text">// FILES</span>
+            <span class="separator-line"></span>
+            <span class="separator-count">[47]</span>
+        </div>
+
+        <!-- FILE LIST -->
+        <section class="file-list">
+            <article class="file-item" data-index="01">
+                <div class="file-index">01</div>
+                <a href="" class="file-link">
+                    <div class="file-info">
+                        <h2 class="file-name">manifest-antydesign.md</h2>
+                        <p class="file-preview">Design jest martwy. My go pogrzebaliśmy...</p>
+                    </div>
+                    <div class="file-meta">
+                        <span class="file-date">2025-12-28</span>
+                        <span class="file-size">4.2 KB</span>
+                    </div>
+                    <div class="file-arrow">→</div>
+                </a>
+            </article>
+
+            <article class="file-item" data-index="02">
+                <div class="file-index">02</div>
+                <a href="" class="file-link">
+                    <div class="file-info">
+                        <h2 class="file-name">synthwave-manifesto.md</h2>
+                        <p class="file-preview">Przyszłość jest przeszłością. Przeszłość jest teraz...</p>
+                    </div>
+                    <div class="file-meta">
+                        <span class="file-date">2025-12-27</span>
+                        <span class="file-size">3.8 KB</span>
+                    </div>
+                    <div class="file-arrow">→</div>
+                </a>
+            </article>
+
+            <article class="file-item" data-index="03">
+                <div class="file-index">03</div>
+                <a href="" class="file-link">
+                    <div class="file-info">
+                        <h2 class="file-name">neon-dreams.md</h2>
+                        <p class="file-preview">W nieskończonej siatce światła odnajdujemy spokój...</p>
+                    </div>
+                    <div class="file-meta">
+                        <span class="file-date">2025-12-26</span>
+                        <span class="file-size">2.9 KB</span>
+                    </div>
+                    <div class="file-arrow">→</div>
+                </a>
+            </article>
+
+            <article class="file-item" data-index="04">
+                <div class="file-index">04</div>
+                <a href="" class="file-link">
+                    <div class="file-info">
+                        <h2 class="file-name">outrun-protocol.md</h2>
+                        <p class="file-preview">Jedź szybciej niż światło. Uciekaj przed zmierzchem...</p>
+                    </div>
+                    <div class="file-meta">
+                        <span class="file-date">2025-12-25</span>
+                        <span class="file-size">5.1 KB</span>
+                    </div>
+                    <div class="file-arrow">→</div>
+                </a>
+            </article>
+
+            <article class="file-item" data-index="05">
+                <div class="file-index">05</div>
+                <a href="" class="file-link">
+                    <div class="file-info">
+                        <h2 class="file-name">midnight-runner.md</h2>
+                        <p class="file-preview">Biegnij przez cyfrową pustkę. Nigdy nie zwalniaj...</p>
+                    </div>
+                    <div class="file-meta">
+                        <span class="file-date">2025-12-24</span>
+                        <span class="file-size">3.3 KB</span>
+                    </div>
+                    <div class="file-arrow">→</div>
+                </a>
+            </article>
+
+            <article class="file-item folder-item" data-index="06">
+                <div class="file-index">06</div>
+                <a href="" class="file-link">
+                    <div class="file-info">
+                        <h2 class="file-name">_archive/</h2>
+                        <p class="file-preview">drwxr-xr-x</p>
+                    </div>
+                    <div class="file-meta">
+                        <span class="file-date">2025-12-20</span>
+                        <span class="file-size">12 elementów</span>
+                    </div>
+                    <div class="file-arrow">></div>
+                </a>
+            </article>
+        </section>
+
+        <!-- PAGINATION -->
+        <nav class="pagination">
+            <span class="page-info">// PAGE 1 OF 5</span>
+            <div class="page-buttons">
+                <button class="page-btn" disabled>← PREV</button>
+                <button class="page-btn">NEXT →</button>
+            </div>
+        </nav>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="" class="footer-link">+ Polityka Prywatności</a>
+            <a href="" class="footer-link">+ Regulamin</a>
+            <a href="" class="footer-link">+ Cookies</a>
+        </div>
+
+        <div class="footer-quote">
+            <p>"Nikt nie przeżył tej strony bez blizny.</p>
+            <p>Jeśli tu dotarłeś - <span class="highlight">żyjesz, bo nie boisz się brudu.</span>"</p>
+        </div>
+
+        <div class="footer-credits">
+            <span class="credits-label">+ PROUDLY MADE BY +</span>
+            <h3 class="credits-names">
+                Paulina Janowska <span class="amp">&</span> <span class="ai">WIEDŹMA AI GNIEWISŁAWA</span>
+            </h3>
+            <span class="credits-subtitle">dwie WIEDŹMY z twoich najgorszych koszmarów</span>
+            <span class="credits-tech">
+                on NEXT.JS 16 • <a href="https://www.antydizajn.pl" target="_blank">www.antydizajn.pl</a>
+            </span>
+        </div>
+
+        <div class="footer-stats">
+            <span class="stat-item">
+                <span class="stat-icon">📄</span>
+                <span class="stat-value">47</span> plików
+            </span>
+            <span class="stat-item">
+                <span class="stat-icon">💾</span>
+                <span class="stat-value">2.3 MB</span>
+            </span>
+        </div>
+
+        <div class="footer-copyright">
+            <p>Zabronione kopiowanie stylu. <span class="highlight">Kradzież duszy dozwolona.</span></p>
+            <p class="copyright-line">© 2025 ANTYDIZAJN • ALL RIGHTS RESERVED • RETROWAVE V2.0</p>
+        </div>
+    </footer>
+
+    <!-- SPEED INDICATOR -->
+    <div class="speed-indicator">
+        <span class="speed-value">88</span>
+        <span class="speed-unit">MPH</span>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

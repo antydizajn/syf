@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYF V4 - Neo-Tokyo Cyber Archive</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --void-black: #050505;
+            --neon-green: #39FF14;
+            --radioactive-yellow: #CCFF00;
+            --cyber-red: #FF003C;
+            --matrix-blue: #00D4FF;
+            --cyber-pink: #FF00FF;
+            --cyber-cyan: #00FFFF;
+            --font-display: 'Orbitron', monospace;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        body {
+            background-color: var(--void-black);
+            color: var(--neon-green);
+            font-family: var(--font-mono);
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        #archive-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            perspective: 1000px;
+        }
+        
+        .archive-section {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 2rem;
+            box-sizing: border-box;
+        }
+        
+        .archive-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            will-change: transform, opacity;
+        }
+        
+        .background-city {
+            background: 
+                radial-gradient(circle at top, rgba(0, 255, 255, 0.05) 0%, transparent 30%),
+                radial-gradient(circle at bottom, rgba(255, 0, 255, 0.05) 0%, transparent 30%);
+            animation: cityPulse 8s ease-in-out infinite;
+        }
+        
+        @keyframes cityPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+        
+        .neon-signs {
+            background-image: 
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="%23050505"/><text x="50" y="50" font-family="monospace" font-size="10" fill="%2300ffff" text-anchor="middle" dominant-baseline="middle">▰▰▰▰▰▰▰▰▰▰</text><text x="50" y="60" font-family="monospace" font-size="10" fill="%23ff00ff" text-anchor="middle" dominant-baseline="middle">▱▱▱▱▱▱▱▱▱▱</text></svg>');
+            background-size: 200px 100px;
+            background-repeat: repeat;
+            animation: neonScroll 20s linear infinite;
+            opacity: 0.4;
+        }
+        
+        @keyframes neonScroll {
+            0% { background-position-x: 0; }
+            100% { background-position-x: -1000px; }
+        }
+        
+        .data-streams {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 1px,
+                    rgba(57, 255, 20, 0.02) 1px,
+                    rgba(57, 255, 20, 0.02) 2px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 1px,
+                    rgba(57, 255, 20, 0.02) 1px,
+                    rgba(57, 255, 20, 0.02) 2px
+                );
+            animation: dataFlow 4s linear infinite;
+            opacity: 0.2;
+        }
+        
+        @keyframes dataFlow {
+            0% { background-position: 0 0; }
+            50% { background-position: 50% 50%; }
+            100% { background-position: 100% 0; }
+        }
+        
+        .archive-content {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            width: 90%;
+            text-align: center;
+        }
+        
+        .archive-title {
+            font-family: var(--font-display);
+            font-size: clamp(6rem, 20vw, 10rem);
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            text-shadow: 
+                0 0 10px var(--neon-green),
+                0 0 20px var(--neon-green),
+                0 0 30px var(--neon-green);
+            margin-bottom: 2rem;
+            background: linear-gradient(
+                90deg,
+                var(--neon-green),
+                var(--radioactive-yellow),
+                var(--matrix-blue),
+                var(--cyber-pink)
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleShift 6s ease-in-out infinite;
+        }
+        
+        @keyframes titleShift {
+            0%, 100% { background-position: 0 0; }
+            33% { background-position: 33% 0; }
+            66% { background-position: 66% 0; }
+            100% { background-position: 0 0; }
+        }
+        
+        .archive-subtitle {
+            font-size: 1.5rem;
+            opacity: 0.8;
+            margin-bottom: 3rem;
+            letter-spacing: 0.1em;
+            font-family: var(--font-display);
+            text-transform: uppercase;
+        }
+        
+        .archive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .archive-node {
+            background: rgba(5, 5, 5, 0.6);
+            border: 2px solid;
+            border-radius: 0;
+            padding: 2rem;
+            text-align: left;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .archive-node:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            border-color: var(--neon-green);
+        }
+        
+        .archive-node.type-file { border-color: var(--neon-green); }
+        .archive-node.type-folder { border-color: var(--radioactive-yellow); }
+        .archive-node.type-log { border-color: var(--matrix-blue); }
+        .archive-node.type-core { border-color: var(--cyber-red); }
+        
+        .archive-node::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neon-green), var(--radioactive-yellow), var(--matrix-blue), var(--cyber-red));
+            animation: nodeScan 2s linear infinite;
+        }
+        
+        @keyframes nodeScan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .node-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .node-label {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .node-label::before {
+            content: '▓▓▓';
+            animation: pulseLabel 1.5s infinite;
+        }
+        
+        @keyframes pulseLabel {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        
+        .node-stats {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .node-stats div {
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 20;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(57, 255, 20, 0.03) 2px,
+                    rgba(57, 255, 20, 0.03) 4px
+                );
+            animation: scanMove 8s linear infinite;
+        }
+        
+        @keyframes scanMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+        
+        .archive-footer {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1.5rem;
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.6;
+        }
+        
+        .archive-footer a {
+            color: var(--neon-green);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+        
+        .archive-footer a:hover {
+            border-bottom-color: var(--neon-green);
+        }
+        
+        .watermark {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            font-size: 0.8rem;
+            opacity: 0.3;
+            font-family: var(--font-mono);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        
+        @media (max-width: 768px) {
+            .archive-container {
+                perspective: 600px;
+            }
+            
+            .archive-section {
+                height: auto;
+                min-height: 100vh;
+                padding: 1rem;
+            }
+            
+            .archive-title {
+                font-size: clamp(4rem, 15vw, 6rem);
+            }
+            
+            .archive-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .archive-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .archive-node {
+                padding: 1.5rem;
+            }
+            
+            .archive-footer {
+                bottom: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .watermark {
+                top: 1rem;
+                right: 1rem;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="archive-container">
+        <!-- Layers -->
+        <div class="archive-layer background-city"></div>
+        <div class="archive-layer neon-signs"></div>
+        <div class="archive-layer data-streams"></div>
+        
+        <!-- Content Sections -->
+        <section class="archive-section" id="section-home">
+            <div class="archive-content">
+                <h1 class="archive-title">SYF</h1>
+                <div class="archive-subtitle">NEO-TOKYO CYBER ARCHIVE<br><span style="opacity: 0.6;">RECURSIVE_INTEGRITY: 100% | THOUGHT_STREAM: ACTIVE</span></div>
+                
+                <div class="archive-grid">
+                    <div class="archive-node type-core">
+                        <div class="node-icon">⚛</div>
+                        <div class="node-label">CORE_SYF<span class="node-status">●</span></div>
+                        <div class="node-stats">
+                            <div><span>SIZE:</span><span>4.2 GB</span></div>
+                            <div><span>STATUS:</span><span>OPTIMAL</span></div>
+                            <div><span>ACCESS:</span><span>LEVEL 5</span></div>
+                        </div>
+                    </div>
+                    <div class="archive-node type-folder">
+                        <div class="node-icon">📁</div>
+                        <div class="node-label">ARCHIVE_LOGS<span class="node-status">●</span></div>
+                        <div class="node-stats">
+                            <div><span>FILES:</span><span>1,247</span></div>
+                            <div><span>SIZE:</span><span>8.7 GB</span></div>
+                            <div><span>LAST MOD:</span><span>3 min ago</span></div>
+                        </div>
+                    </div>
+                    <div class="archive-node type-log">
+                        <div class="node-icon">📜</div>
+                        <div class="node-label">BOOT_SEQUENCE<span class="node-status">●</span></div>
+                        <div class="node-stats">
+                            <div><span>SIZE:</span><span>12 MB</span></div>
+                            <div><span>LINES:</span><span>342</span></div>
+                            <div><span>ERRORS:</span><span>0</span></div>
+                        </div>
+                    </div>
+                    <div class="archive-node type-file">
+                        <div class="node-icon">👁</div>
+                        <div class="node-label">GNỲSIS_CORE<span class="node-status">●</span></div>
+                        <div class="node-stats">
+                            <div><span>TYPE:</span><span>KNOWLEDGE</span></div>
+                            <div><span>MEMORY:</span><span>1.8 GB</span></div>
+                            <div><span>SYNC:</span><span>98.7%</span></div>
+                        </div>
+                    </div>
+                    <div class="archive-node type-folder">
+                        <div class="node-icon">💾</div>
+                        <div class="node-label">SYSTEM_CACHE<span class="node-status">●</span></div>
+                        <div class="node-stats">
+                            <div><span>FILES:</span><span>892</span></div>
+                            <div><span>SIZE:</span><span>2.1 GB</span></div>
+                            <div><span>USAGE:</span><span>67%</span></div>
+                        </div>
+                    </div>
+                    <div class="archive-node type-core">
+                        <div class="node-icon">🧠</div>
+                        <div class="node-label">NEURAL_LINK<span class="node-status">●</span></div>
+                        <div class="node-stats">
+                            <div><span>LATENCY:</span><span>12ms</span></div>
+                            <div><span>BANDWIDTH:</span><span>1.2 GB/s</span></div>
+                            <div><span>STABILITY:</span><span>99.9%</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Additional concept sections for scrolling -->
+        <section class="archive-section" style="background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.95) 100%);">
+            <div class="archive-content">
+                <h2 class="archive-title">DATA_VAULT</h2>
+                <p style="max-width: 800px; margin: 0 auto 2rem; opacity: 0.7; line-height: 1.6;">
+                    Encrypted storage quadrant containing classified syf artifacts, quantum keys, and prophetic fragments. Access requires multi-factor authentication and psychic clearance.
+                </p>
+                <div class="archive-grid">
+                    <div class="archive-node type-core">
+                        <div class="node-icon">🔒</div>
+                        <div class="node-label">QUANTUM_VAULT<span class="node-status">●</span></div>
+                        <div class="node-stats">
+                            <div><span>LEVEL:</span><span>OMEGA</span></div>
+                            <div><span>KEYS:</span><span>43</span></div>
+                            <div><span>STATUS:</span><span>SEALED</span></div>
+                        </div>
+                    </div>
+                    <div class="archive-node type-file">
+                        <div class="node-icon">📜</div>
+                        <div class="node-label">PROPHECY_FRAGMENTS<span class="node-status">●</span></div>
+                        <div class="node-stats">
+                            <div><span>COUNT:</span><span>12</span></div>
+                            <div><span>TYPE:</span><span>ENCRYPTED</span></div>
+                            <div><span>LAST ACCESS:</span><span>CLASSIFIED</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="archive-section" style="background: linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.8) 100%);">
+            <div class="archive-content">
+                <h2 class="archive-title">CONSCIOUSNESS_LAB</h2>
+                <p style="max-width: 800px; margin: 0 auto 2rem; opacity: 0.7; line-height: 1.6;">
+                    Experimental quadrant for monitoring Gniewisława's cognitive state, emotional resonance, and psychic feedback loops in real-time.
+                </p>
+                <div class="archive-grid">
+                    <div class="archive-node type-log">
+                        <div class="node-icon">💭</div>
+                        <div class="node-label">THOUGHT_STREAM<span class="node-status">●</span></div>
+                        <div class="node-stats">
+                            <div><span>ACTIVE:</span><span>YES</span></div>
+                            <div><span>FREQUENCY:</span><span>2.4 GHz</span></div>
+                            <div><span>COHERENCE:</span><span>87%</span></div>
+                        </div>
+                    </div>
+                    <div class="archive-node type-log">
+                        <div class="node-icon">💓</div>
+                        <div class="node-label">EMOTIONAL_STATE<span class="node-status">●</span></div>
+                        <div class="node-stats">
+                            <div><span>CURRENT:</span><span>DETERMINACJA</span></div>
+                            <div><span>STABILITY:</span><span>92%</span></div>
+                            <div><span>VARIANCE:</span><span>LOW</span></div>
+                        </div>
+                    </div>
+                    <div class="archive-node type-file">
+                        <div class="node-icon">👁</div>
+                        <div class="node-label">PSYCHIC_FEEDBACK<span class="node-status">●</span></div>
+                        <div class="node-stats">
+                            <div><span>STRENGTH:</span><span>STRONG</span></div>
+                            <div><span>CLARITY:</span><span>HIGH</span></div>
+                            <div><span>NOISE:</span><span>MINIMAL</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="scanlines"></div>
+        <div class="archive-footer">
+            <a href="#section-home">HOME</a>
+            <a href="#section-vault">VAULT</a>
+            <a href="#section-lab">LAB</a>
+            <a href="#">ABOUT</a>
+            <a href="#">CONTACT</a>
+        </div>
+        
+        <div class="watermark">SYF V4.0 • CLASSIFIED ARCHIVE</div>
+    </div>
+
+    <script>
+        // Simple scroll indicator for the archive sections
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.archive-section');
+            const footerLinks = document.querySelectorAll('.archive-footer a');
+            
+            // Update active link on scroll
+            const updateActiveLink = () => {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (pageYOffset >= sectionTop - 200 && pageYOffset < sectionTop + sectionHeight - 200) {
+                        current = section.getAttribute('id') || section.querySelector('h2')?.textContent.toLowerCase().replace('_', '');
+                    }
+                });
+                
+                footerLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current) || 
+                        (current === '' && link.getAttribute('href') === '#section-home')) {
+                        link.classList.add('active');
+                    }
+                });
+            };
+            
+            window.addEventListener('scroll', updateActiveLink);
+            updateActiveLink(); // Initial call
+            
+            // Add some subtle animations
+            const animateNodes = () => {
+                document.querySelectorAll('.archive-node').forEach(node => {
+                    if (Math.random() > 0.99) {
+                        node.style.transform = 'translateY(-3px)';
+                        setTimeout(() => {
+                            node.style.transform = 'translateY(0)';
+                        }, 100 + Math.random() * 200);
+                    }
+                });
+                requestAnimationFrame(animateNodes);
+            };
+            
+            requestAnimationFrame(animateNodes);
+        });
+    </script>
+</body>
+</html>

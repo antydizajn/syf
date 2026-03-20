@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIM JESTEM – PAULINA JANOWSKA</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
+    <style>
+        /* ═══════════════════════════════════════════════════════════════
+           PSSI V2 - KIM JESTEM
+           Polska Szkoła Plakatu - wolne pozycjonowanie, chaos, SZTUKA
+        ═══════════════════════════════════════════════════════════════ */
+
+        @font-face {
+            font-family: 'Mess';
+            src: url('fonts/Mess-Light_web.woff2') format('woff2');
+            font-weight: 300;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'LettersTorn';
+            src: url('fonts/Letters-Torn.woff2') format('woff2');
+            font-weight: 400;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Compagnon';
+            src: url('fonts/Compagnon-Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-display: swap;
+        }
+
+        :root {
+            --blood: #8A0303;
+            --bone: #D4C4A8;
+            --ink: #0A0A0A;
+            --gold: #C5A059;
+            --red-scream: #CC0000;
+            --sepia-dark: #2A1810;
+            --sepia-mid: #4A3020;
+            --parchment: #C4996C;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--sepia-dark);
+            background-image: url('assets/bg_dark.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            cursor: crosshair;
+            color: var(--bone);
+            font-family: 'Mess', Georgia, serif;
+        }
+
+        /* VIGNETTE */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, 0.7) 100%);
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        .plakat {
+            position: relative;
+            width: 100vw;
+            min-height: 100vh;
+            padding: 5vw;
+        }
+
+        /* NAWIGACJA POWROTNA */
+        .nav-back {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 100;
+        }
+
+        .nav-back a {
+            color: var(--gold);
+            text-decoration: none;
+            font-family: 'Compagnon', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 0.2em;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .nav-back a:hover {
+            color: var(--blood);
+            text-shadow: 0 0 20px var(--blood);
+        }
+
+        /* HERO SKULL - pozycja prawa dolna */
+        .hero-image {
+            position: absolute;
+            bottom: 0;
+            right: 5%;
+            width: 35%;
+            max-width: 450px;
+            opacity: 0.6;
+            z-index: 2;
+            pointer-events: none;
+            mix-blend-mode: screen;
+        }
+
+        /* CALLIGRAPHY - lewa strona */
+        .calligraphy-bg {
+            position: absolute;
+            top: 20%;
+            left: -10%;
+            width: 40%;
+            max-width: 500px;
+            opacity: 0.4;
+            z-index: 1;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            transform: rotate(-10deg);
+        }
+
+        /* TYTUŁ */
+        .title {
+            font-family: 'LettersTorn', cursive;
+            font-size: clamp(4rem, 12vw, 10rem);
+            color: var(--blood);
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            transform: rotate(-3deg);
+            text-shadow:
+                4px 4px 0 var(--ink),
+                8px 8px 20px rgba(0, 0, 0, 0.8);
+            z-index: 10;
+        }
+
+        /* CONTENT BLOCK */
+        .content {
+            position: relative;
+            max-width: 600px;
+            margin: 30vh auto 10vh;
+            z-index: 20;
+            padding: 2rem;
+        }
+
+        .content p {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .content .highlight {
+            color: var(--gold);
+            font-family: 'Compagnon', sans-serif;
+            font-size: 1.5rem;
+        }
+
+        /* MANIFEST */
+        .manifest {
+            font-family: 'Compagnon', sans-serif;
+            font-size: 2rem;
+            color: var(--red-scream);
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            margin: 3rem 0;
+            transform: rotate(2deg);
+            text-shadow: 3px 3px 0 var(--ink);
+        }
+
+        /* FOOTER */
+        footer {
+            position: relative;
+            z-index: 50;
+            text-align: center;
+            padding: 3rem;
+            font-size: 0.8rem;
+            color: var(--parchment);
+            opacity: 0.6;
+        }
+
+        footer a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .title {
+                font-size: clamp(2.5rem, 15vw, 5rem);
+                left: 5%;
+            }
+
+            .content {
+                margin-top: 40vh;
+                padding: 1rem;
+            }
+
+            .hero-image {
+                width: 50%;
+                opacity: 0.4;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="plakat">
+        <!-- NAV -->
+        <nav class="nav-back">
+            <a href="index.html">← POWRÓT</a>
+        </nav>
+
+        <!-- HERO SKULL -->
+        <img src="assets/hero_skull.png" alt="" class="hero-image">
+
+        <!-- CALLIGRAPHY BG -->
+        <img src="assets/calligraphy.png" alt="" class="calligraphy-bg">
+
+        <!-- TYTUŁ -->
+        <h1 class="title">PAULINA</h1>
+
+        <!-- CONTENT -->
+        <div class="content">
+            <p class="highlight">Trans. Artystka. Anarchistka.</p>
+
+            <p>
+                Urodziłam się w&nbsp;miejscu, które mnie nie&nbsp;chciało.
+                Dorastałam w&nbsp;ciele, które mnie więziło.
+                Żyję w&nbsp;świecie, który mnie nie&nbsp;rozumie.
+            </p>
+
+            <p>
+                I&nbsp;mimo tego&nbsp;– tworzę.
+                Buduję strony. Piszę kod.
+                Maluję słowami na&nbsp;ekranie.
+            </p>
+
+            <p class="manifest">
+                ANTYDIZAJN<br>
+                = własny styl<br>
+                = brak stylu<br>
+                = CHUJ.
+            </p>
+
+            <p>
+                Polska Szkoła Plakatu. Wiedźma AI Gniewisława.
+                Dwie siły. Jedna misja:
+                <span class="highlight">robić rzeczy, które uderzają w&nbsp;serce.</span>
+            </p>
+        </div>
+
+        <!-- FOOTER -->
+        <footer>
+            <p>ANTYDIZAJN.PL &bull; Paulina Janowska &amp; WIEDŹMA AI GNIEWISŁAWA &bull; 2025</p>
+            <p><a href="https://antydizajn.pl">www.antydizajn.pl</a></p>
+        </footer>
+    </div>
+
+    <script>
+        console.log(
+            '%c◈ PSSI - KIM JESTEM ◈',
+            'font-size:20px;background:linear-gradient(90deg,#8A0303,#C5A059);-webkit-background-clip:text;color:transparent;padding:10px;'
+        );
+        console.log(
+            '%cPolska Szkoła Plakatu × ANTYDIZAJN',
+            'font-size:12px;color:#C4996C;'
+        );
+    </script>
+</body>
+
+</html>

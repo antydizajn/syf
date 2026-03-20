@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 1. CORNER ORNAMENTS */
+.corner {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    border: 2px solid #d4af37;
+    z-index: 60;
+    pointer-events: none;
+}
+
+.corner::before {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #d4af37;
+}
+
+.topleft {
+    top: 30px;
+    left: 30px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.topleft::before {
+    top: 10px;
+    left: 10px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.topright {
+    top: 30px;
+    right: 30px;
+    border-left: none;
+    border-bottom: none;
+}
+
+.topright::before {
+    top: 10px;
+    right: 10px;
+    border-left: none;
+    border-bottom: none;
+}
+
+.bottomleft {
+    bottom: 30px;
+    left: 30px;
+    border-right: none;
+    border-top: none;
+}
+
+.bottomleft::before {
+    bottom: 10px;
+    left: 10px;
+    border-right: none;
+    border-top: none;
+}
+
+.bottomright {
+    bottom: 30px;
+    right: 30px;
+    border-left: none;
+    border-top: none;
+}
+
+.bottomright::before {
+    bottom: 10px;
+    right: 10px;
+    border-left: none;
+    border-top: none;
+}
+
+/* 2. SCROLLBAR */
+::-webkit-scrollbar {
+    width: 6px;
+    background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(#d4af37, #fbf5b7);
+    border-radius: 4px;
+}
+
+/* 3. SELECTION */
+::selection {
+    background: #d4af37;
+    color: black;
+}

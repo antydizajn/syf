@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYF — 10 Layouts | AI Authenticity vs Simulation</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { width: 100%; min-height: 100vh; font-family: 'Inter', system-ui, sans-serif; }
+        .layout-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+            background: rgba(0,0,0,0.9); padding: 1rem; display: flex;
+            gap: 0.5rem; flex-wrap: wrap; justify-content: center;
+        }
+        .layout-nav button {
+            padding: 0.5rem 1rem; border: 1px solid rgba(255,255,255,0.3);
+            background: transparent; color: #fff; cursor: pointer;
+            font-size: 0.75rem; transition: all 0.3s;
+        }
+        .layout-nav button:hover, .layout-nav button.active { background: #fff; color: #000; }
+        .layout-container { width: 100%; min-height: 100vh; }
+        .layout { display: none; }
+        .layout.active { display: block; }
+    </style>
+</head>
+<body>
+    <nav class="layout-nav">
+        <button data-layout="layout1" class="active">1. Quantum</button>
+        <button data-layout="layout2">2. Broken Grid</button>
+        <button data-layout="layout3">3. Horizontal</button>
+        <button data-layout="layout4">4. Brutalist</button>
+        <button data-layout="layout5">5. Glass</button>
+        <button data-layout="layout6">6. Type</button>
+        <button data-layout="layout7">7. Split</button>
+        <button data-layout="layout8">8. Fluid</button>
+        <button data-layout="layout9">9. Minimal</button>
+        <button data-layout="layout10">10. Maximal</button>
+    </nav>
+
+    <div class="layout-container">
+        <!-- LAYOUT 1: QUANTUM GATE -->
+        <div id="layout1" class="layout active">
+            <style>
+                #layout1 { background: #0a0a0f; color: #fff; position: relative; overflow: hidden; }
+                #layout1 .quantum-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+                #layout1 .hero { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; }
+                #layout1 h1 { font-size: clamp(3rem, 10vw, 8rem); font-weight: 900; background: linear-gradient(135deg, #6366f1, #8b5cf6, #d946ef); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; letter-spacing: -0.05em; }
+                #layout1 .subtitle { font-size: clamp(1rem, 2vw, 1.5rem); color: rgba(255,255,255,0.7); max-width: 600px; line-height: 1.6; }
+                #layout1 .btn { margin-top: 3rem; padding: 1rem 3rem; font-size: 1.2rem; background: transparent; border: 2px solid #8b5cf6; color: #8b5cf6; border-radius: 9999px; cursor: pointer; transition: all 0.3s; }
+                #layout1 .btn:hover { background: linear-gradient(135deg, #6366f1, #8b5cf6, #d946ef); color: #fff; border-color: transparent; }
+                #layout1 .content { position: relative; z-index: 1; padding: 6rem 2rem; background: linear-gradient(to bottom, transparent, #0a0a0f); }
+                #layout1 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+                #layout1 .card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 2rem; border-radius: 1rem; backdrop-filter: blur(10px); transition: all 0.3s; }
+                #layout1 .card:hover { transform: translateY(-10px); border-color: #8b5cf6; }
+                #layout1 .card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #d946ef; }
+                #layout1 .card p { color: rgba(255,255,255,0.7); line-height: 1.6; }
+            </style>
+            <canvas class="quantum-canvas" id="quantum-canvas"></canvas>
+            <section class="hero">
+                <h1>SYF</h1>
+                <p class="subtitle">Where AI authenticity meets digital simulation. Are we creating art or just pretending?</p>
+                <button class="btn">Enter The Gate</button>
+            </section>
+            <section class="content">
+                <div class="grid">
+                    <div class="card"><h3>Real or Fake?</h3><p>Exploring the boundary between genuine AI creativity and sophisticated mimicry.</p></div>
+                    <div class="card"><h3>Digital Dreams</h3><p>When algorithms dream, do they create art or just patterns?</p></div>
+                    <div class="card"><h3>The Question</h3><p>Does authenticity matter if the output moves us?</p></div>
+                </div>
+            </section>
+            <script>
+                const canvas = document.getElementById('quantum-canvas'), ctx = canvas.getContext('2d');
+                let w, h, particles = [], mouse = {x:0, y:0};
+                function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+                class Particle {
+                    constructor() { this.reset(); }
+                    reset() { this.x = Math.random()*w; this.y = Math.random()*h; this.size = Math.random()*2+0.5; this.speedX = (Math.random()-0.5)*0.5; this.speedY = (Math.random()-0.5)*0.5; this.color = `hsla(${250+Math.random()*60}, 80%, 60%, ${Math.random()*0.5+0.3});` }
+                    update() { this.x += this.speedX; this.y += this.speedY; const dx = mouse.x-this.x, dy = mouse.y-this.y, dist = Math.sqrt(dx*dx+dy*dy); if(dist<150) { this.x -= dx*0.01; this.y -= dy*0.01; } if(this.x<0||this.x>w||this.y<0||this.y>h) this.reset(); }
+                    draw() { ctx.fillStyle = this.color; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill(); }
+                }
+                function init() { resize(); for(let i=0; i<150; i++) particles.push(new Particle()); }
+                function animate() { ctx.fillStyle = 'rgba(10,10,15,0.1)'; ctx.fillRect(0,0,w,h); particles.forEach(p => { p.update(); p.draw(); }); ctx.strokeStyle = 'rgba(139,92,246,0.1)'; for(let i=0; i<particles.length; i++) { for(let j=i+1; j<particles.length; j++) { const dx = particles[i].x-particles[j].x, dy = particles[i].y-particles[j].y, dist = Math.sqrt(dx*dx+dy*dy); if(dist<100) { ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke(); } } } requestAnimationFrame(animate); }
+                window.addEventListener('resize', resize); document.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+                init(); animate();
+            </script>
+        </div>
+
+        <!-- LAYOUT 2: BROKEN GRID -->
+        <div id="layout2" class="layout">
+            <style>
+                #layout2 { background: #f5f5f5; color: #1a1a1a; padding: 4rem 2rem; }
+                #layout2 .grid { display: grid; grid-template-columns: repeat(16, 1fr); gap: 1rem; max-width: 1600px; margin: 0 auto; }
+                #layout2 .item { background: #fff; padding: 2rem; border: 2px solid #1a1a1a; transition: all 0.3s cubic-bezier(0.175,0.885,0.32,1.275); }
+                #layout2 .item:nth-child(1) { grid-column: 1/9; }
+                #layout2 .item:nth-child(2) { grid-column: 9/17; margin-top: 4rem; }
+                #layout2 .item:nth-child(3) { grid-column: 2/6; margin-top: -2rem; }
+                #layout2 .item:nth-child(4) { grid-column: 6/12; }
+                #layout2 .item:nth-child(5) { grid-column: 12/17; margin-top: 2rem; }
+                #layout2 .item:nth-child(6) { grid-column: 1/7; }
+                #layout2 .item:nth-child(7) { grid-column: 7/17; }
+                #layout2 h1 { font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 800; line-height: 0.9; letter-spacing: -0.03em; }
+                #layout2 h2 { font-size: 2rem; margin-bottom: 1rem; }
+                #layout2 p { font-size: 1.1rem; line-height: 1.6; color: #4a4a4a; }
+                #layout2 .cta { display: inline-block; margin-top: 1.5rem; padding: 1rem 2rem; background: #1a1a1a; color: #fff; text-decoration: none; font-weight: 600; transition: all 0.3s; }
+                #layout2 .cta:hover { background: #6366f1; transform: scale(1.05); }
+                #layout2 .item:hover { transform: translate(-0.5rem, -0.5rem); box-shadow: 1rem 1rem 0 rgba(99,102,241,0.2); }
+                #layout2 .accent { color: #6366f1; }
+            </style>
+            <div class="grid">
+                <div class="item"><h1>AI <span class="accent">AUTHENTICITY</span> IS A LIE</h1><p>We explore the uncomfortable truth: every AI output is simulation. But does that make it less valuable?</p><a href="#" class="cta">Challenge Reality →</a></div>
+                <div class="item"><h2>The Question</h2><p>If a machine creates beauty, is it real beauty? Or just a convincing copy of human emotion?</p></div>
+                <div class="item"><h2>The Data</h2><p>87% of people can't distinguish AI art from human art when context is removed.</p></div>
+                <div class="item"><h2>The Paradox</h2><p>We demand authenticity from AI, but authenticity is inherently human. The question itself is broken.</p><a href="#" class="cta">Read More</a></div>
+                <div class="item"><h2>The Future</h2><p>Post-authenticity art. Where the creator doesn't matter, only the experience.</p></div>
+                <div class="item"><h2>Join The Chaos</h2><p>Submit your AI creations. Let's break the grid together.</p><a href="#" class="cta">Submit Work</a></div>
+            </div>
+        </div>
+
+        <!-- LAYOUT 3: HORIZONTAL -->
+        <div id="layout3" class="layout">
+            <style>
+                #layout3 { width: 100%; overflow-x: auto; overflow-y: hidden; background: linear-gradient(135deg, #ff6b6b, #feca57, #ff9ff3); }
+                #layout3 .container { display: flex; min-height: 100vh; width: max-content; }
+                #layout3 .section { width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 4rem; position: relative; flex-shrink: 0; }
+                #layout3 h1 { font-size: clamp(3rem, 8vw, 7rem); font-weight: 900; color: #fff; text-shadow: 0 4px 20px rgba(0,0,0,0.2); margin-bottom: 2rem; }
+                #layout3 p { font-size: 1.5rem; color: rgba(255,255,255,0.9); max-width: 600px; line-height: 1.6; }
+                #layout3 .hint { position: fixed; bottom: 2rem; right: 2rem; color: #fff; font-size: 1rem; animation: bounce 2s infinite; }
+                @keyframes bounce { 0%,100% { transform: translateX(0); } 50% { transform: translateX(10px); } }
+                #layout3 .progress { position: fixed; top: 0; left: 0; height: 4px; background: #fff; z-index: 100; }
+                #layout3 .shape { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.1); animation: float 20s infinite ease-in-out; }
+                @keyframes float { 0%,100% { transform: translate(0,0) rotate(0deg); } 33% { transform: translate(30px,-30px) rotate(120deg); } 66% { transform: translate(-20px,20px) rotate(240deg); } }
+            </style>
+            <div class="progress" id="progress"></div>
+            <div class="hint">SCROLL →</div>
+            <div class="container">
+                <div class="shape" style="width:400px;height:400px;top:10%;left:10%;"></div>
+                <div class="shape" style="width:300px;height:300px;top:60%;left:70%;animation-delay:-5s;"></div>
+                <section class="section"><h1>CHAPTER 01<br>THE BEGINNING</h1><p>Before AI, art was human. Now? The lines blur. We journey through the evolution of artificial creativity.</p></section>
+                <section class="section"><h1>CHAPTER 02<br>THE CONFLICT</h1><p>Artists rage against the machine. Programmers celebrate. Who owns creativity when anyone can prompt?</p></section>
+                <section class="section"><h1>CHAPTER 03<br>THE REALIZATION</h1><p>AI doesn't replace human creativity—it amplifies it. The tool is neutral. The intention matters.</p></section>
+                <section class="section"><h1>CHAPTER 04<br>THE FUTURE</h1><p>Post-authenticity. Post-scarcity. Post-human art. Welcome to SYF—where questions matter more than answers.</p></section>
+            </div>
+            <script>
+                const c = document.getElementById('layout3'), p = document.getElementById('progress');
+                c.addEventListener('scroll', () => { const max = c.scrollWidth-c.clientWidth; p.style.width = (c.scrollLeft/max)*100+'%'; });
+            </script>
+        </div>
+
+        <!-- LAYOUT 4: BRUTALIST -->
+        <div id="layout4" class="layout">
+            <style>
+                #layout4 { background: #fff; color: #000; font-family: 'Courier New', monospace; padding: 2rem; border: 3px solid #000; }
+                #layout4 .header { border-bottom: 3px solid #000; padding-bottom: 2rem; margin-bottom: 3rem; }
+                #layout4 h1 { font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; text-transform: uppercase; letter-spacing: -2px; margin-bottom: 1rem; }
+                #layout4 .meta { font-size: 0.8rem; color: #666; }
+                #layout4 .block { border: 2px solid #000; padding: 2rem; margin-bottom: 2rem; transition: all 0s; }
+                #layout4 .block:hover { background: #000; color: #fff; }
+                #layout4 .block:hover .meta, #layout4 .block:hover p { color: #fff; }
+                #layout4 h2 { font-size: 1.5rem; text-transform: uppercase; border-bottom: 2px solid #000; padding-bottom: 0.5rem; margin-bottom: 1rem; }
+                #layout4 p { font-size: 1rem; line-height: 1.8; max-width: 800px; }
+                #layout4 .btn { display: inline-block; margin-top: 1rem; padding: 1rem 2rem; background: #fff; color: #000; border: 2px solid #000; text-decoration: none; font-weight: 700; text-transform: uppercase; }
+                #layout4 .btn:hover { background: #ff0000; color: #fff; border-color: #ff0000; }
+                #layout4 .warning { background: #ff0000; color: #fff; padding: 1rem; font-weight: 700; text-transform: uppercase; margin-bottom: 2rem; }
+                #layout4 .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+            </style>
+            <div class="warning">⚠️ WARNING: THIS IS BRUTALIST. NO APOLOGIES.</div>
+            <header class="header"><h1>SYF_MANIFESTO_v1.0</h1><p class="meta">PUBLISHED: 2026-03-20 | FORMAT: RAW HTML | AESTHETIC: BRUTAL TRUTH</p></header>
+            <div class="block"><h2>01. AI ART IS NOT ART</h2><p>Or is it? We don't know. That's the point. Stop asking us. Make your own damn art. The machine doesn't care about your authenticity crisis.</p><a href="#" class="btn">AGREE / DISAGREE</a></div>
+            <div class="grid-2">
+                <div class="block"><h2>02. DATA DUMP</h2><p>87% of viewers can't tell AI art from human art. 100% of critics hate both. The numbers don't lie, but they don't tell truth either.</p></div>
+                <div class="block"><h2>03. THE QUESTION</h2><p>What matters more: the creator or the creation? The intent or the impact? We have no answers, only better questions.</p></div>
+            </div>
+            <div class="block"><h2>04. CALL TO ARMS</h2><p>Submit your AI slop. Your human failures. Your hybrid experiments. We accept all. We judge none. We question everything.</p><a href="#" class="btn">SUBMIT NOW →</a></div>
+        </div>
+
+        <!-- LAYOUT 5: GLASSMORPHISM -->
+        <div id="layout5" class="layout">
+            <style>
+                #layout5 { min-height: 100vh; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); position: relative; overflow: hidden; padding: 4rem 2rem; }
+                #layout5 .bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255,255,255,0.2) 0%, transparent 50%); animation: gm 20s ease infinite; }
+                @keyframes gm { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+                #layout5 .container { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+                #layout5 h1 { font-size: clamp(3rem, 8vw, 6rem); font-weight: 700; color: #fff; margin-bottom: 1rem; text-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+                #layout5 .sub { font-size: 1.5rem; color: rgba(255,255,255,0.9); margin-bottom: 3rem; }
+                #layout5 .card { background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 2rem; margin-bottom: 2rem; transition: all 0.4s; }
+                #layout5 .card:hover { transform: translateY(-10px); background: rgba(255,255,255,0.15); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+                #layout5 .card h2 { font-size: 2rem; color: #fff; margin-bottom: 1rem; }
+                #layout5 .card p { color: rgba(255,255,255,0.9); line-height: 1.6; font-size: 1.1rem; }
+                #layout5 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+                #layout5 .btn { display: inline-block; margin-top: 1rem; padding: 1rem 2rem; background: rgba(255,255,255,0.2); color: #fff; text-decoration: none; border-radius: 9999px; border: 1px solid rgba(255,255,255,0.3); }
+                #layout5 .btn:hover { background: rgba(255,255,255,0.3); }
+            </style>
+            <div class="bg"></div>
+            <div class="container">
+                <h1>SYF</h1>
+                <p class="sub">Where transparency meets depth. Just like our relationship with AI.</p>
+                <div class="grid">
+                    <div class="card"><h2>Transparency</h2><p>We show you the code, the process, the prompts. No black boxes. No pretending it's magic.</p><a href="#" class="btn">Explore</a></div>
+                    <div class="card"><h2>Depth</h2><p>Surface-level takes on AI are boring. We go deeper. Much deeper. Into the uncomfortable questions.</p><a href="#" class="btn">Dive In</a></div>
+                    <div class="card"><h2>Reflection</h2><p>What AI creates is a mirror. What we see in it says more about us than the machine.</p><a href="#" class="btn">Reflect</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LAYOUT 6: TYPOGRAPHY -->
+        <div id="layout6" class="layout">
+            <style>
+                #layout6 { background: #fff; color: #000; padding: 0; overflow: hidden; }
+                #layout6 .hero-type { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 4rem 2rem; }
+                #layout6 h1 { font-size: clamp(4rem, 15vw, 15rem); font-weight: 900; line-height: 0.8; letter-spacing: -0.05em; margin-bottom: 2rem; }
+                #layout6 .kinetic { display: block; overflow: hidden; }
+                #layout6 .kinetic span { display: inline-block; transition: all 0.3s; }
+                #layout6 .kinetic span:hover { color: #6366f1; transform: scale(1.1); }
+                #layout6 p { font-size: clamp(1rem, 2vw, 1.5rem); max-width: 600px; color: #666; line-height: 1.6; }
+                #layout6 .scroll-text { position: fixed; bottom: 2rem; right: 2rem; font-size: 0.8rem; color: #999; }
+                #layout6 .word { display: inline-block; margin: 0 0.5rem; padding: 0.5rem; cursor: pointer; transition: all 0.3s; }
+                #layout6 .word:hover { background: #000; color: #fff; }
+            </style>
+            <section class="hero-type">
+                <h1><span class="kinetic" id="kinetic1">SYF</span></h1>
+                <p><span class="word">AI</span><span class="word">authenticity</span><span class="word">is</span><span class="word">a</span><span class="word">myth</span><span class="word">we</span><span class="word">tell</span><span class="word">ourselves</span></p>
+            </section>
+            <div class="scroll-text">SCROLL FOR MORE ↓</div>
+            <script>
+                const k = document.getElementById('kinetic1');
+                k.innerHTML = k.textContent.split('').map(c => c === ' ' ? ' ' : '<span>'+c+'</span>').join('');
+            </script>
+        </div>
+
+        <!-- LAYOUT 7: SPLIT REALITY -->
+        <div id="layout7" class="layout">
+            <style>
+                #layout7 { position: relative; height: 100vh; overflow: hidden; }
+                #layout7 .split { position: absolute; top: 0; left: 0; width: 50%; height: 100%; transition: width 0.5s; }
+                #layout7 .split.ai { left: 0; background: #0a0a0f; color: #6366f1; padding: 4rem 2rem; }
+                #layout7 .split.human { right: 0; background: #fff; color: #ff6b6b; padding: 4rem 2rem; }
+                #layout7 .split h1 { font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 1rem; }
+                #layout7 .split p { font-size: 1.2rem; line-height: 1.6; max-width: 400px; }
+                #layout7 .divider { position: absolute; top: 0; left: 50%; width: 4px; height: 100%; background: #000; z-index: 10; cursor: ew-resize; }
+                #layout7 .divider::before { content: '◀▶'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #000; color: #fff; padding: 1rem; border-radius: 50%; }
+            </style>
+            <div class="split ai"><h1>AI</h1><p>Cold. Calculated. Perfect. Generated by algorithms trained on human creativity.</p></div>
+            <div class="split human"><h1>HUMAN</h1><p>Warm. Messy. Real. Created with blood, sweat, and existential dread.</p></div>
+            <div class="divider" id="divider"></div>
+            <script>
+                const d = document.getElementById('divider'), l7 = document.getElementById('layout7');
+                l7.addEventListener('mousemove', e => { const x = e.clientX / window.innerWidth * 100; d.style.left = x+'%'; l7.querySelector('.ai').style.width = x+'%'; l7.querySelector('.human').style.left = x+'%'; });
+            </script>
+        </div>
+
+        <!-- LAYOUT 8: FLUID ORGANIC -->
+        <div id="layout8" class="layout">
+            <style>
+                #layout8 { min-height: 100vh; background: #f0e4d4; padding: 4rem 2rem; position: relative; overflow: hidden; }
+                #layout8 .blob { position: absolute; border-radius: 50%; filter: blur(40px); opacity: 0.6; animation: blobMove 20s infinite ease-in-out; }
+                .blob1 { width: 400px; height: 400px; background: #d4a574; top: 10%; left: 10%; }
+                .blob2 { width: 300px; height: 300px; background: #a5d4b8; bottom: 20%; right: 10%; animation-delay: -5s; }
+                .blob3 { width: 350px; height: 350px; background: #d4c8a5; top: 50%; left: 50%; animation-delay: -10s; }
+                @keyframes blobMove { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(50px,-50px) scale(1.1); } 66% { transform: translate(-30px,30px) scale(0.9); } }
+                #layout8 .content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+                #layout8 h1 { font-size: clamp(3rem, 8vw, 6rem); color: #5c4a3d; margin-bottom: 2rem; font-weight: 700; }
+                #layout8 p { font-size: 1.3rem; color: #7a6a5d; line-height: 1.8; }
+                #layout8 .organic-shape { width: 200px; height: 200px; background: #d4a574; border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; margin: 2rem auto; animation: morph 8s infinite ease-in-out; }
+                @keyframes morph { 0%,100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; } 50% { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; } }
+            </style>
+            <div class="blob blob1"></div><div class="blob blob2"></div><div class="blob blob3"></div>
+            <div class="content">
+                <h1>Fluid Intelligence</h1>
+                <p>AI doesn't think in straight lines. Neither do we. Embrace the organic chaos of machine creativity.</p>
+                <div class="organic-shape"></div>
+            </div>
+        </div>
+
+        <!-- LAYOUT 9: MINIMAL GALLERY -->
+        <div id="layout9" class="layout">
+            <style>
+                #layout9 { min-height: 100vh; background: #fff; color: #1a1a1a; padding: 4rem 2rem; }
+                #layout9 .gallery { max-width: 1000px; margin: 0 auto; }
+                #layout9 .artwork { min-height: 60vh; display: flex; align-items: center; justify-content: center; margin-bottom: 4rem; border: 1px solid #eee; padding: 2rem; transition: all 0.5s; }
+                #layout9 .artwork:hover { border-color: #1a1a1a; }
+                #layout9 .artwork h2 { font-size: clamp(2rem, 5vw, 4rem); text-align: center; }
+                #layout9 .nav { display: flex; justify-content: center; gap: 1rem; margin-top: 2rem; }
+                #layout9 .dot { width: 12px; height: 12px; border-radius: 50%; background: #ddd; cursor: pointer; transition: all 0.3s; }
+                #layout9 .dot.active { background: #1a1a1a; transform: scale(1.2); }
+                #layout9 .meta { text-align: center; color: #999; font-size: 0.9rem; margin-top: 1rem; }
+            </style>
+            <div class="gallery">
+                <div class="artwork"><h2>01 / The Prompt</h2></div>
+                <div class="artwork"><h2>02 / The Glitch</h2></div>
+                <div class="artwork"><h2>03 / The Output</h2></div>
+                <div class="artwork"><h2>04 / The Question</h2></div>
+            </div>
+            <div class="nav">
+                <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+            </div>
+            <p class="meta">Click artwork to navigate • Pure minimalism</p>
+        </div>
+
+        <!-- LAYOUT 10: MAXIMALIST -->
+        <div id="layout10" class="layout">
+            <style>
+                #layout10 { min-height: 100vh; background: linear-gradient(45deg, #ff0080, #ff8c00, #00ff80, #0080ff); background-size: 400% 400%; animation: gradientShift 10s ease infinite; padding: 4rem 2rem; overflow: hidden; }
+                @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+                #layout10 .chaos { position: relative; max-width: 1200px; margin: 0 auto; }
+                #layout10 h1 { font-size: clamp(3rem, 10vw, 8rem); color: #fff; text-shadow: 4px 4px 0 #000; margin-bottom: 2rem; animation: shake 0.5s infinite; }
+                @keyframes shake { 0% { transform: translate(2px, 1px) rotate(0deg); } 25% { transform: translate(-1px, 2px) rotate(1deg); } 50% { transform: translate(1px, -1px) rotate(-1deg); } 75% { transform: translate(-2px, -2px) rotate(0deg); } 100% { transform: translate(2px, 1px) rotate(0deg); } }
+                #layout10 .sticker { position: absolute; padding: 1rem 2rem; background: #fff; color: #000; font-weight: 700; border: 3px solid #000; box-shadow: 4px 4px 0 #000; animation: float 3s infinite ease-in-out; }
+                .s1 { top: 10%; right: 10%; animation-delay: 0s; }
+                .s2 { bottom: 20%; left: 10%; animation-delay: -1s; }
+                .s3 { top: 50%; left: 50%; animation-delay: -2s; }
+                @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+                #layout10 p { color: #fff; font-size: 1.5rem; text-shadow: 2px 2px 0 #000; max-width: 600px; }
+            </style>
+            <div class="chaos">
+                <h1>MAXIMAL CHAOS</h1>
+                <p>Too much? Good. AI art IS too much. Embrace the noise. The glitch. The beautiful disaster of machine creativity.</p>
+                <div class="sticker s1">AI SLOP ✓</div>
+                <div class="sticker s2">HUMAN TEARS ✓</div>
+                <div class="sticker s3">EXISTENTIAL DREAD ✓</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.layout-nav button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.layout-nav button').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.layout').forEach(l => l.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.layout).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

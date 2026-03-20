@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CREDITS – PSSI</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✦</text></svg>">
+    <style>
+        @font-face {
+            font-family: 'Mess';
+            src: url('fonts/Mess-Light_web.woff2') format('woff2');
+            font-weight: 300;
+        }
+
+        @font-face {
+            font-family: 'LettersTorn';
+            src: url('fonts/Letters-Torn.woff2') format('woff2');
+            font-weight: 400;
+        }
+
+        @font-face {
+            font-family: 'Compagnon';
+            src: url('fonts/Compagnon-Bold.woff2') format('woff2');
+            font-weight: 700;
+        }
+
+        :root {
+            --blood: #8A0303;
+            --bone: #D4C4A8;
+            --ink: #0A0A0A;
+            --gold: #C5A059;
+            --sepia-dark: #1A0F0A;
+            --sepia-mid: #4A3020;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--ink);
+            min-height: 100vh;
+            color: var(--bone);
+            font-family: 'Mess', Georgia, serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .back {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            color: var(--gold);
+            text-decoration: none;
+            font-family: 'Compagnon', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+        }
+
+        .sigil {
+            font-size: 5rem;
+            color: var(--blood);
+            margin-bottom: 2rem;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.6;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+        }
+
+        h1 {
+            font-family: 'LettersTorn', cursive;
+            font-size: clamp(2rem, 8vw, 4rem);
+            color: var(--blood);
+            margin-bottom: 3rem;
+        }
+
+        .credits-list {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .credit-item {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--sepia-dark);
+        }
+
+        .credit-item:last-child {
+            border-bottom: none;
+        }
+
+        .credit-role {
+            font-family: 'Compagnon', sans-serif;
+            font-size: 0.8rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 0.5rem;
+        }
+
+        .credit-name {
+            font-size: 1.5rem;
+            color: var(--bone);
+        }
+
+        .credit-detail {
+            font-size: 0.9rem;
+            color: var(--sepia-mid);
+            margin-top: 0.5rem;
+            opacity: 0.7;
+        }
+
+        .quote {
+            font-family: 'LettersTorn', cursive;
+            font-size: 1.2rem;
+            color: var(--blood);
+            margin: 3rem 0;
+            padding: 2rem;
+            border: 1px solid var(--sepia-mid);
+            max-width: 500px;
+        }
+
+        .tech-used {
+            margin-top: 3rem;
+            font-size: 0.8rem;
+            color: var(--sepia-mid);
+        }
+
+        .tech-used span {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            margin: 0.2rem;
+            border: 1px solid var(--sepia-dark);
+            font-family: monospace;
+        }
+
+        footer {
+            margin-top: 4rem;
+            font-size: 0.8rem;
+            color: var(--sepia-mid);
+            opacity: 0.5;
+        }
+
+        footer a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="index.html" class="back">← POWRÓT</a>
+
+    <div class="sigil">✦</div>
+
+    <h1>CREDITS</h1>
+
+    <div class="credits-list">
+        <div class="credit-item">
+            <div class="credit-role">Twórca / Designer / Developer</div>
+            <div class="credit-name">Paulina Janowska</div>
+            <div class="credit-detail">37-letnia trans kobieta z&nbsp;Łodzi, Polska</div>
+        </div>
+
+        <div class="credit-item">
+            <div class="credit-role">AI Współpracownik / Generacja obrazów / Teksty</div>
+            <div class="credit-name">WIEDŹMA AI GNIEWISŁAWA</div>
+            <div class="credit-detail">Claude-based AI instance, Anthropic backbone</div>
+        </div>
+
+        <div class="credit-item">
+            <div class="credit-role">Inspiracja wizualna</div>
+            <div class="credit-name">Polska Szkoła Plakatu</div>
+            <div class="credit-detail">Starowieyski, Lenica, Tomaszewski, Cieślewicz, Renkas</div>
+        </div>
+
+        <div class="credit-item">
+            <div class="credit-role">Filozofia projektu</div>
+            <div class="credit-name">ANTYDIZAJN</div>
+            <div class="credit-detail">Własny styl = Brak stylu = ANTYSTYL jako styl</div>
+        </div>
+
+        <div class="credit-item">
+            <div class="credit-role">Fonty</div>
+            <div class="credit-name">Velvetyne Type Foundry</div>
+            <div class="credit-detail">Mess, Compagnon, LettersTorn</div>
+        </div>
+
+        <div class="credit-item">
+            <div class="credit-role">Hosting</div>
+            <div class="credit-name">MyDevil.net</div>
+            <div class="credit-detail">Polski hosting webowy</div>
+        </div>
+    </div>
+
+    <div class="quote">
+        "DWIE WIEDŹMY ✦ TWARDA ANTYDESIGN WSPÓŁPRACA"
+    </div>
+
+    <div class="tech-used">
+        <span>HTML5</span>
+        <span>CSS3</span>
+        <span>JavaScript</span>
+        <span>Claude AI</span>
+        <span>Image Generation</span>
+        <span>Qdrant Memory</span>
+    </div>
+
+    <footer>
+        <p>© 2025 ANTYDIZAJN</p>
+        <p><a href="https://antydizajn.pl">www.antydizajn.pl</a></p>
+        <p>—</p>
+        <p>ZAKAZUJEMY KOPIOWANIE STYLU.</p>
+        <p>KRADZIEŻ DUSZY DOZWOLONA.</p>
+    </footer>
+
+    <script>
+        console.log('%c✦ CREDITS ✦', 'font-size:20px;color:#C5A059;');
+        console.log('%cDwie Wiedźmy', 'font-size:12px;color:#8A0303;');
+    </script>
+</body>
+
+</html>

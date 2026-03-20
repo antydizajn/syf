@@ -1,0 +1,297 @@
+/* ========================================
+   SYF - TEST 6: PRAWDZIWY BRUTALIZM
+   
+   WYRZUCONE:
+   ✗ scanlines
+   ✗ noise overlay
+   ✗ glow orbs
+   ✗ text-shadow glow
+   ✗ animacje pulsujące
+   ✗ 5 kolorów neonowych
+   ✗ smooth transitions
+   
+   ZOSTAŁO:
+   ✓ czarny + biały + magenta
+   ✓ Space Mono (surowe mono)
+   ✓ ostre krawędzie (0 border-radius)
+   ✓ instant hover (bez transition)
+   ✓ wielka typografia
+   ✓ funkcja > forma
+   ======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: 'Space Mono', monospace;
+    background: #000;
+    color: #fff;
+    min-height: 100vh;
+}
+
+::selection {
+    background: #f0f;
+    color: #000;
+}
+
+/* SCROLLBAR - prosta, bez kolorów */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333;
+}
+
+/* ========================================
+   HEADER
+   ======================================== */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: #000;
+    border-bottom: 1px solid #222;
+}
+
+.logo {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #f0f;
+    text-decoration: none;
+}
+
+.logo:hover {
+    color: #fff;
+}
+
+.nav {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-link {
+    font-size: 0.75rem;
+    color: #666;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.nav-link:hover {
+    color: #fff;
+}
+
+.nav-link.active {
+    color: #f0f;
+}
+
+/* ========================================
+   HERO - wielki tytuł, bez efektów
+   ======================================== */
+.hero {
+    padding: 10rem 2rem 4rem;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: clamp(8rem, 25vw, 20rem);
+    font-weight: 700;
+    color: #f0f;
+    line-height: 0.8;
+    letter-spacing: -0.05em;
+    /* BRAK text-shadow, BRAK glow */
+}
+
+.hero p {
+    margin-top: 2rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+
+/* ========================================
+   CONTROLS
+   ======================================== */
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-top: 1px solid #222;
+    border-bottom: 1px solid #222;
+    font-size: 0.75rem;
+    color: #666;
+}
+
+.sort-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: #666;
+    background: transparent;
+    border: 1px solid #333;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.sort-btn:hover {
+    color: #fff;
+    border-color: #fff;
+}
+
+/* ========================================
+   FILE LIST
+   ======================================== */
+.file-list {
+    padding: 0 2rem 4rem;
+}
+
+.file {
+    display: grid;
+    grid-template-columns: 40px 1fr auto auto auto;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #111;
+    text-decoration: none;
+    color: #fff;
+}
+
+/* INSTANT hover - bez transition */
+.file:hover {
+    background: #111;
+    margin: 0 -2rem;
+    padding: 1rem 2rem;
+}
+
+.file:hover .name {
+    color: #f0f;
+}
+
+.file:hover .arrow {
+    color: #f0f;
+}
+
+/* FOLDER */
+.file.folder {
+    background: rgba(0, 255, 255, 0.03);
+}
+
+.file.folder .name {
+    color: #0ff;
+}
+
+.file.folder:hover {
+    background: rgba(0, 255, 255, 0.08);
+}
+
+.file.folder:hover .name {
+    color: #fff;
+}
+
+.file.folder:hover .arrow {
+    color: #0ff;
+}
+
+.idx {
+    font-size: 0.65rem;
+    color: #333;
+}
+
+.name {
+    font-size: 0.875rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.meta {
+    font-size: 0.7rem;
+    color: #444;
+    text-align: right;
+    min-width: 50px;
+}
+
+.date {
+    font-size: 0.7rem;
+    color: #333;
+    min-width: 40px;
+    text-align: right;
+}
+
+.arrow {
+    font-size: 1rem;
+    color: #222;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.footer {
+    padding: 2rem;
+    text-align: center;
+    font-size: 0.7rem;
+    color: #333;
+    border-top: 1px solid #111;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 768px) {
+    .header {
+        padding: 1rem;
+    }
+
+    .nav {
+        gap: 1rem;
+    }
+
+    .hero {
+        padding: 8rem 1rem 3rem;
+    }
+
+    .controls {
+        padding: 1rem;
+    }
+
+    .file-list {
+        padding: 0 1rem 3rem;
+    }
+
+    .file {
+        grid-template-columns: 1fr auto;
+        gap: 0.5rem;
+    }
+
+    .file:hover {
+        margin: 0 -1rem;
+        padding: 1rem;
+    }
+
+    .idx,
+    .date {
+        display: none;
+    }
+
+    .arrow {
+        display: none;
+    }
+}

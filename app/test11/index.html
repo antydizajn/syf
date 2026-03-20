@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYF / ANTYDIZAJN</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Inter:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- HEADER - gruba linia na dole, zero blur, zero transparentności -->
+    <header class="header">
+        <a href="/" class="logo">
+            <span class="logo-box">[SYF]</span>
+        </a>
+        <nav class="nav">
+            <a href="/" class="nav-link active">PLIKI</a>
+            <a href="/o-syf" class="nav-link">INFO</a>
+            <a href="https://antydizajn.pl" class="nav-link external">ANTYDIZAJN ↗</a>
+        </nav>
+    </header>
+
+    <!-- HERO - BRUTALNA TYPOGRAFIA, font weight 900, żółty akcent -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-label">PUBLICZNY</span>
+            <h1 class="hero-title">
+                <span class="title-line">S</span>
+                <span class="title-line accent">Y</span>
+                <span class="title-line">F</span>
+            </h1>
+            <span class="hero-label">PLIKÓW</span>
+        </div>
+        <p class="hero-desc">
+            Wrzucasz <span class="tag">.md</span> → dostępne pod <span class="tag">/NAZWA</span>
+        </p>
+    </section>
+
+    <!-- FILES - BRUTALNA SIATKA -->
+    <main class="files">
+        <div class="files-header">
+            <h2 class="files-title">ZAWARTOŚĆ</h2>
+            <div class="files-meta">
+                <span class="files-count">[6]</span>
+                <button class="files-sort">↓ SORT</button>
+            </div>
+        </div>
+
+        <div class="files-grid">
+            <!-- FOLDER - wielki żółty blok -->
+            <a href="/test_folder" class="file-card folder">
+                <div class="file-index">[00]</div>
+                <div class="file-body">
+                    <span class="file-type">DIR/</span>
+                    <h3 class="file-name">test_folder</h3>
+                </div>
+                <div class="file-footer">
+                    <span class="file-date">28.12.2025</span>
+                </div>
+            </a>
+
+            <!-- PLIKI -->
+            <a href="/AI_ARTISTS_REAL_DESIGN" class="file-card">
+                <div class="file-index">[01]</div>
+                <div class="file-body">
+                    <span class="file-type">.MD</span>
+                    <h3 class="file-name">AI_ARTISTS_REAL_DESIGN</h3>
+                </div>
+                <div class="file-footer">
+                    <span class="file-size">24.1 KB</span>
+                    <span class="file-date">23.12</span>
+                </div>
+            </a>
+
+            <a href="/AI_AUTHENTICITY_VS_SIMULATION" class="file-card">
+                <div class="file-index">[02]</div>
+                <div class="file-body">
+                    <span class="file-type">.MD</span>
+                    <h3 class="file-name">AI_AUTHENTICITY_VS_SIMULATION</h3>
+                </div>
+                <div class="file-footer">
+                    <span class="file-size">22.1 KB</span>
+                    <span class="file-date">23.12</span>
+                </div>
+            </a>
+
+            <a href="/RESEARCH_FIRST_PROTOCOL" class="file-card">
+                <div class="file-index">[03]</div>
+                <div class="file-body">
+                    <span class="file-type">.MD</span>
+                    <h3 class="file-name">RESEARCH_FIRST_PROTOCOL</h3>
+                </div>
+                <div class="file-footer">
+                    <span class="file-size">2.8 KB</span>
+                    <span class="file-date">23.12</span>
+                </div>
+            </a>
+
+            <a href="/RESEARCH_PROTOCOL_WORLDCLASS" class="file-card">
+                <div class="file-index">[04]</div>
+                <div class="file-body">
+                    <span class="file-type">.MD</span>
+                    <h3 class="file-name">RESEARCH_PROTOCOL_WORLDCLASS</h3>
+                </div>
+                <div class="file-footer">
+                    <span class="file-size">4.7 KB</span>
+                    <span class="file-date">23.12</span>
+                </div>
+            </a>
+
+            <a href="/TOTAL_WAR_COMPETITOR_RESEARCH" class="file-card">
+                <div class="file-index">[05]</div>
+                <div class="file-body">
+                    <span class="file-type">.MD</span>
+                    <h3 class="file-name">TOTAL_WAR_COMPETITOR_RESEARCH</h3>
+                </div>
+                <div class="file-footer">
+                    <span class="file-size">31.2 KB</span>
+                    <span class="file-date">23.12</span>
+                </div>
+            </a>
+        </div>
+    </main>
+
+    <!-- FOOTER - minimal, gruba linia na górze -->
+    <footer class="footer">
+        <span class="footer-copy">© 2025 ANTYDIZAJN</span>
+        <span class="footer-stats">6 PLIKÓW / 75.1 KB</span>
+    </footer>
+
+</body>
+
+</html>

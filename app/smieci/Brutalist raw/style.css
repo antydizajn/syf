@@ -1,0 +1,236 @@
+/* PURE CSS BRUTALISM */
+
+:root {
+    --bg: #fff;
+    --fg: #000;
+    --accent: #ffff00;
+    /* Standard Yellow highlight */
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg);
+    color: var(--fg);
+    margin: 0;
+    padding: 20px;
+    font-size: 16px;
+    line-height: 1.4;
+    max-width: 1200px;
+    margin: 0 auto;
+    border: 5px solid var(--fg);
+    min-height: 100vh;
+}
+
+/* UTILS */
+.blink {
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* LAYOUT */
+.brutal-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* COMPONENT STYLES */
+.header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 40px;
+    border-bottom: 5px solid var(--fg);
+    padding-bottom: 10px;
+}
+
+.menu-btn {
+    background: var(--fg);
+    color: var(--bg);
+    padding: 0 20px;
+    cursor: pointer;
+}
+
+.menu-btn:hover {
+    background: var(--accent);
+    color: var(--fg);
+}
+
+.status-strip {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    border-bottom: 2px solid var(--fg);
+    padding: 5px 0;
+}
+
+.hero {
+    text-align: center;
+    padding: 50px 0;
+    border: 5px solid var(--fg);
+    position: relative;
+    background: repeating-linear-gradient(45deg, #fff, #fff 10px, #eee 10px, #eee 20px);
+}
+
+.badge {
+    display: inline-block;
+    background: var(--fg);
+    color: var(--bg);
+    padding: 5px 10px;
+    font-weight: bold;
+    transform: rotate(-2deg);
+    margin-bottom: 20px;
+}
+
+.hero-title {
+    font-size: 15vw;
+    line-height: 0.8;
+    margin: 0;
+    letter-spacing: -5px;
+}
+
+.hero-title .accent {
+    color: var(--bg);
+    text-shadow: 2px 2px 0 var(--fg), -2px -2px 0 var(--fg), 2px -2px 0 var(--fg), -2px 2px 0 var(--fg);
+}
+
+.count-badge {
+    background: var(--accent);
+    color: var(--fg);
+    display: inline-block;
+    padding: 5px 20px;
+    border: 3px solid var(--fg);
+    font-weight: bold;
+    font-size: 24px;
+    margin-top: -30px;
+    position: relative;
+    z-index: 1;
+}
+
+.cmd {
+    background: var(--fg);
+    color: var(--accent);
+    padding: 20px;
+    font-weight: bold;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 3px solid var(--fg);
+    padding: 10px;
+    background: #ccc;
+}
+
+.total {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.sort-btn {
+    background: var(--bg);
+    border: 3px solid var(--fg);
+    font-weight: bold;
+    padding: 10px 20px;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 5px 5px 0 var(--fg);
+}
+
+.sort-btn:active {
+    box-shadow: none;
+    transform: translate(5px, 5px);
+}
+
+.separator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    color: #666;
+}
+
+.separator hr {
+    flex-grow: 1;
+    border: 0;
+    border-top: 2px solid #666;
+}
+
+.item {
+    border: 3px solid var(--fg);
+    margin-bottom: 10px;
+    padding: 15px;
+    display: grid;
+    grid-template-columns: 30px 1fr auto;
+    gap: 10px;
+    align-items: center;
+    transition: transform 0.1s;
+}
+
+.item:hover {
+    transform: translate(-5px, -5px);
+    box-shadow: 10px 10px 0 var(--fg);
+    background: var(--accent);
+}
+
+.folder {
+    background: #e0f7fa;
+}
+
+.footer {
+    margin-top: 50px;
+    border-top: 5px solid var(--fg);
+    padding-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.links a {
+    display: block;
+    color: var(--fg);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.links a:hover {
+    text-decoration: underline;
+    background: var(--accent);
+}
+
+.quote {
+    grid-column: 1 / -1;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    border: 3px solid var(--fg);
+    padding: 20px;
+}
+
+.credits h3 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.copy {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+/* MEDIA */
+@media (max-width: 600px) {
+    .footer {
+        grid-template-columns: 1fr;
+    }
+}

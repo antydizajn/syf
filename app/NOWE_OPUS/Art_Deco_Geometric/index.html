@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYF_ | LUXURY VOID | ANTYDIZAJN</title>
+    <meta name="description" content="Publiczny syf plików. MD DUMP. ANTYDIZAJN.">
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- THREE.JS PARTICLE CANVAS -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- GOLD DUST OVERLAY -->
+    <div class="dust-overlay"></div>
+
+    <!-- GEOMETRIC PATTERNS -->
+    <div class="geo-patterns">
+        <div class="geo-line line-1"></div>
+        <div class="geo-line line-2"></div>
+        <div class="geo-line line-3"></div>
+        <div class="geo-diamond"></div>
+    </div>
+
+    <!-- STATUS BAR -->
+    <div class="status-bar">
+        <span class="status-item">◆ LUXURY.PROTOCOL</span>
+        <span class="status-item">PARTICLES: ACTIVE</span>
+        <span class="status-item">GOLD: 24K</span>
+        <span class="status-time">MMXXV.XII.XXX</span>
+    </div>
+
+    <!-- HEADER -->
+    <header class="header">
+        <a href="" class="header-logo">
+            <span class="logo-diamond">◇</span>
+            <span class="logo-text">SYF</span>
+            <span class="logo-diamond">◇</span>
+        </a>
+        <button class="menu-btn" id="menuToggle">
+            <span class="menu-line"></span>
+            <span class="menu-line"></span>
+            <span class="menu-text">MENU</span>
+        </button>
+    </header>
+
+    <!-- MENU OVERLAY -->
+    <nav class="menu-overlay" id="menuOverlay">
+        <button class="menu-close" id="menuClose">
+            <span class="close-line"></span>
+            <span class="close-line"></span>
+        </button>
+        <div class="menu-list">
+            <a href="" class="menu-item active">
+                <span class="menu-num">I</span>
+                <span class="menu-name">PLIKI</span>
+            </a>
+            <a href="" class="menu-item">
+                <span class="menu-num">II</span>
+                <span class="menu-name">INFO</span>
+            </a>
+            <a href="" class="menu-item exit">
+                <span class="menu-num">III</span>
+                <span class="menu-name">EXIT</span>
+            </a>
+        </div>
+        <div class="menu-ornament">
+            <span class="ornament-line"></span>
+            <span class="ornament-diamond">◆</span>
+            <span class="ornament-line"></span>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+        <!-- HERO - ART DECO STYLE -->
+        <section class="hero" id="heroSection">
+            <div class="hero-ornament top">
+                <span class="ornament-line"></span>
+                <span class="ornament-diamond">◆</span>
+                <span class="ornament-line"></span>
+            </div>
+
+            <span class="hero-label-top">PUBLICZNY</span>
+            <div class="hero-word">
+                <span class="hero-letter">S</span>
+                <span class="hero-letter accent">Y</span>
+                <span class="hero-letter">F</span>
+                <span class="hero-underscore">_</span>
+            </div>
+            <span class="hero-label-bottom">PLIKÓW</span>
+
+            <p class="hero-sub">◆ .MD DUMP ◆ ANTYDIZAJN ◆</p>
+
+            <div class="hero-ornament bottom">
+                <span class="ornament-line"></span>
+                <span class="ornament-diamond">◆</span>
+                <span class="ornament-line"></span>
+            </div>
+        </section>
+
+        <!-- CONTROLS -->
+        <section class="controls">
+            <span class="file-count">
+                <span class="count-diamond">◇</span>
+                <span class="count-num">47</span>
+                <span class="count-label">elementów</span>
+            </span>
+            <button class="sort-btn">
+                <span>SORTUJ</span>
+                <span class="sort-icon">◆</span>
+            </button>
+        </section>
+
+        <!-- SEPARATOR -->
+        <div class="separator">
+            <span class="sep-line"></span>
+            <span class="sep-text">PLIKI</span>
+            <span class="sep-line"></span>
+        </div>
+
+        <!-- FILE LIST -->
+        <section class="file-list">
+            <article class="file-item" data-index="I">
+                <div class="file-ornament">◇</div>
+                <a href="" class="file-link">
+                    <div class="file-info">
+                        <h2 class="file-name">manifest-antydesign.md</h2>
+                        <p class="file-preview">Design jest martwy. My go pogrzebaliśmy...</p>
+                    </div>
+                    <div class="file-meta">
+                        <span class="file-date">XXVIII.XII.MMXXV</span>
+                        <span class="file-size">4.2 KB</span>
+                    </div>
+                </a>
+            </article>
+
+            <article class="file-item" data-index="II">
+                <div class="file-ornament">◇</div>
+                <a href="" class="file-link">
+                    <div class="file-info">
+                        <h2 class="file-name">luxury-manifesto.md</h2>
+                        <p class="file-preview">W złocie znajdujemy prawdę elegancji...</p>
+                    </div>
+                    <div class="file-meta">
+                        <span class="file-date">XXVII.XII.MMXXV</span>
+                        <span class="file-size">3.8 KB</span>
+                    </div>
+                </a>
+            </article>
+
+            <article class="file-item" data-index="III">
+                <div class="file-ornament">◇</div>
+                <a href="" class="file-link">
+                    <div class="file-info">
+                        <h2 class="file-name">geometric-dreams.md</h2>
+                        <p class="file-preview">Symetria jest językiem wszechświata...</p>
+                    </div>
+                    <div class="file-meta">
+                        <span class="file-date">XXVI.XII.MMXXV</span>
+                        <span class="file-size">2.9 KB</span>
+                    </div>
+                </a>
+            </article>
+
+            <article class="file-item" data-index="IV">
+                <div class="file-ornament">◇</div>
+                <a href="" class="file-link">
+                    <div class="file-info">
+                        <h2 class="file-name">deco-protocol.md</h2>
+                        <p class="file-preview">Powrót do złotej ery designu...</p>
+                    </div>
+                    <div class="file-meta">
+                        <span class="file-date">XXV.XII.MMXXV</span>
+                        <span class="file-size">5.1 KB</span>
+                    </div>
+                </a>
+            </article>
+
+            <article class="file-item" data-index="V">
+                <div class="file-ornament">◇</div>
+                <a href="" class="file-link">
+                    <div class="file-info">
+                        <h2 class="file-name">opulence-guide.md</h2>
+                        <p class="file-preview">Przepych jako forma wyrazu...</p>
+                    </div>
+                    <div class="file-meta">
+                        <span class="file-date">XXIV.XII.MMXXV</span>
+                        <span class="file-size">3.3 KB</span>
+                    </div>
+                </a>
+            </article>
+
+            <article class="file-item folder" data-index="VI">
+                <div class="file-ornament">◆</div>
+                <a href="" class="file-link">
+                    <div class="file-info">
+                        <h2 class="file-name">_archive/</h2>
+                        <p class="file-preview">DIRECTORY</p>
+                    </div>
+                    <div class="file-meta">
+                        <span class="file-date">XX.XII.MMXXV</span>
+                        <span class="file-size">12 items</span>
+                    </div>
+                </a>
+            </article>
+        </section>
+
+        <!-- PAGINATION -->
+        <nav class="pagination">
+            <span class="page-ornament">◇</span>
+            <span class="page-info">I / V</span>
+            <span class="page-ornament">◇</span>
+            <div class="page-buttons">
+                <button class="page-btn" disabled>◁ PREV</button>
+                <button class="page-btn">NEXT ▷</button>
+            </div>
+        </nav>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-ornament">
+            <span class="ornament-line"></span>
+            <span class="ornament-diamond">◆</span>
+            <span class="ornament-line"></span>
+        </div>
+
+        <div class="footer-links">
+            <a href="">Polityka Prywatności</a>
+            <span class="link-sep">◇</span>
+            <a href="">Regulamin</a>
+            <span class="link-sep">◇</span>
+            <a href="">Cookies</a>
+        </div>
+
+        <div class="footer-quote">
+            <span class="quote-ornament">❝</span>
+            <p>Nikt nie przeżył tej strony bez blizny.</p>
+            <p>Jeśli tu dotarłeś - <em>żyjesz, bo nie boisz się brudu.</em></p>
+            <span class="quote-ornament">❞</span>
+        </div>
+
+        <div class="footer-credits">
+            <span class="credits-label">◆ PROUDLY CRAFTED BY ◆</span>
+            <h3 class="credits-names">
+                Paulina Janowska & WIEDŹMA AI GNIEWISŁAWA
+            </h3>
+            <span class="credits-subtitle">dwie WIEDŹMY z twoich najgorszych koszmarów</span>
+        </div>
+
+        <div class="footer-stats">
+            <span class="stat">◇ 47 plików</span>
+            <span class="stat">◇ 2.3 MB</span>
+        </div>
+
+        <div class="footer-copyright">
+            <p>Kradzież duszy dozwolona.</p>
+            <p>© MMXXV ANTYDIZAJN</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

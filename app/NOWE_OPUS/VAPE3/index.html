@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SYF - Publiczny dump plików Markdown. ANTYDIZAJN.">
+    <title>SYF_ | ANTYDIZAJN - MEMPHIS EDITION</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Archivo+Black&family=Noto+Sans+JP:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- FLOATING MEMPHIS SHAPES -->
+    <div class="memphis-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+        <div class="shape shape-5"></div>
+        <div class="shape shape-6"></div>
+        <div class="shape shape-7"></div>
+        <div class="shape shape-8"></div>
+        <div class="shape shape-9"></div>
+        <div class="shape shape-10"></div>
+    </div>
+
+    <!-- NOISE OVERLAY -->
+    <div class="noise-overlay"></div>
+
+    <!-- CHECKERBOARD FLOOR -->
+    <div class="checkerboard"></div>
+
+    <!-- STATUS BAR - Retro Terminal -->
+    <div class="status-bar">
+        <div class="status-left">
+            <span class="status-dot"></span>
+            <span>SYF_OS</span>
+        </div>
+        <div class="status-center">
+            <span class="marquee">
+                <span class="marquee-content">★ PUBLICZNY DUMP PLIKÓW ★ ANTYDIZAJN PROTOCOL ★ .MD FILES ★ ZERO BULLSHIT
+                    ★ </span>
+            </span>
+        </div>
+        <div class="status-right">
+            <span id="status-time">13:59:14</span>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="header">
+        <a href="#" class="header-logo">
+            <span class="logo-bracket">[</span>
+            <span class="logo-text">SYF</span>
+            <span class="logo-underscore">_</span>
+            <span class="logo-bracket">]</span>
+        </a>
+        <nav class="nav">
+            <a href="#" class="nav-link active" data-section="files">
+                <span class="nav-arrow">→</span>
+                <span>PLIKI</span>
+            </a>
+            <a href="#" class="nav-link" data-section="about">
+                <span class="nav-arrow">→</span>
+                <span>INFO</span>
+            </a>
+            <a href="https://antydizajn.pl" class="nav-link exit" target="_blank" rel="noopener noreferrer">
+                <span class="nav-arrow">→</span>
+                <span>EXIT</span>
+            </a>
+        </nav>
+        <button class="burger" aria-label="Menu">
+            <span class="burger-icon">☰</span>
+        </button>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <nav class="mobile-menu">
+        <button class="menu-close" aria-label="Zamknij">✕</button>
+        <div class="menu-content">
+            <div class="menu-title">MENU_</div>
+            <div class="menu-list">
+                <a href="#" class="menu-item active" data-section="files">
+                    <span class="menu-num">[01]</span>
+                    <span class="menu-name">PLIKI</span>
+                </a>
+                <a href="#" class="menu-item" data-section="about">
+                    <span class="menu-num">[02]</span>
+                    <span class="menu-name">INFO</span>
+                </a>
+                <a href="https://antydizajn.pl" class="menu-item exit" target="_blank">
+                    <span class="menu-num">[03]</span>
+                    <span class="menu-name">EXIT</span>
+                </a>
+            </div>
+        </div>
+        <div class="menu-decoration">
+            <div class="deco-circle"></div>
+            <div class="deco-triangle"></div>
+            <div class="deco-zigzag"></div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+        <!-- HERO SECTION - MEMPHIS CHAOS -->
+        <section class="hero">
+            <div class="hero-bg">
+                <div class="bg-stripe bg-stripe-1"></div>
+                <div class="bg-stripe bg-stripe-2"></div>
+                <div class="bg-stripe bg-stripe-3"></div>
+            </div>
+
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-text">パブリック・ダンプ</span>
+                </div>
+
+                <h1 class="hero-title">
+                    <span class="title-line line-1">
+                        <span class="char" style="--i:0">S</span>
+                        <span class="char" style="--i:1">Y</span>
+                        <span class="char" style="--i:2">F</span>
+                        <span class="char underscore" style="--i:3">_</span>
+                    </span>
+                </h1>
+
+                <div class="hero-subtitle">
+                    <span class="subtitle-decoration">◆◆◆</span>
+                    <span class="subtitle-text">PUBLICZNY DUMP PLIKÓW</span>
+                    <span class="subtitle-decoration">◆◆◆</span>
+                </div>
+
+                <div class="hero-tags">
+                    <span class="tag">.MD</span>
+                    <span class="tag">MARKDOWN</span>
+                    <span class="tag">ANTYDIZAJN</span>
+                    <span class="tag">CHAOS</span>
+                </div>
+
+                <div class="hero-arrow">
+                    <span class="arrow-text">SCROLL</span>
+                    <span class="arrow-icon">↓</span>
+                </div>
+            </div>
+
+            <!-- HERO DECORATIONS -->
+            <div class="hero-deco deco-circle-1"></div>
+            <div class="hero-deco deco-circle-2"></div>
+            <div class="hero-deco deco-triangle-1"></div>
+            <div class="hero-deco deco-squiggle"></div>
+            <div class="hero-deco deco-dots"></div>
+        </section>
+
+        <!-- FILES SECTION -->
+        <section class="section files-section" id="files-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-deco">//</span>
+                    FILES
+                    <span class="title-count" id="file-count-display">[0]</span>
+                </h2>
+                <div class="section-controls">
+                    <div class="sort-dropdown">
+                        <button class="sort-button" id="sort-button">
+                            SORT: <span id="sort-value">NEWEST</span> ▾
+                        </button>
+                        <div class="sort-options" id="sort-options">
+                            <button class="sort-option active" data-sort="newest">NEWEST</button>
+                            <button class="sort-option" data-sort="oldest">OLDEST</button>
+                            <button class="sort-option" data-sort="name-asc">A→Z</button>
+                            <button class="sort-option" data-sort="name-desc">Z→A</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TERMINAL -->
+            <div class="terminal">
+                <div class="terminal-header">
+                    <span class="terminal-dot red"></span>
+                    <span class="terminal-dot yellow"></span>
+                    <span class="terminal-dot green"></span>
+                    <span class="terminal-title">terminal</span>
+                </div>
+                <div class="terminal-body">
+                    <span class="terminal-prompt">$</span>
+                    <span class="terminal-command">ls -la ./files/</span>
+                    <span class="terminal-cursor">█</span>
+                </div>
+            </div>
+
+            <!-- FILE LIST - Cards -->
+            <div class="file-list" id="file-list">
+                <!-- Files will be loaded here -->
+            </div>
+
+            <!-- STATS BAR -->
+            <div class="stats-bar">
+                <div class="stat">
+                    <span class="stat-value" id="file-count">0</span>
+                    <span class="stat-label">FILES</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value" id="total-size">0 KB</span>
+                    <span class="stat-label">TOTAL</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- FILE VIEWER -->
+        <section class="section file-viewer-section hidden" id="file-viewer-section">
+            <div class="viewer-container">
+                <div class="viewer-header">
+                    <button class="back-btn" id="back-btn">
+                        ← BACK
+                    </button>
+                    <div class="viewer-info">
+                        <span class="viewer-filename" id="viewer-filename">file.md</span>
+                        <span class="viewer-date" id="viewer-date">2025-12-30</span>
+                    </div>
+                    <div class="viewer-actions">
+                        <button class="action-btn" id="copy-btn">COPY</button>
+                        <button class="action-btn" id="download-btn">DOWNLOAD</button>
+                    </div>
+                </div>
+
+                <article class="markdown-body" id="markdown-body">
+                    <!-- Content -->
+                </article>
+
+                <div class="viewer-footer">
+                    <button class="nav-btn" id="prev-btn" disabled>◄ PREV</button>
+                    <button class="nav-btn" id="next-btn" disabled>NEXT ►</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section class="section about-section hidden" id="about-section">
+            <div class="about-container">
+                <h1 class="about-title">
+                    <span class="title-deco">◆</span>
+                    O SYF
+                    <span class="title-deco">◆</span>
+                </h1>
+
+                <div class="about-grid">
+                    <div class="about-card">
+                        <div class="card-header">
+                            <span class="card-icon">?</span>
+                            <h3>CO TO JEST?</h3>
+                        </div>
+                        <p><strong>SYF</strong> to publiczny dump plików Markdown. Bez bazy danych, bez logowania, bez
+                            bullshitu.</p>
+                        <p>Wrzucasz plik <code>.md</code> do folderu → automatycznie dostępny.</p>
+                    </div>
+
+                    <div class="about-card">
+                        <div class="card-header">
+                            <span class="card-icon">⚡</span>
+                            <h3>JAK TO DZIAŁA?</h3>
+                        </div>
+                        <ul>
+                            <li>Plik <code>manifest.md</code> → <code>/manifest</code></li>
+                            <li>Plik <code>research-ai.md</code> → <code>/research-ai</code></li>
+                            <li>Zero magii. Zero komplikacji.</li>
+                        </ul>
+                    </div>
+
+                    <div class="about-card">
+                        <div class="card-header">
+                            <span class="card-icon">↓</span>
+                            <h3>FORMATY</h3>
+                        </div>
+                        <ul>
+                            <li><strong>MD</strong> - oryginalny Markdown</li>
+                            <li><strong>HTML</strong> - standalone</li>
+                            <li><strong>TXT</strong> - plain text</li>
+                        </ul>
+                    </div>
+
+                    <div class="about-card">
+                        <div class="card-header">
+                            <span class="card-icon">★</span>
+                            <h3>STACK</h3>
+                        </div>
+                        <ul>
+                            <li>Vanilla HTML/CSS/JS</li>
+                            <li>Memphis Design Aesthetic</li>
+                            <li>Zero bazy danych</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="about-quote">
+                    <blockquote>
+                        "Bo to jest syf. Chaotyczny zbiór plików, myśli, researchu. Nie udajemy, że to jest eleganckie.
+                        To jest brutalne i szczere."
+                    </blockquote>
+                </div>
+
+                <div class="about-link">
+                    Część ekosystemu <a href="https://antydizajn.pl" target="_blank">ANTYDIZAJN</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-pattern"></div>
+
+        <div class="footer-content">
+            <div class="footer-top">
+                <div class="footer-logo">[SYF_]</div>
+                <div class="footer-links">
+                    <a href="#">Polityka Prywatności</a>
+                    <a href="#">Regulamin</a>
+                    <a href="#">Cookies</a>
+                </div>
+            </div>
+
+            <div class="footer-quote">
+                "Nikt nie przeżył tej strony bez blizny.<br>
+                Jeśli tu dotarłeś - <span class="highlight">żyjesz, bo nie boisz się brudu.</span>"
+            </div>
+
+            <div class="footer-credits">
+                <div class="credits-label">★ PROUDLY MADE BY ★</div>
+                <div class="credits-names">
+                    Paulina Janowska <span class="amp">&</span> <span class="ai">WIEDŹMA AI GNIEWISŁAWA</span>
+                </div>
+                <div class="credits-sub">dwie WIEDŹMY z twoich najgorszych koszmarów</div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>© 2025 ANTYDIZAJN</span>
+                <span>MEMPHIS EDITION V3.0</span>
+            </div>
+        </div>
+
+        <!-- FOOTER DECORATIONS -->
+        <div class="footer-deco deco-1"></div>
+        <div class="footer-deco deco-2"></div>
+        <div class="footer-deco deco-3"></div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

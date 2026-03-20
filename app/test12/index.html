@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYF / ANTYDIZAJN</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- SYSTEM STATUS BAR -->
+    <div class="status-bar">
+        <span class="status-item">>_ SYS.ONLINE</span>
+        <span class="status-item">NODE:0x7F3A</span>
+        <span class="status-item blink">REC</span>
+        <span class="status-item">MEM:64.2%</span>
+        <span class="status-time">2025.12.28_17:03:38</span>
+    </div>
+
+    <!-- HEADER - logo + hamburger -->
+    <header class="header">
+        <a href="/" class="header-logo">&lt;SYF/&gt;</a>
+        <button class="burger" id="burger" aria-label="Menu">
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+            <span class="burger-text">MENU</span>
+        </button>
+    </header>
+
+    <!-- FULLSCREEN MENU OVERLAY -->
+    <nav class="menu-overlay" id="menuOverlay">
+        <button class="menu-close" id="menuClose">×</button>
+
+        <div class="menu-list">
+            <a href="/" class="menu-item active">
+                <span class="menu-num">01</span>
+                <span class="menu-name">PLIKI</span>
+                <div class="menu-frame">
+                    <span class="frame-corner tl"></span>
+                    <span class="frame-corner tr"></span>
+                    <span class="frame-corner bl"></span>
+                    <span class="frame-corner br"></span>
+                </div>
+            </a>
+            <a href="/info" class="menu-item">
+                <span class="menu-num">02</span>
+                <span class="menu-name">INFO</span>
+            </a>
+            <a href="/sciek" class="menu-item">
+                <span class="menu-num">03</span>
+                <span class="menu-name">ŚCIEK</span>
+            </a>
+            <a href="https://antydizajn.pl" class="menu-item exit">
+                <span class="menu-num">04</span>
+                <span class="menu-name">EXIT</span>
+            </a>
+        </div>
+
+        <div class="menu-footer">
+            <span class="menu-status">SYSTEM STATUS: <span class="status-ok">ONLINE</span></span>
+            <span class="menu-version">ANTYDIZAJN PROTOCOL V2.0</span>
+        </div>
+    </nav>
+
+    <script>
+        const burger = document.getElementById('burger');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menuClose = document.getElementById('menuClose');
+
+        burger.addEventListener('click', () => {
+            menuOverlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        });
+
+        menuClose.addEventListener('click', () => {
+            menuOverlay.classList.remove('open');
+            document.body.style.overflow = '';
+        });
+
+        // ESC key closes menu
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                menuOverlay.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        });
+    </script>
+
+    <!-- HERO - DESTRUKCYJNA TYPOGRAFIA -->
+    <section class="hero">
+        <div class="hero-code">// INIT_DISPLAY</div>
+        <span class="hero-label-top">PUBLICZNY</span>
+        <div class="hero-word">
+            <span class="hero-letter">S</span>
+            <span class="hero-letter accent">Y</span>
+            <span class="hero-letter">F</span>
+            <span class="hero-letter underscore">_</span>
+        </div>
+        <span class="hero-label-bottom">PLIKÓW</span>
+        <p class="hero-sub">&gt;_ .MD DUMP // ANTYDIZAJN</p>
+        <div class="hero-hex">0x53 0x59 0x46</div>
+    </section>
+
+    <!-- FILES - DESTRUKCYJNA LISTA -->
+    <main class="files">
+
+        <!-- COMMAND LINE -->
+        <div class="cmd-line">
+            <span class="cmd-prompt">$</span>
+            <span class="cmd-text">ls -la /syf/files/ --sort=date</span>
+            <span class="cmd-cursor">_</span>
+        </div>
+
+        <!-- FOLDER - ŻÓŁTY BLOK FULL WIDTH -->
+        <a href="/test_folder" class="file-row folder">
+            <div class="file-num">00</div>
+            <div class="file-info">
+                <span class="file-type">drwxr-xr-x</span>
+                <span class="file-name">test_folder/</span>
+            </div>
+            <div class="file-arrow">&gt;</div>
+        </a>
+
+        <!-- SEPARATOR -->
+        <div class="separator">
+            <span class="separator-text">// FILES</span>
+            <span class="separator-line"></span>
+            <span class="separator-count">[5]</span>
+        </div>
+
+        <!-- PLIKI -->
+        <a href="/AI_ARTISTS_REAL_DESIGN" class="file-row">
+            <div class="file-num">01</div>
+            <div class="file-info">
+                <span class="file-type">-rw-r--r--</span>
+                <span class="file-name">AI_ARTISTS_REAL_DESIGN</span>
+                <span class="file-meta">24.1KB | 0x5E3A | 23.12.2024</span>
+            </div>
+            <div class="file-arrow">&gt;</div>
+        </a>
+
+        <a href="/AI_AUTHENTICITY_VS_SIMULATION" class="file-row">
+            <div class="file-num">02</div>
+            <div class="file-info">
+                <span class="file-type">-rw-r--r--</span>
+                <span class="file-name">AI_AUTHENTICITY_VS_SIMULATION</span>
+                <span class="file-meta">22.1KB | 0x56D1 | 23.12.2024</span>
+            </div>
+            <div class="file-arrow">&gt;</div>
+        </a>
+
+        <a href="/RESEARCH_FIRST_PROTOCOL" class="file-row">
+            <div class="file-num">03</div>
+            <div class="file-info">
+                <span class="file-type">-rw-r--r--</span>
+                <span class="file-name">RESEARCH_FIRST_PROTOCOL</span>
+                <span class="file-meta">2.8KB | 0x0AE0 | 23.12.2024</span>
+            </div>
+            <div class="file-arrow">&gt;</div>
+        </a>
+
+        <a href="/RESEARCH_PROTOCOL_WORLDCLASS" class="file-row">
+            <div class="file-num">04</div>
+            <div class="file-info">
+                <span class="file-type">-rw-r--r--</span>
+                <span class="file-name">RESEARCH_PROTOCOL_WORLDCLASS</span>
+                <span class="file-meta">4.7KB | 0x125C | 23.12.2024</span>
+            </div>
+            <div class="file-arrow">&gt;</div>
+        </a>
+
+        <a href="/TOTAL_WAR_COMPETITOR_RESEARCH" class="file-row">
+            <div class="file-num">05</div>
+            <div class="file-info">
+                <span class="file-type">-rw-r--r--</span>
+                <span class="file-name">TOTAL_WAR_COMPETITOR_RESEARCH</span>
+                <span class="file-meta">31.2KB | 0x7A00 | 23.12.2024</span>
+            </div>
+            <div class="file-arrow">&gt;</div>
+        </a>
+
+        <!-- END COMMAND -->
+        <div class="cmd-line end">
+            <span class="cmd-prompt">$</span>
+            <span class="cmd-text">// END_OF_LIST</span>
+        </div>
+
+    </main>
+
+    <!-- FOOTER - styl wsparcie.antydizajn.pl -->
+    <footer class="footer">
+        <!-- Linki -->
+        <div class="footer-links">
+            <a href="/polityka-prywatnosci" class="footer-link">+ Polityka Prywatności</a>
+            <a href="/regulamin" class="footer-link">+ Regulamin</a>
+            <a href="/cookies" class="footer-link">+ Cookies</a>
+        </div>
+
+        <!-- Cytat -->
+        <div class="footer-quote">
+            <p>"Nikt nie przeżył tej strony bez blizny.</p>
+            <p>Jeśli tu dotarłeś - <span class="highlight">żyjesz, bo nie boisz się brudu.</span>"</p>
+        </div>
+
+        <!-- Credits -->
+        <div class="footer-credits">
+            <span class="credits-label">+ PROUDLY MADE BY +</span>
+            <h3 class="credits-names">Paulina Janowska <span class="amp">&</span> <span class="ai">Wiedźma AI</span>
+            </h3>
+            <span class="credits-tech">on NEXT.JS 16 • <a href="https://www.antydizajn.pl">www.antydizajn.pl</a>
+                •</span>
+        </div>
+
+        <!-- Copyright -->
+        <div class="footer-copyright">
+            <p>Zabronione kopiowanie stylu. <span class="highlight">Kradzież duszy dozwolona.</span></p>
+            <p class="copyright-line">© 2025 ANTYDIZAJN • ALL RIGHTS RESERVED • SYSTEM V2.0</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

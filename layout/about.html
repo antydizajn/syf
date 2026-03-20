@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O SYF | SYF.ANTYDIZAJN.PL</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- SCANLINES OVERLAY -->
+    <div class="scanlines"></div>
+
+    <!-- NOISE OVERLAY -->
+    <div class="noise"></div>
+
+    <!-- GLOW ORBS -->
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    <div class="glow-orb glow-orb-3"></div>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <span class="logo-bracket">[</span>
+                <span class="logo-text">SYF</span>
+                <span class="logo-bracket">]</span>
+                <span class="logo-domain">.antydizajn.pl</span>
+            </a>
+
+            <nav class="nav">
+                <a href="index.html" class="nav-link">PLIKI</a>
+                <a href="about.html" class="nav-link active">O SYF</a>
+                <a href="https://antydizajn.pl" class="nav-link nav-link-external">
+                    ANTYDIZAJN
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M3.5 2H10V8.5M10 2L2 10" stroke="currentColor" stroke-width="1.5" />
+                    </svg>
+                </a>
+            </nav>
+
+            <div class="header-decorative">
+                <span class="status-dot"></span>
+                <span class="status-text">LIVE</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main about-page">
+        <!-- HERO -->
+        <section class="about-hero">
+            <div class="about-hero-content">
+                <h1 class="about-title">
+                    <span class="title-word title-word-1">CO</span>
+                    <span class="title-word title-word-2">TO</span>
+                    <span class="title-word title-word-3">KURWA</span>
+                    <span class="title-word title-word-4">JEST?</span>
+                </h1>
+                <div class="about-subtitle">
+                    <span class="subtitle-line"></span>
+                    <span class="subtitle-text">MANIFEST SYF</span>
+                    <span class="subtitle-line"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTENT BLOCKS -->
+        <section class="about-content">
+            <!-- BLOCK 1 -->
+            <article class="about-block">
+                <div class="block-number">01</div>
+                <div class="block-content">
+                    <h2 class="block-title">DEFINICJA</h2>
+                    <p class="block-text">
+                        <strong>SYF</strong> to publiczny dump plików Markdown.
+                        Bez bazy danych. Bez logowania. Bez bullshitu.
+                    </p>
+                    <p class="block-text">
+                        Wrzucasz plik <code>.md</code> do folderu → automatycznie
+                        pojawia się pod <code>/NAZWA</code>. Tyle.
+                    </p>
+                </div>
+            </article>
+
+            <!-- BLOCK 2 -->
+            <article class="about-block">
+                <div class="block-number">02</div>
+                <div class="block-content">
+                    <h2 class="block-title">DLACZEGO "SYF"?</h2>
+                    <p class="block-text">
+                        Bo to jest syf. Chaos. Bałagan myśli. Notatki, researche,
+                        manifesty, random shit który nie pasuje nigdzie indziej.
+                    </p>
+                    <p class="block-text">
+                        Nie próbujemy udawać że to jest "curated collection" albo
+                        "knowledge base". To jest <span class="highlight-magenta">dump</span>.
+                        Śmietnik. I to jest okay.
+                    </p>
+                </div>
+            </article>
+
+            <!-- BLOCK 3 -->
+            <article class="about-block">
+                <div class="block-number">03</div>
+                <div class="block-content">
+                    <h2 class="block-title">ZASADY</h2>
+                    <ul class="block-list">
+                        <li>
+                            <span class="list-icon">◆</span>
+                            <span>Wszystko jest publiczne</span>
+                        </li>
+                        <li>
+                            <span class="list-icon">◆</span>
+                            <span>Nic nie jest edytowalne przez web</span>
+                        </li>
+                        <li>
+                            <span class="list-icon">◆</span>
+                            <span>Brak komentarzy, reakcji, social bullshit</span>
+                        </li>
+                        <li>
+                            <span class="list-icon">◆</span>
+                            <span>Read-only dla wszystkich</span>
+                        </li>
+                        <li>
+                            <span class="list-icon">◆</span>
+                            <span>Eksport do MD/PDF/HTML/TXT/DOCX</span>
+                        </li>
+                    </ul>
+                </div>
+            </article>
+
+            <!-- BLOCK 4 -->
+            <article class="about-block">
+                <div class="block-number">04</div>
+                <div class="block-content">
+                    <h2 class="block-title">TECHNOLOGIA</h2>
+                    <div class="tech-grid">
+                        <div class="tech-item">
+                            <span class="tech-label">FRAMEWORK</span>
+                            <span class="tech-value">Next.js 16</span>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-label">RENDERING</span>
+                            <span class="tech-value">Remark + Rehype</span>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-label">STORAGE</span>
+                            <span class="tech-value">Filesystem</span>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-label">HOSTING</span>
+                            <span class="tech-value">MyDevil</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- BLOCK 5 -->
+            <article class="about-block about-block-accent">
+                <div class="block-number">05</div>
+                <div class="block-content">
+                    <h2 class="block-title">ZWIĄZEK Z ANTYDIZAJN</h2>
+                    <p class="block-text">
+                        SYF jest częścią ekosystemu <a href="https://antydizajn.pl">ANTYDIZAJN</a>.
+                    </p>
+                    <p class="block-text">
+                        To miejsce gdzie lądują rzeczy które mają być publicznie dostępne,
+                        ale nie pasują do głównej strony. Researche, notatki, dokumentacja
+                        procesu, random myśli.
+                    </p>
+                    <blockquote class="block-quote">
+                        "Transparencja to nie weakness. To power move."
+                    </blockquote>
+                </div>
+            </article>
+        </section>
+
+        <!-- CTA -->
+        <section class="about-cta">
+            <div class="cta-decoration">
+                <span class="cta-line"></span>
+                <span class="cta-diamond">◆</span>
+                <span class="cta-line"></span>
+            </div>
+            <a href="index.html" class="cta-button">
+                <span class="cta-text">PRZEGLĄDAJ PLIKI</span>
+                <span class="cta-arrow">→</span>
+            </a>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <span class="footer-copy">© 2025 ANTYDIZAJN</span>
+                <span class="footer-sep">|</span>
+                <span class="footer-note">wszystko tutaj to syf i chaos</span>
+            </div>
+            <div class="footer-right">
+                <a href="https://antydizajn.pl" class="footer-link">antydizajn.pl</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Stagger animation for blocks
+        document.querySelectorAll('.about-block').forEach((block, i) => {
+            block.style.opacity = '0';
+            block.style.transform = 'translateY(30px)';
+
+            setTimeout(() => {
+                block.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                block.style.opacity = '1';
+                block.style.transform = 'translateY(0)';
+            }, 200 + (i * 100));
+        });
+
+        // Title words animation
+        document.querySelectorAll('.title-word').forEach((word, i) => {
+            word.style.opacity = '0';
+            word.style.transform = 'translateY(-20px)';
+
+            setTimeout(() => {
+                word.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                word.style.opacity = '1';
+                word.style.transform = 'translateY(0)';
+            }, 100 + (i * 100));
+        });
+    </script>
+
+    <style>
+        /* ABOUT PAGE SPECIFIC STYLES */
+
+        .about-page {
+            max-width: 900px;
+        }
+
+        /* HERO */
+        .about-hero {
+            text-align: center;
+            padding: var(--space-3xl) 0;
+            margin-bottom: var(--space-3xl);
+        }
+
+        .about-title {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+        }
+
+        .title-word {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 8vw, 5rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            line-height: 1;
+        }
+
+        .title-word-1,
+        .title-word-2 {
+            color: var(--text-tertiary);
+        }
+
+        .title-word-3 {
+            color: var(--neon-magenta);
+            text-shadow:
+                0 0 20px var(--neon-magenta-glow),
+                0 0 40px var(--neon-magenta-glow);
+        }
+
+        .title-word-4 {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 15px var(--neon-cyan-glow);
+        }
+
+        .about-subtitle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-md);
+        }
+
+        .subtitle-line {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-orange));
+        }
+
+        .subtitle-line:last-child {
+            background: linear-gradient(90deg, var(--neon-orange), transparent);
+        }
+
+        .subtitle-text {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.3em;
+            color: var(--neon-orange);
+        }
+
+        /* CONTENT BLOCKS */
+        .about-content {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xl);
+        }
+
+        .about-block {
+            display: grid;
+            grid-template-columns: 60px 1fr;
+            gap: var(--space-lg);
+            padding: var(--space-xl);
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--text-muted);
+            transition: all var(--transition-base);
+        }
+
+        .about-block:hover {
+            border-left-color: var(--neon-magenta);
+            background: var(--bg-tertiary);
+        }
+
+        .about-block-accent {
+            border-left-color: var(--neon-cyan);
+            background: rgba(0, 255, 255, 0.03);
+        }
+
+        .block-number {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            line-height: 1;
+        }
+
+        .about-block:hover .block-number {
+            color: var(--neon-magenta);
+        }
+
+        .block-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-md);
+        }
+
+        .block-text {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-sm);
+            line-height: 1.7;
+        }
+
+        .block-text:last-child {
+            margin-bottom: 0;
+        }
+
+        .block-text strong {
+            color: var(--neon-magenta);
+            font-weight: 600;
+        }
+
+        .block-text code {
+            font-family: var(--font-mono);
+            font-size: 0.9em;
+            padding: 2px 6px;
+            background: rgba(0, 255, 102, 0.1);
+            border: 1px solid rgba(0, 255, 102, 0.3);
+            color: var(--neon-green);
+        }
+
+        .block-text a {
+            color: var(--neon-green);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: all var(--transition-fast);
+        }
+
+        .block-text a:hover {
+            border-bottom-color: var(--neon-green);
+        }
+
+        /* BLOCK LIST */
+        .block-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .block-list li {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            color: var(--text-secondary);
+        }
+
+        .list-icon {
+            color: var(--neon-red);
+            font-size: 0.6rem;
+        }
+
+        /* TECH GRID */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-md);
+            margin-top: var(--space-md);
+        }
+
+        .tech-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: var(--space-sm);
+            background: var(--bg-primary);
+            border: 1px solid var(--text-muted);
+        }
+
+        .tech-label {
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+        }
+
+        .tech-value {
+            font-size: 0.9rem;
+            color: var(--neon-cyan);
+            font-weight: 500;
+        }
+
+        /* BLOCK QUOTE */
+        .block-quote {
+            margin-top: var(--space-lg);
+            padding: var(--space-md) var(--space-lg);
+            background: rgba(255, 0, 255, 0.05);
+            border-left: 3px solid var(--neon-magenta);
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        /* CTA */
+        .about-cta {
+            text-align: center;
+            margin-top: var(--space-3xl);
+            padding-top: var(--space-2xl);
+        }
+
+        .cta-decoration {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+        }
+
+        .cta-line {
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-magenta), transparent);
+        }
+
+        .cta-diamond {
+            color: var(--neon-orange);
+            font-size: 0.75rem;
+            animation: spin 10s linear infinite;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-md) var(--space-2xl);
+            background: transparent;
+            border: 2px solid var(--neon-magenta);
+            color: var(--neon-magenta);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            transition: all var(--transition-base);
+        }
+
+        .cta-button:hover {
+            background: var(--neon-magenta);
+            color: var(--bg-void);
+            box-shadow: 0 0 30px var(--neon-magenta-glow);
+        }
+
+        .cta-arrow {
+            font-size: 1.2rem;
+            transition: transform var(--transition-fast);
+        }
+
+        .cta-button:hover .cta-arrow {
+            transform: translateX(5px);
+        }
+
+        /* FOOTER LINK */
+        .footer-link {
+            color: var(--neon-cyan);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: color var(--transition-fast);
+        }
+
+        .footer-link:hover {
+            color: var(--neon-magenta);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            .about-block {
+                grid-template-columns: 1fr;
+                gap: var(--space-md);
+            }
+
+            .block-number {
+                font-size: 1.5rem;
+            }
+
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .title-word {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</body>
+
+</html>

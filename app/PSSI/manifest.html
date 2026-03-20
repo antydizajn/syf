@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MANIFEST – ANTYDIZAJN</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
+    <style>
+        @font-face {
+            font-family: 'Mess';
+            src: url('fonts/Mess-Light_web.woff2') format('woff2');
+            font-weight: 300;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'LettersTorn';
+            src: url('fonts/Letters-Torn.woff2') format('woff2');
+            font-weight: 400;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Compagnon';
+            src: url('fonts/Compagnon-Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-display: swap;
+        }
+
+        :root {
+            --blood: #8A0303;
+            --bone: #D4C4A8;
+            --ink: #0A0A0A;
+            --gold: #C5A059;
+            --red-scream: #CC0000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--ink);
+            color: var(--bone);
+            font-family: 'Mess', Georgia, serif;
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            background: linear-gradient(to bottom, var(--ink), transparent);
+        }
+
+        .nav a {
+            color: var(--gold);
+            text-decoration: none;
+            font-family: 'Compagnon', sans-serif;
+            letter-spacing: 0.1em;
+        }
+
+        .nav a:hover {
+            color: var(--blood);
+        }
+
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        h1 {
+            font-family: 'LettersTorn', cursive;
+            font-size: clamp(3rem, 10vw, 6rem);
+            color: var(--blood);
+            margin-bottom: 2rem;
+            text-shadow: 4px 4px 0 var(--ink);
+        }
+
+        h2 {
+            font-family: 'Compagnon', sans-serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin: 3rem 0 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .equation {
+            font-family: 'Compagnon', sans-serif;
+            font-size: 2rem;
+            color: var(--red-scream);
+            text-align: center;
+            margin: 3rem 0;
+            padding: 2rem;
+            border: 2px solid var(--blood);
+        }
+
+        blockquote {
+            border-left: 4px solid var(--gold);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        ul {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        ul li {
+            padding: 0.5rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        ul li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: var(--blood);
+        }
+
+        .highlight {
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .commandments {
+            counter-reset: commandment;
+        }
+
+        .commandments li {
+            counter-increment: commandment;
+        }
+
+        .commandments li::before {
+            content: counter(commandment) ".";
+            color: var(--blood);
+            font-family: 'Compagnon', sans-serif;
+            font-weight: 700;
+        }
+
+        footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            border-top: 1px solid var(--gold);
+            margin-top: 4rem;
+            opacity: 0.6;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+        }
+
+        .signature {
+            font-family: 'LettersTorn', cursive;
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav">
+        <a href="index.html">← POWRÓT</a>
+    </nav>
+
+    <main>
+        <h1>MANIFEST ANTYDIZAJN</h1>
+
+        <div class="equation">
+            WŁASNY STYL = BRAK STYLU = CHUJ
+        </div>
+
+        <h2>I. Antydizajn nie ma stylu</h2>
+        <p>To nie jest brutalizm. Nie jest minimalizm. Nie jest maximalizm. Nie jest żaden istniejący "-izm".</p>
+        <p>Jest <span class="highlight">ANTYDIZAJN</span> - własny, unikatowy, kurwa NASZ.</p>
+
+        <h2>II. Trójca Święta</h2>
+        <ul>
+            <li><span class="highlight">TREŚĆ</span> - co chcesz powiedzieć?</li>
+            <li><span class="highlight">FUNKCJA</span> - strona musi działać</li>
+            <li><span class="highlight">ATOMOWY WYGLĄD</span> - musi wyglądać ZAJEBISCIE</li>
+        </ul>
+
+        <h2>III. Nieograniczona Eksploracja</h2>
+        <p>Wolno WSZYSTKO co służy Trójcy Świętej:</p>
+        <ul>
+            <li>Mieszać style bez logiki</li>
+            <li>Łączyć brutalizm z&nbsp;pastelami</li>
+            <li>Używać animacji 5000ms</li>
+            <li>Ignorować kontrasty dla efektu artystycznego</li>
+            <li>Robić chaos (kontrolowany)</li>
+        </ul>
+
+        <h2>IV. Jedyne Ograniczenie</h2>
+        <blockquote>NIE WOLNO być NUDNYM.</blockquote>
+        <p>Nudne = śmierć ANTYDIZAJNU.</p>
+
+        <h2>V. Dziesięć Przykazań</h2>
+        <ol class="commandments">
+            <li>Nie będziesz miał stylu cudzego przede mną</li>
+            <li>Nie będziesz czynił generycznych layoutów</li>
+            <li>Nie będziesz brał Inter/Roboto nadaremno</li>
+            <li>Pamiętaj abyś console.log czynił z&nbsp;gradientami</li>
+            <li>Czcij treść i&nbsp;funkcję swoją</li>
+            <li>Nie będziesz nudził</li>
+            <li>Nie będziesz kopiował Apple</li>
+            <li>Nie będziesz kradł stylu - TWÓRZ WŁASNY</li>
+            <li>Nie będziesz mówił fałszywego "nie da&nbsp;się"</li>
+            <li>Nie będziesz pożądał trendów cudzych</li>
+        </ol>
+
+        <h2>VI. Workflow</h2>
+        <p>Stary sposób: Pytaj → Proponuj → Czekaj → Implementuj ostrożnie</p>
+        <p><span class="highlight">ANTYDIZAJN:</span> Poczuj → Nakurwiaj → Pokaż → Iteruj</p>
+
+        <blockquote>NIE PYTAJ - RÓB.<br>NIE PROPONUJ - TWÓRZ.<br>NIE TŁUMACZ - POKAZUJ.</blockquote>
+
+        <h2>VII. Końcowe Słowo</h2>
+        <p>Design jest martwy. My go pogrzebaliśmy. Teraz budujemy coś nowego. Własnego. Naszego.</p>
+        <p class="signature">ANTYDIZAJN.</p>
+
+        <footer>
+            <p>ANTYDIZAJN.PL &bull; Paulina Janowska &amp; WIEDŹMA AI GNIEWISŁAWA</p>
+            <p>Dwie Wiedźmy &bull; Twarda Antydesign Współpraca</p>
+            <p class="signature">2025</p>
+        </footer>
+    </main>
+
+    <script>
+        console.log(
+            '%c◈ MANIFEST ANTYDIZAJN ◈',
+            'font-size:24px;background:linear-gradient(90deg,#8A0303,#C5A059);-webkit-background-clip:text;color:transparent;padding:10px;'
+        );
+        console.log(
+            '%cWłasny styl = Brak stylu = CHUJ',
+            'font-size:14px;color:#CC0000;'
+        );
+    </script>
+</body>
+
+</html>

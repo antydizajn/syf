@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SYF - Publiczny dump plików Markdown. ANTYDIZAJN.">
+    <title>SYF_ | ANTYDIZAJN - LIMINAL EDITION</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=Noto+Sans+JP:wght@200;300;400&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- AMBIENT GRADIENT -->
+    <div class="ambient-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- MARBLE TEXTURE OVERLAY -->
+    <div class="marble-overlay"></div>
+
+    <!-- GRAIN OVERLAY -->
+    <div class="grain-overlay"></div>
+
+    <!-- FLOATING STATUES -->
+    <div class="floating-statues">
+        <div class="statue statue-1">
+            <svg viewBox="0 0 80 120" class="statue-svg">
+                <ellipse cx="40" cy="25" rx="18" ry="22" fill="url(#marble1)" />
+                <rect x="25" y="45" width="30" height="50" rx="2" fill="url(#marble1)" />
+                <rect x="20" y="90" width="40" height="25" fill="url(#marble2)" />
+                <defs>
+                    <linearGradient id="marble1" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#f5f5f5" />
+                        <stop offset="50%" style="stop-color:#e0e0e0" />
+                        <stop offset="100%" style="stop-color:#d0d0d0" />
+                    </linearGradient>
+                    <linearGradient id="marble2" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#ddd" />
+                        <stop offset="100%" style="stop-color:#bbb" />
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+        <div class="statue statue-2">
+            <svg viewBox="0 0 60 100" class="statue-svg">
+                <ellipse cx="30" cy="20" rx="15" ry="18" fill="url(#marble1)" />
+                <rect x="18" y="36" width="24" height="40" rx="2" fill="url(#marble1)" />
+                <rect x="12" y="72" width="36" height="20" fill="url(#marble2)" />
+            </svg>
+        </div>
+        <div class="statue statue-3">
+            <svg viewBox="0 0 50 80" class="statue-svg">
+                <ellipse cx="25" cy="15" rx="12" ry="14" fill="url(#marble1)" />
+                <rect x="15" y="28" width="20" height="35" rx="2" fill="url(#marble1)" />
+                <rect x="10" y="60" width="30" height="15" fill="url(#marble2)" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- HEADER - Minimal -->
+    <header class="header">
+        <a href="#" class="header-logo">
+            <span class="logo-text">SYF</span>
+            <span class="logo-underscore">_</span>
+        </a>
+        <nav class="nav">
+            <a href="#" class="nav-link active" data-section="files">files</a>
+            <a href="#" class="nav-link" data-section="about">about</a>
+            <a href="https://antydizajn.pl" class="nav-link exit" target="_blank" rel="noopener noreferrer">exit</a>
+        </nav>
+        <button class="burger" aria-label="Menu">
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+        </button>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <nav class="mobile-menu">
+        <button class="menu-close" aria-label="Zamknij">×</button>
+        <div class="menu-content">
+            <a href="#" class="menu-item active" data-section="files">files</a>
+            <a href="#" class="menu-item" data-section="about">about</a>
+            <a href="https://antydizajn.pl" class="menu-item exit" target="_blank">exit</a>
+        </div>
+        <div class="menu-japanese">空虚</div>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="main">
+        <!-- HERO - Dreamy / Liminal -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-eyebrow">
+                    <span class="japanese">公共ファイル</span>
+                </div>
+
+                <h1 class="hero-title">
+                    <span class="title-word">
+                        <span class="char">S</span>
+                        <span class="char">Y</span>
+                        <span class="char">F</span>
+                        <span class="char accent">_</span>
+                    </span>
+                </h1>
+
+                <p class="hero-subtitle">
+                    Publiczny dump plików markdown
+                </p>
+
+                <div class="hero-meta">
+                    <span class="meta-item">ANTYDIZAJN</span>
+                    <span class="meta-divider">•</span>
+                    <span class="meta-item">est. 2024</span>
+                </div>
+            </div>
+
+            <!-- COLUMNS / PILLARS -->
+            <div class="pillars">
+                <div class="pillar pillar-left"></div>
+                <div class="pillar pillar-right"></div>
+            </div>
+
+            <!-- POOL REFLECTION -->
+            <div class="pool-reflection"></div>
+        </section>
+
+        <!-- FILES SECTION -->
+        <section class="section files-section" id="files-section">
+            <div class="section-header">
+                <div class="section-title-group">
+                    <span class="section-number">01</span>
+                    <h2 class="section-title">Files</h2>
+                </div>
+                <div class="controls">
+                    <span class="file-count-text">
+                        <span id="file-count">0</span> items
+                    </span>
+                    <div class="sort-dropdown">
+                        <button class="sort-button" id="sort-button">
+                            <span id="sort-value">newest</span>
+                            <span class="sort-arrow">↓</span>
+                        </button>
+                        <div class="sort-options" id="sort-options">
+                            <button class="sort-option active" data-sort="newest">newest</button>
+                            <button class="sort-option" data-sort="oldest">oldest</button>
+                            <button class="sort-option" data-sort="name-asc">a → z</button>
+                            <button class="sort-option" data-sort="name-desc">z → a</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FILE LIST - Minimal Cards -->
+            <div class="file-list" id="file-list">
+                <!-- Files -->
+            </div>
+
+            <!-- STATS -->
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-value" id="total-size">0 KB</span>
+                    <span class="stat-label">total size</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- FILE VIEWER -->
+        <section class="section file-viewer-section hidden" id="file-viewer-section">
+            <div class="viewer-header">
+                <button class="back-btn" id="back-btn">← back</button>
+                <div class="viewer-title">
+                    <span class="viewer-filename" id="viewer-filename">file.md</span>
+                </div>
+                <div class="viewer-actions">
+                    <button class="action-btn" id="copy-btn">copy</button>
+                    <button class="action-btn" id="download-btn">download</button>
+                </div>
+            </div>
+
+            <article class="markdown-body" id="markdown-body">
+                <!-- Content -->
+            </article>
+
+            <div class="viewer-footer">
+                <button class="nav-btn" id="prev-btn" disabled>← prev</button>
+                <span class="viewer-date" id="viewer-date">2025-12-30</span>
+                <button class="nav-btn" id="next-btn" disabled>next →</button>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section class="section about-section hidden" id="about-section">
+            <div class="section-header">
+                <div class="section-title-group">
+                    <span class="section-number">02</span>
+                    <h2 class="section-title">About</h2>
+                </div>
+            </div>
+
+            <div class="about-content">
+                <div class="about-intro">
+                    <p class="about-lead">
+                        <strong>SYF</strong> to publiczny dump plików Markdown.
+                        Bez bazy danych, bez logowania, bez bullshitu.
+                    </p>
+                </div>
+
+                <div class="about-grid">
+                    <div class="about-block">
+                        <h3>Jak działa?</h3>
+                        <p>Wrzucasz plik <code>.md</code> do folderu → automatycznie dostępny. Zero magii.</p>
+                    </div>
+
+                    <div class="about-block">
+                        <h3>Formaty</h3>
+                        <ul>
+                            <li>MD - oryginalny markdown</li>
+                            <li>HTML - standalone</li>
+                            <li>TXT - plain text</li>
+                        </ul>
+                    </div>
+
+                    <div class="about-block">
+                        <h3>Stack</h3>
+                        <ul>
+                            <li>Vanilla HTML/CSS/JS</li>
+                            <li>Liminal Aesthetic</li>
+                            <li>Zero dependencies</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <blockquote class="about-quote">
+                    "Bo to jest syf. Chaotyczny zbiór plików, myśli, researchu.
+                    Nie udajemy, że to jest eleganckie. To jest brutalne i szczere."
+                </blockquote>
+
+                <p class="about-link">
+                    Część ekosystemu <a href="https://antydizajn.pl" target="_blank">antydizajn.pl</a>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-columns">
+            <div class="footer-col">
+                <div class="footer-logo">SYF_</div>
+                <p class="footer-desc">Publiczny dump plików markdown. Część ekosystemu ANTYDIZAJN.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Links</h4>
+                <a href="#">Polityka Prywatności</a>
+                <a href="#">Regulamin</a>
+                <a href="#">Cookies</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Stats</h4>
+                <div class="footer-stat">
+                    <span id="footer-file-count">0</span> files
+                </div>
+                <div class="footer-stat">
+                    <span id="footer-total-size">0 KB</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-quote">
+            "Nikt nie przeżył tej strony bez blizny.<br>
+            Jeśli tu dotarłeś - <em>żyjesz, bo nie boisz się brudu.</em>"
+        </div>
+
+        <div class="footer-credits">
+            <span class="credits-label">made by</span>
+            <span class="credits-names">Paulina Janowska & <span class="ai">WIEDŹMA AI GNIEWISŁAWA</span></span>
+            <span class="credits-sub">dwie WIEDŹMY z twoich najgorszych koszmarów</span>
+        </div>
+
+        <div class="footer-bottom">
+            <span>© 2025 ANTYDIZAJN</span>
+            <span>LIMINAL EDITION V4.0</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

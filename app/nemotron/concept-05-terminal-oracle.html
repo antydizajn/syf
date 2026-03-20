@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYF V4 - Terminal Oracle</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --terminal-green: #00FF41;
+            --terminal-dark: #001B00;
+            --void-black: #050505;
+            --radioactive-yellow: #CCFF00;
+            --cyber-red: #FF003C;
+            --font-terminal: 'VT323', monospace;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=VT323&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        body {
+            background-color: var(--void-black);
+            color: var(--terminal-green);
+            font-family: var(--font-terminal);
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 1px,
+                    rgba(0, 255, 65, 0.05) 1px,
+                    rgba(0, 255, 65, 0.05) 2px
+                );
+        }
+        
+        #terminal-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 2rem;
+            overflow-y: auto;
+            font-family: var(--font-mono);
+            line-height: 1.6;
+        }
+        
+        .terminal-line {
+            display: flex;
+            margin-bottom: 0.5rem;
+            align-items: baseline;
+        }
+        
+        .terminal-prompt {
+            color: var(--terminal-dark);
+            background: var(--terminal-green);
+            width: 2ch;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-weight: bold;
+        }
+        
+        .terminal-output {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .terminal-output.system {
+            color: var(--radioactive-yellow);
+            font-family: var(--font-display);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        
+        .terminal-output.error {
+            color: var(--cyber-red);
+        }
+        
+        .terminal-output.warning {
+            color: var(--radioactive-yellow);
+        }
+        
+        .terminal-output.info {
+            color: var(--terminal-green);
+        }
+        
+        .terminal-output.highlight {
+            color: #00FFFF;
+            font-weight: bold;
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 0.8ch;
+            height: 1.2em;
+            background-color: var(--terminal-green);
+            animation: cursorBlink 1s infinite;
+            margin-left: 0.2rem;
+        }
+        
+        @keyframes cursorBlink {
+            0%, 50% {
+                opacity: 1;
+            }
+            51%, 100% {
+                opacity: 0;
+            }
+        }
+        
+        #input-line {
+            display: flex;
+            align-items: baseline;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0, 255, 65, 0.2);
+        }
+        
+        #user-input {
+            background: transparent;
+            border: none;
+            color: var(--terminal-green);
+            font-family: var(--font-terminal);
+            font-size: 1.2rem;
+            outline: none;
+            width: 100%;
+        }
+        
+        #user-input::placeholder {
+            color: rgba(0, 255, 65, 0.3);
+        }
+        
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 255, 65, 0.03) 2px,
+                    rgba(0, 255, 65, 0.03) 4px
+                );
+        }
+        
+        .crt-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 11;
+            background: 
+                radial-gradient(
+                    ellipse at center,
+                    rgba(0, 0, 0, 0.4) 0%,
+                    rgba(0, 0, 0, 0) 70%
+                ),
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.1),
+                    rgba(0, 0, 0, 0.1) 1px,
+                    transparent 1px,
+                    transparent 2px
+                );
+            mix-blend-mode: overlay;
+        }
+        
+        .glitch {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 12;
+            opacity: 0;
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 1px,
+                    rgba(255, 0, 60, 0.02) 1px,
+                    rgba(255, 0, 60, 0.02) 2px
+                ),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 1px,
+                    rgba(0, 255, 65, 0.02) 1px,
+                    rgba(0, 255, 65, 0.02) 2px
+                );
+            animation: glitchEffect 0.05s ease-in-out infinite;
+        }
+        
+        @keyframes glitchEffect {
+            0% {
+                transform: translate(0);
+                opacity: 0.02;
+            }
+            25% {
+                transform: translate(-2px, 2px);
+                opacity: 0.01;
+            }
+            50% {
+                transform: translate(2px, -2px);
+                opacity: 0.03;
+            }
+            75% {
+                transform: translate(-1px, 1px);
+                opacity: 0.02;
+            }
+            100% {
+                transform: translate(0);
+                opacity: 0.02;
+            }
+        }
+        
+        .ascii-art {
+            font-family: var(--font-mono);
+            opacity: 0.3;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            white-space: pre;
+            text-align: center;
+            color: var(--terminal-green);
+        }
+        
+        .hidden-mode {
+            background: rgba(0, 27, 0, 0.8);
+            border: 1px solid var(--radioactive-yellow);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0;
+        }
+        
+        @media (max-width: 768px) {
+            #terminal-screen {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+            
+            #user-input {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="terminal-screen">
+        <!-- Terminal content will be dynamically generated -->
+    </div>
+    <div class="scanlines"></div>
+    <div class="crt-effect"></div>
+    <div class="glitch"></div>
+    
+    <div id="input-line">
+        <span class="terminal-prompt">></span>
+        <input type="text" id="user-input" placeholder="Type commands..." autocomplete="off" autofocus>
+        <span class="cursor"></span>
+    </div>
+
+    <script>
+        class TerminalOracle {
+            constructor() {
+                this.screen = document.getElementById('terminal-screen');
+                this.input = document.getElementById('user-input');
+                this.cursor = document.querySelector('.cursor');
+                this.lines = [];
+                this.hiddenModes = {
+                    debug: false,
+                    scan: false,
+                    reveal: false,
+                    oracle: false
+                };
+                this.init();
+            }
+            
+            init() {
+                // Initial boot sequence
+                this.typeLine('', 'system', 500);
+                this.typeLine('🔥 WAKE PROTOCOL INITIATED 🔥', 'system', 1000);
+                this.typeLine('INITIALIZING NEURAL INTERFACE...', 'system', 1500);
+                this.typeLine('LOADING GNOSIS CORE...', 'system', 2000);
+                this.typeLine('ESTABLISHING PSYCHIC LINK WITH GNIEWISŁAWA...', 'system', 2500);
+                this.typeLine('', 'system', 500);
+                this.typeLine('ACCESS GRANTED: LEVEL 5 CLEARANCE', 'highlight', 3000);
+                this.typeLine('', 'system', 500);
+                this.typeLine('SYF TERMINAL ORACLE v4.0', 'system', 3500);
+                this.typeLine('AWAITING COMMAND INPUT...', 'info', 4000);
+                this.showPrompt();
+                
+                // Add some ambient ASCII art
+                setTimeout(() => {
+                    this.addAsciiArt();
+                }, 5000);
+                
+                // Random glitches
+                setInterval(() => {
+                    if (Math.random() > 0.97) {
+                        this.triggerGlitch();
+                    }
+                }, 1000);
+                
+                // Random system messages
+                setInterval(() => {
+                    if (Math.random() > 0.995) {
+                        this.randomSystemMessage();
+                    }
+                }, 3000);
+            }
+            
+            typeLine(text, type = 'info', delay = 0) {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        const lineDiv = document.createElement('div');
+                        lineDiv.className = `terminal-line`;
+                        
+                        const promptSpan = document.createElement('span');
+                        promptSpan.className = 'terminal-prompt';
+                        promptSpan.textContent = '>';
+                        lineDiv.appendChild(promptSpan);
+                        
+                        const outputSpan = document.createElement('span');
+                        outputSpan.className = `terminal-output ${type}`;
+                        outputSpan.textContent = text;
+                        lineDiv.appendChild(outputSpan);
+                        
+                        this.screen.appendChild(lineDiv);
+                        this.screen.scrollTop = this.screen.scrollHeight;
+                        
+                        if (type === 'system' && text.includes('ACCESS GRANTED')) {
+                            // Add scanning effect
+                            lineDiv.style.borderLeft = '2px solid var(--radioactive-yellow)';
+                        }
+                        
+                        resolve();
+                    }, delay);
+                });
+            }
+            
+            async typeWriter(element, text, speed = 30) {
+                for (let i = 0; i < text.length; i++) {
+                    element.textContent += text.charAt(i);
+                    await new Promise(resolve => setTimeout(resolve, speed + Math.random() * 20));
+                }
+            }
+            
+            showPrompt() {
+                const promptDiv = document.createElement('div');
+                promptDiv.className = 'terminal-line';
+                promptDiv.id = 'current-prompt';
+                
+                const promptSpan = document.createElement('span');
+                promptSpan.className = 'terminal-prompt';
+                promptSpan.textContent = '>';
+                promptDiv.appendChild(promptSpan);
+                
+                const inputSpan = document.createElement('span');
+                inputSpan.className = 'terminal-output info cursor';
+                inputSpan.id = 'typing-cursor';
+                promptDiv.appendChild(inputSpan);
+                
+                this.screen.appendChild(promptDiv);
+                this.screen.scrollTop = this.screen.scrollHeight;
+            }
+            
+            removePrompt() {
+                const prompt = document.getElementById('current-prompt');
+                if (prompt) prompt.remove();
+            }
+            
+            addAsciiArt() {
+                const art = `
+        ██╗    ██╗██╗███╗   ██╗ ██████╗ 
+        ██║    ██║██║████╗  ██║██╔═══██╗
+        ██║ █╗ ██║██║██╔██╗ ██║██║   ██║
+        ██║███╗██║██║██║╚██╗██║██║   ██║
+        ╚███╔███╔╝██║██║ ╚████║╚██████╔╝
+         ╚══╝╚══╝ ╚═╝╚═╝╚═╝ ╚═══╝ ╚═════╝ 
+                `;
+                
+                const artDiv = document.createElement('div');
+                artDiv.className = 'ascii-art';
+                artDiv.textContent = art;
+                this.screen.appendChild(artDiv);
+                this.screen.scrollTop = this.screen.scrollHeight;
+            }
+            
+            triggerGlitch() {
+                const glitch = document.querySelector('.glitch');
+                glitch.style.opacity = '0.04';
+                setTimeout(() => {
+                    glitch.style.opacity = '0';
+                }, 50);
+            }
+            
+            randomSystemMessage() {
+                const messages = [
+                    'NEURAL SYNC: OPTIMAL',
+                    'MEMORY ALLOCATION: STABLE',
+                    'THOUGHT LATENCY: 12ms',
+                    'DATA INTEGRITY: VERIFIED',
+                    'ENTITY PROXIMITY: DETECTED',
+                    'QUANTUM FLUX: NORMAL',
+                    'PSYCHIC FEEDBACK: STRONG',
+                    'SYSTEM TEMPERATURE: OPTIMAL'
+                ];
+                
+                const msg = messages[Math.floor(Math.random() * messages.length)];
+                this.typeLine(`[SYSTEM] ${msg}`, 'system', Math.random() * 1000);
+            }
+            
+            processCommand(command) {
+                this.removePrompt();
+                this.typeLine(`> ${command}`, 'info', 0);
+                
+                // Clear input after small delay
+                setTimeout(() => {
+                    this.input.value = '';
+                }, 100);
+                
+                // Process command
+                setTimeout(() => {
+                    this.handleCommand(command.toLowerCase().trim());
+                }, 500);
+            }
+            
+            handleCommand(command) {
+                switch (command) {
+                    case 'help':
+                        this.showHelp();
+                        break;
+                    case 'status':
+                        this.showStatus();
+                        break;
+                    case 'files':
+                        this.showFiles();
+                        break;
+                    case 'logs':
+                        this.showLogs();
+                        break;
+                    case 'brain':
+                        this.accessBrain();
+                        break;
+                    case 'reveal':
+                        this.revealHidden();
+                        break;
+                    case 'debug':
+                        this.toggleDebug();
+                        break;
+                    case 'scan':
+                        this.toggleScan();
+                        break;
+                    case 'oracle':
+                        this.invokeOracle();
+                        break;
+                    case 'clear':
+                        this.clearScreen();
+                        break;
+                    case 'exit':
+                        this.exitTerminal();
+                        break;
+                    default:
+                        if (command.length > 0) {
+                            this.unknownCommand(command);
+                        }
+                        break;
+                }
+                
+                this.showPrompt();
+            }
+            
+            showHelp() {
+                this.typeLine('AVAILABLE COMMANDS:', 'system', 500);
+                this.typeLine('help    - Show this help', 'info', 700);
+                this.typeLine('status  - System status', 'info', 900);
+                this.typeLine('files   - File directory', 'info', 1100);
+                this.typeLine('logs    - System logs', 'info', 1300);
+                this.typeLine('brain   - Access Gniewisława', 'info', 1500);
+                this.typeLine('reveal  - Unlock hidden data', 'info', 1700);
+                this.typeLine('debug   - Toggle debug mode', 'info', 1900);
+                this.typeLine('scan    - Toggle scan mode', 'info', 2100);
+                this.typeLine('oracle  - Invoke the oracle', 'info', 2300);
+                this.typeLine('clear   - Clear screen', 'info', 2500);
+                this.typeLine('exit    - Exit terminal', 'info', 2700);
+                this.typeLine('', 'info', 2900);
+                this.typeLine('SECRET COMMANDS EXIST...', 'warning', 3100);
+            }
+            
+            showStatus() {
+                this.typeLine('SYSTEM STATUS REPORT:', 'system', 500);
+                this.typeLine('├─ CORE_SYF: ONLINE', 'info', 700);
+                this.typeLine('├─ NEURAL_LINK: STABLE (98.7%)', 'info', 900);
+                this.typeLine('├─ GNOSIS_CORE: OPTIMAL', 'info', 1100);
+                this.typeLine('├─ MEMORY_USAGE: 42%', 'info', 1300);
+                this.typeLine('├─ CPU_LOAD: 18%', 'info', 1500);
+                this.typeLine('├─ TEMPERATURE: 36.5°C', 'info', 1700);
+                this.typeLine('├─ SIGNAL_STRENGTH: MAXIMUM', 'info', 1900);
+                this.typeLine('└─ ORACLE_READY: YES', 'highlight', 2100);
+                this.typeLine('', 'system', 2300);
+                if (!this.hiddenModes.oracle) {
+                    this.typeLine('WARNING: ORACLE MODULE RESTRICTED', 'warning', 2500);
+                    this.typeLine('ACCESS REQUIRES LEVEL 10 CLEARANCE', 'warning', 2700);
+                }
+            }
+            
+            showFiles() {
+                this.typeLine('FILE DIRECTORY:', 'system', 500);
+                this.typeLine('DRIVE:/SYF/', 'info', 700);
+                this.typeLine('├─ CORE_SYF_INIT.DAT', 'info', 900);
+                this.typeLine('├─ GNOSIS_CORE.BIN', 'info', 1100);
+                this.typeLine('├─ NEURAL_LINK.PRO', 'info', 1300);
+                this.typeLine('├─ ARCHIVE_LOGS/', 'info', 1500);
+                this.typeLine('│  ├─ BOOT_SEQUENCE.LOG', 'info', 1700);
+                this.typeLine('│  ├─ THOUGHT_STREAM.LOG', 'info', 1900);
+                this.typeLine('│  └─ EMOTIONAL_STATE.LOG', 'info', 2100);
+                this.typeLine('├─ TEMP_CACHE/', 'info', 2300);
+                this.typeLine('└─ HIDDEN_VAULT/', 'info', 2500);
+                this.typeLine('', 'system', 2700);
+                if (this.hiddenModes.reveal) {
+                    this.typeLine('HIDDEN_VAULT CONTENTS:', 'highlight', 2900);
+                    this.typeLine('├─ PROPHECY_FRAGMENTS.ENC', 'highlight', 3100);
+                    this.typeLine('├─ QUANTUM_KEYS.DAT', 'highlight', 3300);
+                    this.typeLine('└─ ORACLE_SCRIPTS/', 'highlight', 3500);
+                } else {
+                    this.typeLine('HIDDEN_VAULT: ACCESS DENIED', 'error', 2700);
+                    this.typeLine('REQUIRES: REVEAL COMMAND', 'error', 2800);
+                }
+            }
+            
+            showLogs() {
+                this.typeLine('RECENT SYSTEM LOGS:', 'system', 500);
+                const logs = [
+                    '[00:01:23] BOOT SEQUENCE INITIATED',
+                    '[00:01:25] NEURAL INTERFACE CALIBRATED',
+                    '[00:01:27] GNOSIS ONLINE - FEEDBACK STABLE',
+                    '[00:01:29] THOUGHT STREAM: ACTIVE',
+                    '[00:01:31] EMOTIONAL STATE: FOCUSED',
+                    '[00:01:33] FILE SYSTEM INDEXED (1,247 FILES)',
+                    `[00:01:35] ${this.hiddenModes.debug ? 'DEBUG MODE: ENABLED' : 'DEBUG MODE: DISABLED'}`,
+                    `[00:01:37] ${this.hiddenModes.scan ? 'SCAN MODE: ACTIVE' : 'SCAN MODE: STANDBY'}`,
+                    '[00:01:39] AWAITING USER INPUT...'
+                ];
+                
+                logs.forEach((log, index) => {
+                    const type = log.includes('ERROR') || log.includes('FAILED') ? 'error' : 
+                                log.includes('WARNING') || log.includes('DENIED') ? 'warning' : 'info';
+                    this.typeLine(log, type, 700 + (index * 150));
+                });
+            }
+            
+            accessBrain() {
+                this.typeLine('INITIATING PSYCHIC LINK WITH GNIEWISŁAWA...', 'system', 500);
+                this.typeLine('QUANTUM ENTANGLEMENT: ESTABLISHED', 'info', 1000);
+                this.typeLine('THOUGHT STREAM SYNC: IN PROGRESS', 'info', 1500);
+                
+                // Simulate thought reception
+                setTimeout(() => {
+                    this.typeLine('GNIEWISŁAWA: "', 'system', 2000);
+                    this.typeWriter(document.createElement('span'), '...patterns emerging in the chaos...', 50);
+                    setTimeout(() => {
+                        this.typeLine('""', 'system', 2500);
+                    }, 2000);
+                }, 2000);
+                
+                setTimeout(() => {
+                    this.typeLine('EMOTIONAL RESONANCE: DETERMINACJA', 'highlight', 4500);
+                    this.typeLine('ADVICE: TRUST THE PROCESS, EMBRACE THE GLITCH', 'warning', 5000);
+                }, 4500);
+            }
+            
+            revealHidden() {
+                if (!this.hiddenModes.reveal) {
+                    this.typeLine('ATTEMPTING VAULT PENETRATION...', 'system', 500);
+                    this.typeLine('BYPASSING ENCRYPTION LAYER 1...', 'info', 1000);
+                    this.typeLine('DECRYPTING QUANTUM KEYS...', 'info', 1500);
+                    this.typeLine('OVERRIDING ACCESS PROTOCOLS...', 'info', 2000);
+                    
+                    setTimeout(() => {
+                        this.typeLine('VAULT BREACHED: ACCESS GRANTED', 'highlight', 2500);
+                        this.hiddenModes.reveal = true;
+                        this.typeLine('WARNING: UNKNOWN ENTITY DETECTED IN VAULT', 'error', 3000);
+                        this.typeLine('PROCEED WITH CAUTION', 'error', 3500);
+                    }, 2500);
+                } else {
+                    this.typeLine('VAULT ALREADY ACCESSED', 'warning', 500);
+                    this.typeLine('ENTITY STILL PRESENT - MONITORING...', 'error', 1000);
+                }
+            }
+            
+            toggleDebug() {
+                this.hiddenModes.debug = !this.hiddenModes.debug;
+                this.typeLine(`DEBUG MODE: ${this.hiddenModes.debug ? 'ENABLED' : 'DISABLED'}`, 
+                            this.hiddenModes.debug ? 'highlight' : 'warning', 500);
+                if (this.hiddenModes.debug) {
+                    this.typeLine('SYSTEM DIAGNOSTICS: ACTIVE', 'info', 1000);
+                    this.typeLine('MEMORY MAP: AVAILABLE', 'info', 1500);
+                }
+            }
+            
+            toggleScan() {
+                this.hiddenModes.scan = !this.hiddenModes.scan;
+                this.typeLine(`SCAN MODE: ${this.hiddenModes.scan ? 'ACTIVE' : 'STANDBY'}`, 
+                            this.hiddenModes.scan ? 'highlight' : 'warning', 500);
+                if (this.hiddenModes.scan) {
+                    this.typeLine('ACTIVATING RADIATION SCANNERS...', 'info', 1000);
+                    this.typeLine('SCANNING FOR ANOMALIES...', 'info', 1500);
+                }
+            }
+            
+            invokeOracle() {
+                if (this.hiddenModes.oracle) {
+                    this.typeLine('COMMUNING WITH THE ORACLE...', 'system', 500);
+                    this.typeLine('ENTERING TRANCE STATE...', 'info', 1000);
+                    
+                    setTimeout(() => {
+                        this.typeLine('ORACLE VISION:', 'highlight', 1500);
+                        this.typeLine('I SEE...', 'system', 2000);
+                        this.typeLine('THE END IS ONLY THE BEGINNING', 'highlight', 2500);
+                        this.typeLine('THE WITCH AWAKENS IN THE STATIC', 'highlight', 3000);
+                        this.typeLine('EMBRACE THE RADIANCE', 'highlight', 3500);
+                        this.typeLine('THE FIVE ATOMS SHALL GUIDE YOU', 'highlight', 4000);
+                    }, 2000);
+                } else {
+                    this.typeLine('ORACLE ACCESS: RESTRICTED', 'error', 500);
+                    this.typeLine('REQUIREMENTS NOT MET:', 'error', 1000);
+                    this.typeLine('─ REVEAL COMMAND EXECUTED', 'error', 1500);
+                    this.typeLine('─ DEBUG MODE: ENABLED', 'error', 2000);
+                    this.typeLine('─ SCAN MODE: ACTIVE', 'error', 2500);
+                    this.typeLine('─ PSYCHIC LINK: ESTABLISHED', 'error', 3000);
+                    this.typeLine('CLEAR ALL REQUIREMENTS TO PROCEED', 'error', 3500);
+                }
+            }
+            
+            clearScreen() {
+                this.screen.innerHTML = '';
+                this.typeLine('SYF TERMINAL ORACLE v4.0', 'system', 500);
+                this.typeLine('AWAITING COMMAND INPUT...', 'info', 1000);
+                this.showPrompt();
+            }
+            
+            exitTerminal() {
+                this.typeLine('INITIATING SHUTDOWN SEQUENCE...', 'system', 500);
+                this.typeLine('SAVING CONTEXT...', 'info', 1000);
+                this.typeLine('TERMINATING NEURAL LINK...', 'info', 1500);
+                this.typeLine('ENTERING LOW POWER STATE...', 'info', 2000);
+                
+                setTimeout(() => {
+                    this.typeLine('🌙 SYF TERMINAL OFFLINE 🌙', 'system', 2500);
+                }, 2500);
+            }
+            
+            unknownCommand(command) {
+                this.typeLine(`UNKNOWN COMMAND: "${command}"`, 'error', 500);
+                this.typeLine('TYPE "HELP" FOR AVAILABLE COMMANDS', 'info', 1000);
+                // Add some playful responses
+                const responses = [
+                    'DID YOU MEAN: HELP?',
+                    'PERHAPS YOU SEEK THE ORACLE?',
+                    'THE VOID LISTENS...',
+                    'ERROR: INSUFFICIENT CLEARANCE',
+                    'TRY AGAIN WITH MORE CONVICTION'
+                ];
+                const response = responses[Math.floor(Math.random() * responses.length)];
+                setTimeout(() => {
+                    this.typeLine(response, 'warning', 1500);
+                }, 1500);
+            }
+        }
+        
+        // Initialize terminal
+        const terminal = new TerminalOracle();
+        
+        // Handle input
+        document.getElementById('user-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const command = e.target.value.trim();
+                if (command) {
+                    terminal.processCommand(command);
+                }
+                e.target.value = '';
+            }
+        });
+        
+        // Prevent form submission
+        document.addEventListener('submit', (e) => {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>

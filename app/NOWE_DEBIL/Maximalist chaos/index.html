@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYF // CHAOS PHYSICS</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Space+Grotesk:wght@300;500;700;900&display=swap');
+    </style>
+</head>
+
+<body class="bg-[#050505] text-white overflow-hidden select-none m-0 p-0">
+
+    <!-- PHYSICS CONTAINER -->
+    <div id="physics-container" class="fixed inset-0 z-0 cursor-grab active:cursor-grabbing"></div>
+
+    <!-- HINT OVERLAY -->
+    <div
+        class="fixed top-6 left-1/2 -translate-x-1/2 text-[#00ff66] font-['JetBrains_Mono'] text-[10px] tracking-[0.2em] z-50 pointer-events-none mix-blend-difference opacity-70 border border-[#00ff66] px-4 py-2 bg-black/50 backdrop-blur-sm">
+        // GRAVITY: ON | DRAG_OBJECTS: TRUE
+    </div>
+
+    <!-- SCRIPT -->
+    <script src="script.js"></script>
+</body>
+
+</html>

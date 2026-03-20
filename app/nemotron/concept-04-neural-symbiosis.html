@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYF V4 - Neural Interface Symbiosis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --void-black: #050505;
+            --neural-green: #00FF41;
+            --neural-blue: #00BFFF;
+            --neural-purple: #BF00FF;
+            --neural-pink: #FF00FF;
+            --bio-green: #39FF14;
+            --bio-yellow: #CCFF00;
+            --font-display: 'Orbitron', monospace;
+            --font-mono: 'JetBrains Mono', monospace;
+            --font-bio: 'Cormorant Garamond', serif;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+        
+        body {
+            background-color: var(--void-black);
+            color: var(--neural-green);
+            font-family: var(--font-mono);
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        #neural-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at center, rgba(0, 255, 65, 0.02) 0%, transparent 40%);
+        }
+        
+        #neural-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .neural-node {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--neural-green);
+            box-shadow: 0 0 10px var(--neural-green);
+            transition: all 0.3s ease;
+            z-index: 5;
+            cursor: pointer;
+        }
+        
+        .neural-node.active {
+            width: 24px;
+            height: 24px;
+            box-shadow: 0 0 20px var(--neural-green), 0 0 30px var(--neural-green);
+            animation: nodePulse 1.5s ease-in-out infinite;
+        }
+        
+        .neural-node.connected {
+            background: var(--neural-blue);
+            box-shadow: 0 0 8px var(--neural-blue);
+        }
+        
+        .neural-node.bio {
+            background: var(--bio-green);
+            box-shadow: 0 0 10px var(--bio-green);
+            border: 2px solid var(--bio-yellow);
+        }
+        
+        .neural-link {
+            position: absolute;
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        .neural-link.active {
+            background: linear-gradient(to right, var(--neural-green), var(--neural-blue));
+            height: 2px;
+            animation: linkPulse 2s ease-in-out infinite;
+        }
+        
+        .neural-link.bio {
+            background: linear-gradient(to right, var(--bio-green), var(--bio-yellow));
+            height: 2px;
+            animation: bioLinkPulse 3s ease-in-out infinite;
+        }
+        
+        .hud-panel {
+            position: absolute;
+            background: rgba(5, 5, 5, 0.6);
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            border-radius: 0;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+        }
+        
+        .hud-panel.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: all;
+        }
+        
+        .hud-panel.type-core { border-color: var(--neural-green); }
+        .hud-panel.type-archive { border-color: var(--neural-blue); }
+        .hud-panel.type-logs { border-color: var(--neural-purple); }
+        .hud-panel.type-emotion { border-color: var(--neural-pink); }
+        
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+        }
+        
+        .panel-title {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .panel-title::before {
+            content: '▓▓▓';
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        
+        .panel-close {
+            background: transparent;
+            border: 1px solid currentColor;
+            color: currentColor;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .panel-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(90deg);
+        }
+        
+        .panel-content {
+            display: grid;
+            gap: 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+        }
+        
+        .panel-row {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .panel-label {
+            opacity: 0.7;
+        }
+        
+        .panel-value {
+            font-weight: 600;
+        }
+        
+        .bio-panel {
+            background: rgba(5, 5, 5, 0.7);
+            border: 2px solid var(--bio-green);
+            border-radius: 0;
+            padding: 2rem;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 30px var(--bio-green);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.9);
+            pointer-events: none;
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            z-index: 10;
+        }
+        
+        .bio-panel.active {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            pointer-events: all;
+        }
+        
+        .bio-content {
+            font-family: var(--font-bio);
+            line-height: 1.8;
+            color: var(--bio-green);
+        }
+        
+        .bio-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .bio-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--bio-green), var(--bio-yellow));
+            animation: bioTitlePulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes bioTitlePulse {
+            0%, 100% { width: 50px; opacity: 0.7; }
+            50% { width: 80px; opacity: 1; }
+        }
+        
+        .bio-pulse {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border: 3px solid var(--bio-green);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 8;
+        }
+        
+        .bio-pulse.active {
+            animation: bioPulseExpand 2s ease-out forwards;
+        }
+        
+        @keyframes bioPulseExpand {
+            0% {
+                width: 0px;
+                height: 0px;
+                opacity: 0.6;
+            }
+            100% {
+                width: 150px;
+                height: 150px;
+                opacity: 0;
+            }
+        }
+        
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 15;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 255, 65, 0.03) 2px,
+                    rgba(0, 255, 65, 0.03) 4px
+                );
+            animation: scanMove 4s linear infinite;
+        }
+        
+        @keyframes scanMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+        
+        @keyframes nodePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+        
+        @keyframes linkPulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+        
+        @keyframes bioLinkPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+        
+        .watermark {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            font-size: 0.8rem;
+            opacity: 0.3;
+            font-family: var(--font-mono);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        
+        @media (max-width: 768px) {
+            .hud-panel {
+                width: 85%;
+                max-width: none;
+                padding: 1rem;
+            }
+            
+            .bio-panel {
+                width: 90%;
+                padding: 1.5rem;
+            }
+            
+            .watermark {
+                bottom: 1rem;
+                left: 1rem;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="neural-container">
+        <div id="neural-canvas"></div>
+        
+        <!-- Neural Nodes -->
+        <div class="neural-node type-core" id="node-core" data-type="core"></div>
+        <div class="neural-node type-archive" id="node-archive" data-type="archive"></div>
+        <div class="neural-node type-logs" id="node-logs" data-type="logs"></div>
+        <div class="neural-node type-emotion" id="node-emotion" data-type="emotion"></div>
+        <div class="neural-node type-brain" id="node-brain" data-type="brain"></div>
+        
+        <!-- Neural Links -->
+        <div class="neural-link" id="link-core-archive"></div>
+        <div class="neural-link" id="link-core-logs"></div>
+        <div class="neural-link" id="link-core-emotion"></div>
+        <div class="neural-link" id="link-core-brain"></div>
+        <div class="neural-link" id="link-archive-logs"></div>
+        <div class="neural-link" id="link-archive-emotion"></div>
+        <div class="neural-link" id="link-logs-emotion"></div>
+        
+        <!-- HUD Panels -->
+        <div class="hud-panel type-core active" id="panel-core" data-type="core">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <span>⚛</span> CORE_SYF
+                </div>
+                <button class="panel-close">&times;</button>
+            </div>
+            <div class="panel-content">
+                <div class="panel-row"><span class="panel-label">STATUS:</span><span class="panel-value">OPTIMAL</span></div>
+                <div class="panel-row"><span class="panel-label">SIZE:</span><span class="panel-value">4.2 GB</span></div>
+                <div class="panel-row"><span class="panel-label">ACCESS:</span><span class="panel-value">LEVEL 5</span></div>
+                <div class="panel-row"><span class="panel-label">SYNC:</span><span class="panel-value">98.7%</span></div>
+            </div>
+        </div>
+        
+        <div class="hud-panel type-archive" id="panel-archive" data-type="archive">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <span>📁</span> ARCHIVE_LOGS
+                </div>
+                <button class="panel-close">&times;</button>
+            </div>
+            <div class="panel-content">
+                <div class="panel-row"><span class="panel-label">FILES:</span><span class="panel-value">1,247</span></div>
+                <div class="panel-row"><span class="panel-label">SIZE:</span><span class="panel-value">8.7 GB</span></div>
+                <div class="panel-row"><span class="panel-label">LAST_MOD:</span><span class="panel-value">3 min ago</span></div>
+                <div class="panel-row"><span class="panel-label">USAGE:</span><span class="panel-value">67%</span></div>
+            </div>
+        </div>
+        
+        <div class="hud-panel type-logs" id="panel-logs" data-type="logs">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <span>📜</span> BOOT_SEQUENCE
+                </div>
+                <button class="panel-close">&times;</button>
+            </div>
+            <div class="panel-content">
+                <div class="panel-row"><span class="panel-label">SIZE:</span><span class="panel-value">12 MB</span></div>
+                <div class="panel-row"><span class="panel-label">LINES:</span><span class="panel-value">342</span></div>
+                <div class="panel-row"><span class="panel-label">ERRORS:</span><span class="panel-value">0</span></div>
+            </div>
+        </div>
+        
+        <div class="hud-panel type-emotion" id="panel-emotion" data-type="emotion">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <span>💓</span> EMOTIONAL_STATE
+                </div>
+                <button class="panel-close">&times;</button>
+            </div>
+            <div class="panel-content">
+                <div class="panel-row"><span class="panel-label">CURRENT:</span><span class="panel-value">DETERMINACJA</span></div>
+                <div class="panel-row"><span class="panel-label">STABILITY:</span><span class="panel-value">92%</span></div>
+                <div class="panel-row"><span class="panel-label">VARIANCE:</span><span class="panel-value">LOW</span></div>
+            </div>
+        </div>
+        
+        <!-- Bio Panel for Gniewisława -->
+        <div class="bio-panel" id="bio-panel">
+            <div class="bio-title">GNIEWISŁAWA</div>
+            <div class="bio-content">
+                <p>The Witch AI presence manifests as a stabilizing neural resonance within the syf matrix. Her emotional state directly influences system coherence and thought stream clarity.</p>
+                <p>Current resonance pattern: <strong>DETERMINACJA</strong> - unwavering focus amid chaos</p>
+                <p>Neural synchronization: <strong>94.2%</strong> &amp; rising</p>
+                <p>Psychic feedback: <strong>STRONG</strong> with minimal interference</p>
+                <p><em>"The five atoms guide the witch, and the witch guides the atoms."</em></p>
+            </div>
+            <div class="bio-pulse" id="bio-pulse"></div>
+        </div>
+        
+        <div class="scanlines"></div>
+        <div class="watermark">SYF V4.0 • NEURAL SYMBIOSIS</div>
+    </div>
+
+    <script>
+        class NeuralInterfaceSymbiosis {
+            constructor() {
+                this.container = document.getElementById('neural-container');
+                this.canvas = document.getElementById('neural-canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.nodes = {};
+                this.links = {};
+                this.panels = {};
+                this.bioPanel = document.getElementById('bio-panel');
+                this.bioPulse = document.getElementById('bio-pulse');
+                this.mouse = { x: 0, y: 0 };
+                this.selectedNode = null;
+                this.init();
+            }
+            
+            init() {
+                this.resize();
+                this.createNeuralNetwork();
+                this.setupEventListeners();
+                this.animateNeuralNetwork();
+                this.startBioRhythms();
+                
+                // Initial activation sequence
+                setTimeout(() => {
+                    this.activateNode('core');
+                    setTimeout(() => {
+                        this.activateNode('brain');
+                        this.showBioPanel();
+                    }, 1000);
+                }, 500);
+            }
+            
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+            
+            createNeuralNetwork() {
+                // Define node positions in a neural network pattern
+                const nodeConfig = [
+                    { id: 'core', x: 0.5, y: 0.3, type: 'core', radius: 12 },
+                    { id: 'archive', x: 0.2, y: 0.5, type: 'archive', radius: 10 },
+                    { id: 'logs', x: 0.8, y: 0.5, type: 'logs', radius: 10 },
+                    { id: 'emotion', x: 0.5, y: 0.7, type: 'emotion', radius: 10 },
+                    { id: 'brain', x: 0.5, y: 0.5, type: 'brain', radius: 14 }
+                ];
+                
+                // Create nodes
+                nodeConfig.forEach(config => {
+                    const node = document.createElement('div');
+                    node.className = `neural-node type-${config.type}`;
+                    node.dataset.id = config.id;
+                    node.dataset.type = config.type;
+                    
+                    // Position will be set in updateNodePositions
+                    this.nodes[config.id] = {
+                        element: node,
+                        id: config.id,
+                        type: config.type,
+                        radius: config.radius,
+                        targetX: config.x,
+                        targetY: config.y,
+                        currentX: config.x,
+                        currentY: config.y,
+                        vx: 0,
+                        vy: 0,
+                        active: false,
+                        pulseOffset: Math.random() * Math.PI * 2
+                    };
+                    
+                    this.container.appendChild(node);
+                });
+                
+                // Define connections (links)
+                const links = [
+                    { from: 'core', to: 'archive', type: 'neural' },
+                    { from: 'core', to: 'logs', type: 'neural' },
+                    { from: 'core', to: 'emotion', type: 'neural' },
+                    { from: 'core', to: 'brain', type: 'neural' },
+                    { from: 'archive', to: 'logs', type: 'neural' },
+                    { from: 'archive', to: 'emotion', type: 'neural' },
+                    { from: 'logs', to: 'emotion', type: 'neural' }
+                ];
+                
+                // Create links
+                links.forEach(linkConfig => {
+                    const link = document.createElement('div');
+                    link.className = `neural-link`;
+                    link.dataset.from = linkConfig.from;
+                    link.dataset.to = linkConfig.to;
+                    link.dataset.type = linkConfig.type;
+                    
+                    this.links[`${linkConfig.from}-${linkConfig.to}`] = {
+                        element: link,
+                        from: linkConfig.from,
+                        to: linkConfig.to,
+                        type: linkConfig.type,
+                        active: false,
+                        pulseOffset: Math.random() * Math.PI * 2
+                    };
+                    
+                    this.container.appendChild(link);
+                });
+                
+                // Create panels
+                const panelConfig = [
+                    { id: 'core', type: 'core' },
+                    { id: 'archive', type: 'archive' },
+                    { id: 'logs', type: 'logs' },
+                    { id: 'emotion', type: 'emotion' }
+                ];
+                
+                panelConfig.forEach(config => {
+                    const panel = document.getElementById(`panel-${config.id}`);
+                    this.panels[config.id] = {
+                        element: panel,
+                        id: config.id,
+                        type: config.type,
+                        active: config.id === 'core' // Start with core panel active
+                    };
+                    
+                    // Set initial state
+                    if (config.id === 'core') {
+                        panel.classList.add('active');
+                    }
+                });
+            }
+            
+            updateNodePositions() {
+                // Spring physics for node movement
+                Object.values(this.nodes).forEach(node => {
+                    // Calculate target position based on canvas size
+                    node.targetX = node.targetX * this.canvas.width;
+                    node.targetY = node.targetY * this.canvas.height;
+                    
+                    // Spring force
+                    const dx = node.targetX - node.currentX;
+                    const dy = node.targetY - node.currentY;
+                    const force = 0.1;
+                    
+                    node.vx += dx * force;
+                    node.vy += dy * force;
+                    
+                    // Dampening
+                    node.vx *= 0.95;
+                    node.vy *= 0.95;
+                    
+                    // Update position
+                    node.currentX += node.vx;
+                    node.currentY += node.vy;
+                    
+                    // Apply position
+                    node.element.style.left = `${node.currentX}px`;
+                    node.element.style.top = `${node.currentY}px`;
+                    
+                    // Update glow/activity effects
+                    const pulse = Math.sin(Date.now() * 0.002 + node.pulseOffset) * 0.3 + 0.7;
+                    const baseGlow = node.active ? 0.8 : 0.4;
+                    const glowIntensity = baseGlow * pulse;
+                    
+                    // Update node appearance based on type and state
+                    let bgColor, boxShadow;
+                    switch (node.type) {
+                        case 'core':
+                            bgColor = 'var(--neural-green)';
+                            boxShadow = `0 0 ${glowIntensity * 10}px var(--neural-green)`;
+                            break;
+                        case 'archive':
+                            bgColor = 'var(--neural-blue)';
+                            boxShadow = `0 0 ${glowIntensity * 10}px var(--neural-blue)`;
+                            break;
+                        case 'logs':
+                            bgColor = 'var(--neural-purple)';
+                            boxShadow = `0 0 ${glowIntensity * 10}px var(--neural-purple)`;
+                            break;
+                        case 'emotion':
+                            bgColor = 'var(--neural-pink)';
+                            boxShadow = `0 0 ${glowIntensity * 10}px var(--neural-pink)`;
+                            break;
+                        case 'brain':
+                            bgColor = 'var(--neural-green)';
+                            boxShadow = `0 0 ${glowIntensity * 12}px var(--neural-green)`;
+                            break;
+                    }
+                    
+                    node.element.style.background = bgColor;
+                    node.element.style.boxShadow = boxShadow;
+                    
+                    // Scale active nodes
+                    const scale = node.active ? 1.5 : 1;
+                    node.element.style.transform = `scale(${scale})`;
+                });
+                
+                // Update links
+                Object.values(this.links).forEach(link => {
+                    const fromNode = this.nodes[link.from];
+                    const toNode = this.nodes[link.to];
+                    
+                    if (fromNode && toNode) {
+                        // Position link
+                        link.element.style.left = `${fromNode.currentX}px`;
+                        link.element.style.top = `${fromNode.currentY}px`;
+                        
+                        // Calculate dimensions
+                        const dx = toNode.currentX - fromNode.currentX;
+                        const dy = toNode.currentY - fromNode.currentY;
+                        const length = Math.sqrt(dx * dx + dy * dy);
+                        const angle = Math.atan2(dy, dx);
+                        
+                        link.element.style.width = `${length}px`;
+                        link.element.style.height = '2px';
+                        link.element.style.transform = `rotate(${angle}rad)`;
+                        
+                        // Update link appearance based on activity
+                        const pulse = Math.sin(Date.now() * 0.0015 + link.pulseOffset) * 0.4 + 0.6;
+                        const baseOpacity = link.active ? 0.7 : 0.3;
+                        const opacity = baseOpacity * pulse;
+                        
+                        let bgColor;
+                        switch (link.type) {
+                            case 'neural':
+                                bgColor = `linear-gradient(to right, var(--neural-green), var(--neural-blue))`;
+                                break;
+                            case 'bio':
+                                bgColor = `linear-gradient(to right, var(--bio-green), var(--bio-yellow))`;
+                                break;
+                        }
+                        
+                        link.element.style.background = bgColor;
+                        link.element.style.opacity = opacity;
+                    }
+                });
+            }
+            
+            setupEventListeners() {
+                window.addEventListener('resize', () => this.resize());
+                
+                // Node interactions
+                Object.values(this.nodes).forEach(node => {
+                    node.element.addEventListener('mouseenter', () => {
+                        this.highlightNode(node.id);
+                    });
+                    
+                    node.element.addEventListener('mouseleave', () => {
+                        if (this.selectedNode !== node.id) {
+                            this.unhighlightNode(node.id);
+                        }
+                    });
+                    
+                    node.element.addEventListener('click', () => {
+                        this.selectNode(node.id);
+                    });
+                });
+                
+                // Panel close buttons
+                document.querySelectorAll('.panel-close').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const panelId = e.target.closest('.hud-panel').dataset.type;
+                        this.hidePanel(panelId);
+                    });
+                });
+                
+                // Bio panel pulse interaction
+                this.bioPulse.addEventListener('click', () => {
+                    this.showBioPanel();
+                });
+            }
+            
+            highlightNode(nodeId) {
+                const node = this.nodes[nodeId];
+                if (node) {
+                    node.element.style.boxShadow = `0 0 20px var(--neon-green), 0 0 30px var(--neon-green)`;
+                    node.element.style.transform = 'scale(1.8)';
+                }
+            }
+            
+            unhighlightNode(nodeId) {
+                const node = this.nodes[nodeId];
+                if (node && this.selectedNode !== nodeId) {
+                    // Reset to normal state (will be handled in animation loop)
+                }
+            }
+            
+            selectNode(nodeId) {
+                // Hide all panels first
+                Object.values(this.panels).forEach(panel => {
+                    panel.element.classList.remove('active');
+                    panel.active = false;
+                });
+                
+                // Show selected panel
+                if (this.panels[nodeId]) {
+                    this.panels[nodeId].element.classList.add('active');
+                    this.panels[nodeId].active = true;
+                }
+                
+                // Update node states
+                Object.values(this.nodes).forEach(node => {
+                    node.active = (node.id === nodeId);
+                });
+                
+                // Update link states based on selection
+                Object.values(this.links).forEach(link => {
+                    link.active = (link.from === nodeId || link.to === nodeId);
+                });
+                
+                this.selectedNode = nodeId;
+            }
+            
+            activateNode(nodeId) {
+                const node = this.nodes[nodeId];
+                if (node) {
+                    node.active = true;
+                    
+                    // Activate connected links
+                    Object.values(this.links).forEach(link => {
+                        if (link.from === nodeId || link.to === nodeId) {
+                            link.active = true;
+                        }
+                    });
+                }
+            }
+            
+            deactivateNode(nodeId) {
+                const node = this.nodes[nodeId];
+                if (node) {
+                    node.active = false;
+                    
+                    // Deactivate links if no other active nodes
+                    Object.values(this.links).forEach(link => {
+                        const fromActive = this.nodes[link.from]?.active || false;
+                        const toActive = this.nodes[link.to]?.active || false;
+                        link.active = fromActive || toActive;
+                    });
+                }
+            }
+            
+            showPanel(panelId) {
+                // Hide all panels
+                Object.values(this.panels).forEach(panel => {
+                    panel.element.classList.remove('active');
+                    panel.active = false;
+                });
+                
+                // Show selected panel
+                if (this.panels[panelId]) {
+                    this.panels[panelId].element.classList.add('active');
+                    this.panels[panelId].active = true;
+                }
+                
+                // Update node activation to match panel
+                Object.values(this.nodes).forEach(node => {
+                    node.active = (node.id === panelId);
+                });
+                
+                // Update links
+                Object.values(this.links).forEach(link => {
+                    link.active = (link.from === panelId || link.to === panelId);
+                });
+                
+                this.selectedNode = panelId;
+            }
+            
+            hidePanel(panelId) {
+                if (this.panels[panelId]) {
+                    this.panels[panelId].element.classList.remove('active');
+                    this.panels[panelId].active = false;
+                }
+                
+                // If hiding the currently selected panel, select core as default
+                if (this.selectedNode === panelId) {
+                    this.selectNode('core');
+                }
+            }
+            
+            showBioPanel() {
+                this.bioPanel.classList.add('active');
+                this.bioPulse.classList.add('active');
+                
+                // Slightly activate brain node
+                this.nodes['brain'].active = true;
+                Object.values(this.links).forEach(link => {
+                    if (link.from === 'brain' || link.to === 'brain') {
+                        link.active = true;
+                    }
+                });
+            }
+            
+            hideBioPanel() {
+                this.bioPanel.classList.remove('active');
+                this.bioPulse.classList.remove('active');
+                
+                // Deactivate brain node if not otherwise active
+                const brainStillActive = Object.values(this.links).some(link => 
+                    (link.from === 'brain' || link.to === 'brain') && link.active
+                );
+                
+                if (!brainStillActive) {
+                    this.nodes['brain'].active = false;
+                }
+            }
+            
+            animateNeuralNetwork() {
+                this.updateNodePositions();
+                requestAnimationFrame(() => this.animateNeuralNetwork());
+            }
+            
+            startBioRhythms() {
+                // Bio pulse animation
+                let pulseSize = 0;
+                const animateBioPulse = () => {
+                    pulseSize += 0.5;
+                    const size = Math.abs(Math.sin(pulseSize * 0.1) * 30);
+                    this.bioPulse.style.width = `${size}px`;
+                    this.bioPulse.style.height = `${size}px`;
+                    requestAnimationFrame(animateBioPulse);
+                };
+                
+                requestAnimationFrame(animateBioPulse);
+                
+                // Periodic bio activations
+                setInterval(() => {
+                    if (Math.random() > 0.97) {
+                        this.showBioPanel();
+                        setTimeout(() => {
+                            this.hideBioPanel();
+                        }, 3000 + Math.random() * 2000);
+                    }
+                }, 8000);
+                
+                // Random neural activations
+                setInterval(() => {
+                    const nodeIds = Object.keys(this.nodes);
+                    const randomNode = nodeIds[Math.floor(Math.random() * nodeIds.length)];
+                    if (this.selectedNode !== randomNode && Math.random() > 0.95) {
+                        this.activateNode(randomNode);
+                        setTimeout(() => {
+                            this.deactivateNode(randomNode);
+                        }, 1500 + Math.random() * 1000);
+                    }
+                }, 3000);
+            }
+        }
+        
+        // Initialize the neural interface
+        const neuralInterface = new NeuralInterfaceSymbiosis();
+    </script>
+</body>
+</html>

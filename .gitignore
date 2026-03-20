@@ -1,0 +1,22 @@
+# SYF V5 Gitignore
+
+# Next.js App
+/app/node_modules
+/app/.next
+/app/out
+/app/build
+/app/.vercel
+/app/*.tsbuildinfo
+/app/next-env.d.ts
+
+# OS
+.DS_Store
+
+# Misc
+*.log
+*.pem
+.env*
+.boot_errors
+.watchdog_alert
+.context_status
+.error_alert

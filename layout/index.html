@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYF.ANTYDIZAJN.PL</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- SCANLINES OVERLAY -->
+    <div class="scanlines"></div>
+
+    <!-- NOISE OVERLAY -->
+    <div class="noise"></div>
+
+    <!-- GLOW ORBS -->
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    <div class="glow-orb glow-orb-3"></div>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="logo">
+                <span class="logo-bracket">[</span>
+                <span class="logo-text">SYF</span>
+                <span class="logo-bracket">]</span>
+                <span class="logo-domain">.antydizajn.pl</span>
+            </a>
+
+            <nav class="nav">
+                <a href="index.html" class="nav-link active">PLIKI</a>
+                <a href="about.html" class="nav-link">O SYF</a>
+                <a href="https://antydizajn.pl" class="nav-link nav-link-external">
+                    ANTYDIZAJN
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M3.5 2H10V8.5M10 2L2 10" stroke="currentColor" stroke-width="1.5" />
+                    </svg>
+                </a>
+            </nav>
+
+            <div class="header-decorative">
+                <span class="status-dot"></span>
+                <span class="status-text">LIVE</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+        <!-- PAGE TITLE SECTION -->
+        <section class="page-title-section">
+            <h1 class="page-title">
+                <span class="title-line title-line-1">PUBLICZNY</span>
+                <span class="title-line title-line-2">DUMP</span>
+                <span class="title-line title-line-3">PLIKÓW</span>
+            </h1>
+            <p class="page-subtitle">
+                Wrzucasz <span class="highlight-cyan">.md</span> →
+                dostępne pod <span class="highlight-magenta">/NAZWA</span>
+            </p>
+            <div class="title-decoration">
+                <span class="dec-line"></span>
+                <span class="dec-diamond">◆</span>
+                <span class="dec-line"></span>
+            </div>
+        </section>
+
+        <!-- CONTROLS -->
+        <section class="controls">
+            <div class="controls-left">
+                <span class="file-count">
+                    <span class="file-count-number">5</span> plików
+                </span>
+            </div>
+
+            <div class="controls-right">
+                <div class="sort-dropdown">
+                    <button class="sort-button">
+                        <span class="sort-icon">↓</span>
+                        <span>NAJNOWSZE</span>
+                        <svg class="chevron" width="12" height="12" viewBox="0 0 12 12">
+                            <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" />
+                        </svg>
+                    </button>
+                    <div class="sort-menu">
+                        <button class="sort-option active">Najnowsze</button>
+                        <button class="sort-option">Najstarsze</button>
+                        <button class="sort-option">Nazwa A–Z</button>
+                        <button class="sort-option">Nazwa Z–A</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FILE LIST -->
+        <section class="file-list">
+            <!-- FILE ITEM 1 -->
+            <article class="file-item" data-index="01">
+                <div class="file-index">01</div>
+                <a href="file.html" class="file-link">
+                    <div class="file-info">
+                        <h2 class="file-name">TOTAL_WAR_COMPETITOR_RESEARCH</h2>
+                        <p class="file-preview">Brutalny research konkurencji w przestrzeni AI...</p>
+                    </div>
+                    <div class="file-meta">
+                        <span class="file-date">2025-12-28</span>
+                        <span class="file-size">21.7 KB</span>
+                    </div>
+                    <div class="file-arrow">→</div>
+                </a>
+            </article>
+
+            <!-- FILE ITEM 2 -->
+            <article class="file-item" data-index="02">
+                <div class="file-index">02</div>
+                <a href="file.html" class="file-link">
+                    <div class="file-info">
+                        <h2 class="file-name">AI_ARTISTS_REAL_DESIGN</h2>
+                        <p class="file-preview">Jak AI artyści robią prawdziwy design...</p>
+                    </div>
+                    <div class="file-meta">
+                        <span class="file-date">2025-12-27</span>
+                        <span class="file-size">24.8 KB</span>
+                    </div>
+                    <div class="file-arrow">→</div>
+                </a>
+            </article>
+
+            <!-- FILE ITEM 3 -->
+            <article class="file-item" data-index="03">
+                <div class="file-index">03</div>
+                <a href="file.html" class="file-link">
+                    <div class="file-info">
+                        <h2 class="file-name">AI_AUTHENTICITY_VS_SIMULATION</h2>
+                        <p class="file-preview">Autentyczność versus symulacja w erze AI...</p>
+                    </div>
+                    <div class="file-meta">
+                        <span class="file-date">2025-12-26</span>
+                        <span class="file-size">22.9 KB</span>
+                    </div>
+                    <div class="file-arrow">→</div>
+                </a>
+            </article>
+
+            <!-- FILE ITEM 4 -->
+            <article class="file-item" data-index="04">
+                <div class="file-index">04</div>
+                <a href="file.html" class="file-link">
+                    <div class="file-info">
+                        <h2 class="file-name">RESEARCH_PROTOCOL_WORLDCLASS</h2>
+                        <p class="file-preview">Protokół researchu na poziomie światowym...</p>
+                    </div>
+                    <div class="file-meta">
+                        <span class="file-date">2025-12-25</span>
+                        <span class="file-size">4.9 KB</span>
+                    </div>
+                    <div class="file-arrow">→</div>
+                </a>
+            </article>
+
+            <!-- FILE ITEM 5 -->
+            <article class="file-item" data-index="05">
+                <div class="file-index">05</div>
+                <a href="file.html" class="file-link">
+                    <div class="file-info">
+                        <h2 class="file-name">RESEARCH_FIRST_PROTOCOL</h2>
+                        <p class="file-preview">Research-first podejście do wszystkiego...</p>
+                    </div>
+                    <div class="file-meta">
+                        <span class="file-date">2025-12-24</span>
+                        <span class="file-size">2.7 KB</span>
+                    </div>
+                    <div class="file-arrow">→</div>
+                </a>
+            </article>
+        </section>
+
+        <!-- PAGINATION -->
+        <nav class="pagination">
+            <button class="pagination-btn pagination-prev" disabled>
+                <span>←</span> POPRZEDNIA
+            </button>
+            <div class="pagination-numbers">
+                <button class="pagination-num active">1</button>
+                <button class="pagination-num">2</button>
+                <button class="pagination-num">3</button>
+                <span class="pagination-dots">...</span>
+                <button class="pagination-num">12</button>
+            </div>
+            <button class="pagination-btn pagination-next">
+                NASTĘPNA <span>→</span>
+            </button>
+        </nav>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <span class="footer-copy">© 2025 ANTYDIZAJN</span>
+                <span class="footer-sep">|</span>
+                <span class="footer-note">wszystko tutaj to syf i chaos</span>
+            </div>
+            <div class="footer-right">
+                <div class="footer-stats">
+                    <span class="stat-item">
+                        <span class="stat-icon">📄</span>
+                        <span class="stat-value">5</span> plików
+                    </span>
+                    <span class="stat-item">
+                        <span class="stat-icon">💾</span>
+                        <span class="stat-value">77.0</span> KB
+                    </span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

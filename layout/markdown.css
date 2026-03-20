@@ -1,0 +1,518 @@
+/* ========================================
+   MARKDOWN RENDERING STYLES - NEON BRUTALISM
+   ======================================== */
+
+/* FILE PAGE LAYOUT */
+.file-page {
+    max-width: 900px;
+}
+
+/* DOWNLOAD BAR */
+.download-bar {
+    position: sticky;
+    top: 60px;
+    z-index: 90;
+    background: rgba(15, 15, 15, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.download-bar-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--space-sm) var(--space-xl);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+}
+
+.back-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    transition: color var(--transition-fast);
+}
+
+.back-link:hover {
+    color: var(--neon-magenta);
+}
+
+.back-arrow {
+    font-size: 1rem;
+    transition: transform var(--transition-fast);
+}
+
+.back-link:hover .back-arrow {
+    transform: translateX(-3px);
+}
+
+.download-bar-center {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.download-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: var(--text-tertiary);
+}
+
+.download-buttons {
+    display: flex;
+    gap: 2px;
+}
+
+.download-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--bg-secondary);
+    border: 1px solid transparent;
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.download-btn:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-color: var(--text-muted);
+}
+
+.download-btn.active {
+    background: var(--neon-magenta);
+    color: var(--bg-void);
+    border-color: var(--neon-magenta);
+}
+
+.btn-icon {
+    font-size: 0.8rem;
+}
+
+.copy-link-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid var(--text-muted);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.copy-link-btn:hover {
+    border-color: var(--neon-cyan);
+    color: var(--neon-cyan);
+}
+
+.copy-link-btn.copied {
+    background: var(--neon-green);
+    border-color: var(--neon-green);
+    color: var(--bg-void);
+}
+
+/* FILE HEADER */
+.file-header {
+    margin-bottom: var(--space-2xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: 2px solid var(--neon-magenta);
+}
+
+.file-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: var(--neon-magenta);
+    text-shadow: 0 0 20px var(--neon-magenta-glow);
+    letter-spacing: 0.02em;
+    margin-bottom: var(--space-md);
+    word-break: break-word;
+}
+
+.file-metadata {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.meta-label {
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+}
+
+.meta-value {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+}
+
+.meta-sep {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+/* ========================================
+   MARKDOWN BODY - THE NEON RENDERING
+   ======================================== */
+
+.markdown-body {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+}
+
+/* HEADINGS */
+.markdown-body h1 {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--neon-magenta);
+    text-shadow: 0 0 15px var(--neon-magenta-glow);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: var(--space-2xl) 0 var(--space-lg) 0;
+    padding-bottom: var(--space-sm);
+    border-bottom: 3px solid var(--neon-magenta);
+}
+
+.markdown-body h1:first-child {
+    margin-top: 0;
+}
+
+.markdown-body h2 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px var(--neon-cyan-glow);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: var(--space-2xl) 0 var(--space-md) 0;
+    padding-left: var(--space-md);
+    border-left: 4px solid var(--neon-cyan);
+}
+
+.markdown-body h3 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--neon-orange);
+    text-shadow: 0 0 8px var(--neon-orange-glow);
+    letter-spacing: 0.05em;
+    margin: var(--space-xl) 0 var(--space-md) 0;
+}
+
+.markdown-body h4 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--neon-yellow);
+    letter-spacing: 0.03em;
+    margin: var(--space-lg) 0 var(--space-sm) 0;
+}
+
+.markdown-body h5,
+.markdown-body h6 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: var(--space-lg) 0 var(--space-sm) 0;
+}
+
+/* PARAGRAPHS */
+.markdown-body p {
+    margin: var(--space-md) 0;
+    color: var(--text-primary);
+}
+
+/* STRONG / EM */
+.markdown-body strong {
+    font-weight: 700;
+    color: var(--neon-magenta);
+}
+
+.markdown-body em {
+    font-style: italic;
+    color: var(--text-secondary);
+}
+
+/* LINKS */
+.markdown-body a {
+    color: var(--neon-green);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: all var(--transition-fast);
+}
+
+.markdown-body a:hover {
+    color: var(--neon-cyan);
+    border-bottom-color: var(--neon-cyan);
+    text-shadow: 0 0 10px var(--neon-cyan-glow);
+}
+
+/* HORIZONTAL RULE */
+.markdown-body hr {
+    border: none;
+    height: 3px;
+    background: linear-gradient(90deg,
+            transparent,
+            var(--neon-orange) 20%,
+            var(--neon-orange) 80%,
+            transparent);
+    margin: var(--space-2xl) 0;
+    box-shadow: 0 0 15px var(--neon-orange-glow);
+}
+
+/* BLOCKQUOTE */
+.markdown-body blockquote {
+    margin: var(--space-xl) 0;
+    padding: var(--space-md) var(--space-lg);
+    background: rgba(255, 0, 255, 0.05);
+    border-left: 4px solid var(--neon-magenta);
+    font-style: italic;
+}
+
+.markdown-body blockquote p {
+    margin: 0;
+    color: var(--text-secondary);
+}
+
+.markdown-body blockquote strong {
+    color: var(--neon-magenta);
+    font-style: normal;
+}
+
+/* UNORDERED LISTS */
+.markdown-body ul {
+    list-style: none;
+    margin: var(--space-md) 0;
+    padding-left: 0;
+}
+
+.markdown-body ul li {
+    position: relative;
+    padding-left: var(--space-xl);
+    margin: var(--space-sm) 0;
+}
+
+.markdown-body ul li .bullet {
+    position: absolute;
+    left: 0;
+    color: var(--neon-red);
+    font-weight: bold;
+}
+
+/* ORDERED LISTS */
+.markdown-body ol {
+    list-style: none;
+    margin: var(--space-md) 0;
+    padding-left: 0;
+    counter-reset: item;
+}
+
+.markdown-body ol li {
+    position: relative;
+    padding-left: var(--space-2xl);
+    margin: var(--space-sm) 0;
+}
+
+.markdown-body ol li .number {
+    position: absolute;
+    left: 0;
+    color: var(--neon-cyan);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+/* INLINE CODE */
+.markdown-body code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    padding: 2px 6px;
+    background: rgba(0, 255, 102, 0.1);
+    border: 1px solid rgba(0, 255, 102, 0.3);
+    color: var(--neon-green);
+}
+
+/* CODE BLOCKS */
+.markdown-body pre {
+    margin: var(--space-xl) 0;
+    padding: var(--space-lg);
+    background: var(--bg-secondary);
+    border: 1px solid var(--text-muted);
+    border-left: 4px solid var(--neon-purple);
+    overflow-x: auto;
+}
+
+.markdown-body pre code {
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+/* TABLES */
+.markdown-body table {
+    width: 100%;
+    margin: var(--space-xl) 0;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.markdown-body th {
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--text-muted);
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--neon-magenta);
+}
+
+.markdown-body td {
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--text-muted);
+    color: var(--text-secondary);
+}
+
+.markdown-body tr:hover td {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* IMAGES */
+.markdown-body img {
+    max-width: 100%;
+    height: auto;
+    margin: var(--space-xl) 0;
+    border: 2px solid var(--text-muted);
+}
+
+/* FOOTER NOTE */
+.markdown-body .footer-note {
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--text-muted);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* ========================================
+   FILE NAVIGATION
+   ======================================== */
+
+.file-navigation {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--text-muted);
+}
+
+.file-nav-link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-md);
+    background: var(--bg-secondary);
+    border: 1px solid transparent;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.file-nav-link:hover {
+    border-color: var(--neon-magenta);
+    background: var(--bg-tertiary);
+}
+
+.file-nav-next {
+    text-align: right;
+}
+
+.nav-direction {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+}
+
+.nav-filename {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.file-nav-link:hover .nav-filename {
+    color: var(--neon-cyan);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .download-bar-content {
+        flex-wrap: wrap;
+        gap: var(--space-md);
+    }
+
+    .download-bar-center {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .download-label {
+        width: 100%;
+        text-align: center;
+        margin-bottom: var(--space-xs);
+    }
+
+    .file-metadata {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-sm);
+    }
+
+    .meta-sep {
+        display: none;
+    }
+
+    .file-navigation {
+        grid-template-columns: 1fr;
+    }
+
+    .file-nav-next {
+        text-align: left;
+    }
+}

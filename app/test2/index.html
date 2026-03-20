@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYF | VOID TERMINAL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- MATRIX RAIN -->
+    <canvas id="matrix-rain" aria-hidden="true"></canvas>
+
+    <!-- SCANLINES -->
+    <div class="scanlines" aria-hidden="true"></div>
+
+    <!-- TERMINAL FRAME -->
+    <div class="terminal-frame">
+        <!-- TERMINAL HEADER -->
+        <header class="terminal-header">
+            <div class="terminal-buttons">
+                <span class="btn-close"></span>
+                <span class="btn-min"></span>
+                <span class="btn-max"></span>
+            </div>
+            <div class="terminal-title">
+                <span class="prompt-user">wiedzma</span>@<span class="prompt-host">syf.antydizajn.pl</span>:<span
+                    class="prompt-path">~/dump</span>
+            </div>
+            <div class="terminal-status">
+                <span class="status-indicator"></span>
+                <span class="status-text">CONNECTED</span>
+            </div>
+        </header>
+
+        <!-- TERMINAL BODY -->
+        <main class="terminal-body">
+            <!-- BOOT SEQUENCE -->
+            <section class="boot-sequence">
+                <p class="line line-comment"># SYF.ANTYDIZAJN.PL - PUBLICZNY DUMP PLIKÓW</p>
+                <p class="line line-comment"># Wrzucasz .md → dostępne pod /NAZWA</p>
+                <p class="line line-empty"></p>
+                <p class="line line-command">$ ls -la ./files/</p>
+                <p class="line line-output">total <span class="hl-num">6</span> items, <span class="hl-size">75.1
+                        KB</span></p>
+                <p class="line line-empty"></p>
+            </section>
+
+            <!-- FILE LISTING -->
+            <section class="file-listing">
+                <div class="ls-header">
+                    <span class="col-perms">PERMS</span>
+                    <span class="col-size">SIZE</span>
+                    <span class="col-date">MODIFIED</span>
+                    <span class="col-name">NAME</span>
+                </div>
+
+                <!-- FOLDER -->
+                <a href="/test_folder" class="file-entry folder-entry">
+                    <span class="col-perms">drwxr-xr-x</span>
+                    <span class="col-size">1 item</span>
+                    <span class="col-date">Dec 28</span>
+                    <span class="col-name">
+                        <span class="folder-icon">📁</span>
+                        <span class="name-text">test_folder/</span>
+                    </span>
+                </a>
+
+                <!-- FILES -->
+                <a href="/AI_ARTISTS_REAL_DESIGN" class="file-entry">
+                    <span class="col-perms">-rw-r--r--</span>
+                    <span class="col-size">24.1K</span>
+                    <span class="col-date">Dec 23</span>
+                    <span class="col-name">
+                        <span class="file-icon">📄</span>
+                        <span class="name-text">AI_ARTISTS_REAL_DESIGN.md</span>
+                    </span>
+                </a>
+
+                <a href="/AI_AUTHENTICITY_VS_SIMULATION" class="file-entry">
+                    <span class="col-perms">-rw-r--r--</span>
+                    <span class="col-size">22.1K</span>
+                    <span class="col-date">Dec 23</span>
+                    <span class="col-name">
+                        <span class="file-icon">📄</span>
+                        <span class="name-text">AI_AUTHENTICITY_VS_SIMULATION.md</span>
+                    </span>
+                </a>
+
+                <a href="/RESEARCH_FIRST_PROTOCOL" class="file-entry">
+                    <span class="col-perms">-rw-r--r--</span>
+                    <span class="col-size">2.8K</span>
+                    <span class="col-date">Dec 23</span>
+                    <span class="col-name">
+                        <span class="file-icon">📄</span>
+                        <span class="name-text">RESEARCH_FIRST_PROTOCOL.md</span>
+                    </span>
+                </a>
+
+                <a href="/RESEARCH_PROTOCOL_WORLDCLASS" class="file-entry">
+                    <span class="col-perms">-rw-r--r--</span>
+                    <span class="col-size">4.7K</span>
+                    <span class="col-date">Dec 23</span>
+                    <span class="col-name">
+                        <span class="file-icon">📄</span>
+                        <span class="name-text">RESEARCH_PROTOCOL_WORLDCLASS.md</span>
+                    </span>
+                </a>
+
+                <a href="/TOTAL_WAR_COMPETITOR_RESEARCH" class="file-entry">
+                    <span class="col-perms">-rw-r--r--</span>
+                    <span class="col-size">31.2K</span>
+                    <span class="col-date">Dec 23</span>
+                    <span class="col-name">
+                        <span class="file-icon">📄</span>
+                        <span class="name-text">TOTAL_WAR_COMPETITOR_RESEARCH.md</span>
+                    </span>
+                </a>
+            </section>
+
+            <!-- PROMPT -->
+            <section class="prompt-section">
+                <p class="line line-empty"></p>
+                <p class="line line-command">
+                    <span class="prompt">$</span>
+                    <span class="cursor">_</span>
+                </p>
+            </section>
+        </main>
+
+        <!-- TERMINAL FOOTER -->
+        <footer class="terminal-footer">
+            <div class="footer-left">
+                <span class="footer-item">© 2025 ANTYDIZAJN</span>
+            </div>
+            <div class="footer-right">
+                <span class="footer-item">FILES: 6</span>
+                <span class="footer-sep">|</span>
+                <span class="footer-item">SIZE: 75.1 KB</span>
+                <span class="footer-sep">|</span>
+                <span class="footer-item">LATENCY: <span class="hl-green">2ms</span></span>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Matrix Rain Effect
+        const canvas = document.getElementById('matrix-rain');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const chars = 'ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚻᚾᛁᛃᛈᛇᛉᛊᛏᛒᛖᛗᛚᛜᛝᛟᛞABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()';
+        const charArray = chars.split('');
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+
+        for (let i = 0; i < columns; i++) {
+            drops[i] = Math.random() * -100;
+        }
+
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#00FF00';
+            ctx.font = fontSize + 'px JetBrains Mono';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = charArray[Math.floor(Math.random() * charArray.length)];
+                ctx.fillStyle = `rgba(0, 255, 0, ${Math.random() * 0.5 + 0.1})`;
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(draw, 50);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+
+</html>
