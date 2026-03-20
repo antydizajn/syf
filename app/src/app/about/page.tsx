@@ -8,7 +8,7 @@ export default async function AboutPage() {
     <>
       <Header />
       
-      <main className="max-w-4xl mx-auto px-4 md:px-10 py-20 flex flex-col gap-12 min-h-screen font-mono">
+      <main className="max-w-4xl mx-auto px-4 md:px-10 py-12 flex flex-col gap-8 font-mono">
         <header className="border-b-12 border-black pb-8">
            <h1 className="text-7xl md:text-9xl font-[1000] tracking-tighter uppercase leading-[0.8] wrap-break-word">
             O SYFIE<span className="opacity-20">.</span>OS
