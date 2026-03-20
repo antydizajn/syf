@@ -1,4 +1,5 @@
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import { getAllFiles } from '@/lib/files';
 
 export default async function AboutPage() {
@@ -88,11 +89,9 @@ export default async function AboutPage() {
            </p>
         </section>
 
-        <footer className="text-[10px] font-black uppercase opacity-30 flex justify-between border-t-2 border-dashed border-black pt-4">
-           <span>ESTABLISHED_BY ANTYDIZAJN</span>
-           <span>AGI_READY: TRUE // TOTAL_NODES: {allFiles.length}</span>
-        </footer>
+        </section>
       </main>
+      <Footer />
     </>
   );
 }
