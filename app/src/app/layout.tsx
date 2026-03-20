@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://syf.antydizajn.pl"),
   title: {
     default: "SYF | ANTYDIZAJN",
-    template: "%s | SYF.ANTYDIZAJN.PL",
+    template: "%s | SYYF.ANTYDIZAJN.PL",
   },
   description: "Publiczny dump plików Markdown. Syf, chaos, bałagan myśli. Zero bazy danych, zero logowania, zero bullshitu.",
   keywords: ["markdown", "files", "dump", "antydizajn", "syf", "chaos", "public"],
@@ -83,12 +83,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pl" className={`${jetbrainsMono.variable} ${orbitron.variable}`}>
+    <html lang="pl" className={`${jetbrainsMono.variable} ${orbitron.variable} bg-white`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <meta name="theme-color" content="#ffffff" />
       </head>
+      <body className="bg-transparent text-black min-h-screen flex flex-col relative">
         <a href="#main-content" className="skip-link">
           Przejdź do treści
         </a>
