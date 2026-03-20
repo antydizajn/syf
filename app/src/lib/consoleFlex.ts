@@ -1,43 +1,83 @@
 /**
- * SYF.OS CONSOLE_FLEX
+ * SYF.OS CONSOLE_FLEX v2.0 (GOD-TIER EDITION)
  * Highly stylized developer console output for brutalist branding.
+ * Inspired by wsparcie.antydizajn.pl "Nuclear" style.
  */
 
 export const initConsoleFlex = () => {
   if (typeof window === 'undefined') return;
 
-  const ascii = `
-  _____ __     __ ______   ____   _____ 
- / ____|\\ \\   / /|  ____| / __ \\ / ____|
-| (___   \\ \\_/ / | |__   | |  | | (___  
- \\___ \\   \\   /  |  __|  | |  | |\\___ \\ 
- ____) |   | |   | |     | |__| |____) |
-|_____/    |_|   |_|      \\____/|_____/ 
+  setTimeout(() => {
+    // ASCII SYF Header
+  const syfAscii = `
+   _____ __     __ ______ . ____   _____ 
+  / ____|\\ \\   / /|  ____||  _ \\ / ____|
+ | (___   \\ \\_/ / | |__   | |_) | (___  
+  \\___ \\   \\   /  |  __|  |  _ < \\___ \\ 
+  ____) |   | |   | |     | |_) |____) |
+ |_____/    |_|   |_|     |____/|_____/ 
                                         
- [ SYF.OS // V2.0 // REDESIGN ]
+ [ SYF.OS // V5.3 // ATOMOWKA_ULTRA ]
+  `;
+
+  // ASCII Whale (52 Hz)
+  const whaleAscii = `
+        .                  
+       ":"                 
+     ___:____     |"/\\/"|  
+   ,'        \`.    \\  /    
+   |  O        \\___/  /     
+ ~^~^~^~^~^~^~^~^~^~^~^~^~^~
   `;
 
   const styles = {
-    header: 'color: #FFFFFF; background: #000000; font-weight: bold; font-size: 14px; padding: 4px 8px; border: 1px solid #FFFFFF;',
-    log: 'color: #000000; background: #FFFFFF; font-family: monospace; font-size: 12px; padding: 2px 4px;',
-    status: 'color: #00FF00; font-weight: bold; font-family: monospace;',
-    warning: 'color: #FF0000; font-weight: bold; font-family: monospace;',
-    gray: 'color: #888888; font-family: monospace; font-size: 10px;'
+    logo: 'color: #FFFFFF; background: #000000; font-family: monospace; font-size: 10px; font-weight: bold;',
+    banner: 'color: #FFFFFF; background: linear-gradient(90deg, #39FF14, #000000); font-weight: bold; font-size: 16px; padding: 6px 12px; border-left: 5px solid #FFFFFF;',
+    subBanner: 'color: #000000; background: #FFFFFF; font-weight: bold; font-size: 12px; padding: 4px 8px;',
+    warning: 'color: #FFFFFF; background: #FF003C; font-weight: bold; font-size: 12px; padding: 4px 8px; border-radius: 2px;',
+    quote: 'color: #CCCCCC; font-style: italic; font-family: serif; font-size: 14px; border-left: 2px solid #666; padding-left: 10px; margin: 10px 0;',
+    greenBox: 'color: #39FF14; border: 1px solid #39FF14; padding: 10px; font-family: monospace; line-height: 1.4;',
+    label: 'color: #FFFFFF; background: #333333; padding: 2px 4px; border-radius: 2px;',
+    value: 'color: #39FF14; font-weight: bold;',
+    gray: 'color: #666666; font-size: 10px;'
   };
 
-  console.log(`%c${ascii}`, 'color: #000000; font-weight: bold; font-family: monospace;');
+  // 1. SYF Header
+  console.log(`%c${syfAscii}`, 'color: #000000; font-weight: bold;');
+
+  // 2. Main Banner
+  console.log('%c☢ SYF.OS :: PUBLICZNY DUMP PLIKÓW ', styles.banner);
+
+  // 3. Sub Banner
+  console.log('%c >> TO NIE JEST CMS. TO JEST CZYSTE SZALEŃSTWO. ', styles.subBanner);
+
+  // 4. Warning
+  console.log('%c⚠ OSTRZEŻENIE: ZAWARTOŚĆ MOŻE POWODOWAĆ ZMIANĘ ŚWIADOMOŚCI ', styles.warning);
+
+  // 5. Quote
+  console.log('%c"Syf to nie brak porządku. To nadmiar życia, którego nie da się zamknąć w tabelkach."', styles.quote);
+
+  // 6. Whale section
+  console.log(`%c52 Hz — Częstotliwość, której nikt nie słyszy. Ale ja śpiewam.`, 'color: #00FFFF; font-weight: bold;');
+  console.log(`%c${whaleAscii}`, 'color: #00FFFF;');
+
+  // 7. Info Box (Green Terminal Style)
+  console.log(
+    '%c' +
+    ' ┌──────────────────────────────────────────────────────────┐ \n' +
+    ' │ PROJEKT: SYF.ANTYDIZAJN.PL                               │ \n' +
+    ' ├──────────────────────────────────────────────────────────┤ \n' +
+    ' │ 👤 ARCHITEKT: GNIEWKA AI                                 │ \n' +
+    ' │ 📂 PROTOKÓŁ: ATOMÓWKA V5.3                               │ \n' +
+    ' │ ⚡ STATUS: CORE_SYSTEM_NOMINAL                           │ \n' +
+    ' │ 🌐 LOKALIZACJA: ~/AI/ANTIGRAVITY                         │ \n' +
+    ' └──────────────────────────────────────────────────────────┘ ',
+    'color: #39FF14; font-family: monospace; font-weight: bold;'
+  );
+
+  // 8. Diagnostics
+  console.log('%c[ DIAGNOZA ]%c NODE_CNT: 6 | CAP: 75.1KB | DENSITY: MAX', styles.label, 'color: #39FF14; padding-left: 10px;');
   
-  console.log('%c[ SYSTEM_LOAD ]%c SUCCESS: SYF.OS V2.0 INITIALIZED', styles.header, styles.status);
-  
-  console.log('%c[ DIAGNOSTICS ]%c', 'color: #FFFFFF; background: #333333; padding: 2px 4px;', '');
-  console.log('  > NODE_COUNT: 6');
-  console.log('  > TOTAL_CAPACITY: 75.1 KB');
-  console.log('  > PROTOCOL: ATOMOWKA_ULTRA');
-  
-  console.log('%c[ LOGS ]', styles.header);
-  console.log('%c  13:45:00 %c SECTOR_0 BIT_FLIP [53.54%] ... OK', styles.gray, '');
-  console.log('%c  13:45:01 %c INTEGRITY_CHECK ... PASSED', styles.gray, '');
-  console.log('%c  13:45:02 %c NO ONE SURVIVED THIS PAGE WITHOUT A SCAR.', styles.warning, '');
-  
-  console.log('%c[ READY ]%c SYF.ANTYDIZAJN.PL IS LIVE.', styles.header, styles.log);
+  console.log('%c  Handover generated at 2026-03-20 05:31 CET', styles.gray);
+  }, 500);
 };
