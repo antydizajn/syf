@@ -3,15 +3,12 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
 import { motion } from 'framer-motion';
-import { use } from 'react';
 
 // Uwaga: To jest komponent kliencki, więc dane pobieramy przez propsy przekazane z wrapper'a serwerowego 
 // lub używamy 'use' jeśli to Next.js 15+. 
-// Aby zachować czystość, zrobimy z tego hybrydę lub pełny Client Component jeśli trzeba.
-// Tutaj jednak zrobimy pełny refactor na Server Component dla SEO/Performance i tylko 
-// najbardziej potrzebne części ominiemy motion.div.
 
 export interface PageProps {
   file?: any;
@@ -32,7 +29,7 @@ export default function CatchAllContent({ file, items, breadcrumb, slug, isFolde
           className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest opacity-50 mb-8"
         >
           <Link href="/" className="hover:text-white transition-colors">ROOT</Link>
-          {breadcrumb.map((item: any, i: number) => (
+          {breadcrumb.map((item: any) => (
             <React.Fragment key={item.href}>
               <span>/</span>
               <Link href={item.href} className="hover:text-white transition-colors">{item.title}</Link>
@@ -174,7 +171,23 @@ export default function CatchAllContent({ file, items, breadcrumb, slug, isFolde
           prose-pre:bg-zinc-900/50 prose-pre:border prose-pre:border-white/5 prose-pre:backdrop-blur-sm"
         >
           {file.content ? (
-            <ReactMarkdown>{file.content}</ReactMarkdown>
+            <ReactMarkdown
+              components={{
+                img: ({ node, ...props }) => (
+                  <div className="relative w-full aspect-video my-8 border border-white/5 overflow-hidden">
+                    <Image
+                      src={(props.src as string) || ''}
+                      alt={props.alt || ''}
+                      fill
+                      className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                      sizes="(max-width: 1200px) 100vw, 1200px"
+                    />
+                  </div>
+                ),
+              }}
+            >
+              {file.content}
+            </ReactMarkdown>
           ) : (
             <div className="text-center py-32 text-zinc-700 font-bold tracking-[0.2em] italic uppercase">
               [ NO_PAYLOAD_DETECTED ]

@@ -10,14 +10,13 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin", "latin-ext"],
   variable: "--font-mono",
   display: "swap",
-  preload: true,
 });
 
 const orbitron = Orbitron({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
-  preload: true,
+  weight: ["400", "500", "700", "900"],
 });
 
 // Enhanced Metadata
@@ -25,7 +24,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://syf.antydizajn.pl"),
   title: {
     default: "SYF | ANTYDIZAJN",
-    template: "%s | SYYF.ANTYDIZAJN.PL",
+    template: "%s | SYF.ANTYDIZAJN.PL",
   },
   description: "Publiczny dump plików Markdown. Syf, chaos, bałagan myśli. Zero bazy danych, zero logowania, zero bullshitu.",
   keywords: ["markdown", "files", "dump", "antydizajn", "syf", "chaos", "public"],
@@ -86,8 +85,6 @@ export default function RootLayout({
   return (
     <html lang="pl" className={`${jetbrainsMono.variable} ${orbitron.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <meta name="theme-color" content="#ffffff" />
       </head>
       <body className="bg-transparent text-black min-h-screen flex flex-col relative">

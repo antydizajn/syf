@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { unstable_cache } from 'next/cache';
 
 const filesDirectory = path.join(process.cwd(), '../files');
 
@@ -17,11 +18,10 @@ export interface ItemData {
     itemCount?: number;
 }
 
-export async function getAllItems(): Promise<ItemData[]> {
-    return getAllFiles();
-}
-
-export async function getAllFiles(): Promise<ItemData[]> {
+/**
+ * Raw data fetching from filesystem
+ */
+async function getAllFilesRaw(): Promise<ItemData[]> {
     try {
         const files = await fs.readdir(filesDirectory);
         const filteredFiles = files.filter(f => !f.startsWith('.'));
@@ -64,7 +64,7 @@ export async function getAllFiles(): Promise<ItemData[]> {
                     date: formatDate(stats.birthtime),
                     modifiedDate: formatDate(stats.mtime),
                     itemCount
-                } as ItemData & { itemCount?: number };
+                } as ItemData;
             })
         );
         return items;
@@ -72,6 +72,19 @@ export async function getAllFiles(): Promise<ItemData[]> {
         console.error('Error reading files:', error);
         return [];
     }
+}
+
+/**
+ * Cached version of getAllFiles
+ */
+export const getAllFiles = unstable_cache(
+    async () => getAllFilesRaw(),
+    ['all-files'],
+    { revalidate: 3600, tags: ['files'] }
+);
+
+export async function getAllItems(): Promise<ItemData[]> {
+    return getAllFiles();
 }
 
 export async function getFileBySlug(slug: string): Promise<ItemData | null> {
@@ -104,32 +117,46 @@ export async function getAdjacentFiles(slug: string): Promise<{ prev: ItemData |
     };
 }
 
-export async function getBreadcrumb(slugs: string[]): Promise<{ title: string, href: string }[]> {
-    const breadcrumbs = [{ title: 'Home', href: '/' }];
-    let currentPath = '';
-    for (const slug of slugs) {
-        currentPath += `/${slug}`;
-        const item = await getFileBySlug(slug);
-        breadcrumbs.push({
-            title: item?.title || slug,
-            href: currentPath
-        });
-    }
-    return breadcrumbs;
-}
-
-export async function getTotalSize(): Promise<string> {
-    try {
-        const files = await fs.readdir(filesDirectory);
-        let total = 0;
-        for (const file of files) {
-            try {
-                const stats = await fs.stat(path.join(filesDirectory, file));
-                total += stats.size;
-            } catch (e) { /* ignore single error */ }
+/**
+ * Cached version of breadcrumb generation
+ */
+export const getBreadcrumb = unstable_cache(
+    async (slugs: string[]) => {
+        const breadcrumbs = [{ title: 'Home', href: '/' }];
+        let currentPath = '';
+        for (const slug of slugs) {
+            currentPath += `/${slug}`;
+            const item = await getFileBySlug(slug);
+            breadcrumbs.push({
+                title: item?.title || slug,
+                href: currentPath
+            });
         }
-        return `${(total / 1024 / 1024).toFixed(2)} MB`;
-    } catch (error) {
-        return '0 MB';
-    }
-}
+        return breadcrumbs;
+    },
+    ['breadcrumbs'],
+    { revalidate: 3600, tags: ['files'] }
+);
+
+/**
+ * Cached version of total size calculation
+ */
+export const getTotalSize = unstable_cache(
+    async (): Promise<string> => {
+        try {
+            const files = await fs.readdir(filesDirectory);
+            let total = 0;
+            for (const file of files) {
+                try {
+                    const stats = await fs.stat(path.join(filesDirectory, file));
+                    total += stats.size;
+                } catch (e) { /* ignore single error */ }
+            }
+            return `${(total / 1024 / 1024).toFixed(2)} MB`;
+        } catch (error) {
+            return '0 MB';
+        }
+    },
+    ['total-size'],
+    { revalidate: 3600, tags: ['files'] }
+);
