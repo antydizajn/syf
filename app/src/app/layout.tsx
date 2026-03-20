@@ -89,7 +89,6 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <meta name="theme-color" content="#ffffff" />
       </head>
-      <body className="bg-white text-black min-h-screen flex flex-col relative">
         <a href="#main-content" className="skip-link">
           Przejdź do treści
         </a>

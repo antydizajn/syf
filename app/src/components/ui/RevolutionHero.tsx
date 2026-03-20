@@ -357,7 +357,6 @@ export default function RevolutionBackground() {
   }, [globalIntensity])
 
   return (
-    <div className="fixed inset-0 w-full h-full -z-10 pointer-events-none opacity-30 bg-white">
       <canvas ref={canvasRef} className="w-full h-full" />
     </div>
   )
