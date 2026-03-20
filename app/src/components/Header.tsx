@@ -7,7 +7,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="border-b-8 border-black bg-white sticky top-0 z-1000 p-4 md:px-10 flex justify-between items-center font-mono">
+    <header className="border-b-8 border-black bg-white/50 backdrop-blur-xl sticky top-0 z-1000 p-4 md:px-10 flex justify-between items-center font-mono">
       <Link href="/" className="text-2xl font-[1000] tracking-tighter uppercase group transition-all">
         SYF<span className="group-hover:translate-x-1 inline-block">.</span>OS
       </Link>

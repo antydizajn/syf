@@ -35,7 +35,7 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
       <motion.header 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-12 border-b-8 border-black pb-8 pt-4 relative bg-white -mx-4 px-4 md:-mx-10 md:px-10"
+        className="mb-12 border-b-8 border-black pb-8 pt-4 relative bg-white/50 backdrop-blur-xl -mx-4 px-4 md:-mx-10 md:px-10"
       >
         <div className="absolute top-4 right-4 md:right-10 text-right text-black opacity-80 text-[10px] hidden md:block uppercase font-bold tracking-widest leading-tight">
           [ SYSTEM_VERSION: V2.0 ]<br/>
