@@ -43,7 +43,7 @@ export default function Footer() {
     <motion.footer 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="relative z-10 mt-auto border-t-8 border-black bg-white py-16 px-4 md:px-10 -mx-4 md:-mx-10"
+      className="relative z-10 mt-auto border-t-8 border-black bg-white/50 backdrop-blur-xl py-16 px-4 md:px-10 -mx-4 md:-mx-10"
     >
       <div className="max-w-7xl mx-auto space-y-16">
         {/* Top Section: Links & Main Quote */}
