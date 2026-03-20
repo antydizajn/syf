@@ -103,7 +103,7 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
           <motion.div 
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex items-center justify-between gap-4 p-2 bg-[#fdfdfd]/80 backdrop-blur-sm border-2 border-black"
+            className="flex items-center justify-between gap-4 p-2 bg-white/50 backdrop-blur-sm border-2 border-black"
           >
             <button 
               onClick={() => { setPage(p => Math.max(0, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
@@ -149,7 +149,7 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
                   className={`group relative flex flex-col h-full min-h-[220px] transition-all duration-300 border-2 border-black overflow-hidden backdrop-blur-sm ${
                     isFolder 
                       ? "bg-black text-white hover:bg-zinc-900" 
-                      : "bg-[#fdfdfd]/80 text-black hover:bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:-translate-x-1 hover:-translate-y-1"
+                      : "bg-white/50 text-black hover:bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:-translate-x-1 hover:-translate-y-1"
                   }`}
                 >
                   {/* Visual Polish Elements */}
