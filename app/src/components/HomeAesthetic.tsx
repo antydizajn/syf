@@ -92,7 +92,7 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
       </motion.header>
 
       {/* Grid Explorer */}
-      <div className="flex-1 min-h-0 flex flex-col gap-6 px-4 md:px-0 mt-8">
+      <div className="flex flex-col gap-6 px-4 md:px-0 mt-8 mb-12">
         <div className="flex justify-between items-center text-[10px] font-black tracking-[0.3em] text-black/40 uppercase border-b-2 border-black/10 pb-2">
           <span>{"//"} DIRECTORY_EXPLORER_V2.0 (PAGE_{page + 1})</span>
           <span>SYF_SYSTEM_OS</span>
@@ -212,7 +212,7 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mt-8 flex items-center justify-center gap-6"
+            className="mt-4 flex items-center justify-center gap-6"
           >
             <button 
               onClick={() => { setPage(p => Math.max(0, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
