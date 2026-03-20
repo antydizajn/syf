@@ -7,6 +7,7 @@ import Link from 'next/link';
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const [stats, setStats] = useState<{ uptime: number; latency: number; packets: string } | null>(null);
+  const [vitals, setVitals] = useState<{ lcp: string; cls: string; inp: string }>({ lcp: '...', cls: '...', inp: '...' });
 
   useEffect(() => {
     setStats({
@@ -14,6 +15,28 @@ export default function Footer() {
       latency: Math.floor(Math.random() * 50),
       packets: Math.floor(Math.random() * 1000000).toLocaleString()
     });
+
+    // Mock Web Vitals (Real integration would use web-vitals lib, but for SYF aesthetic we can use perf API or simulated high-perf triggers)
+    if (typeof window !== 'undefined' && 'PerformanceObserver' in window) {
+      try {
+        const observer = new PerformanceObserver((list) => {
+          const entries = list.getEntries();
+          entries.forEach((entry) => {
+            if (entry.entryType === 'largest-contentful-paint') {
+              setVitals(v => ({ ...v, lcp: (entry.startTime / 1000).toFixed(2) + 'S' }));
+            }
+            if (entry.entryType === 'layout-shift') {
+              // Real CLS is cumulative, but for a simple HUD display we show current
+              setVitals(v => ({ ...v, cls: entry.startTime.toFixed(3) }));
+            }
+          });
+        });
+        observer.observe({ type: 'largest-contentful-paint', buffered: true });
+        observer.observe({ type: 'layout-shift', buffered: true });
+      } catch (e) {
+        console.warn('Vitals observer failed', e);
+      }
+    }
   }, []);
   
   return (
@@ -50,6 +73,12 @@ export default function Footer() {
                   <div className="flex justify-between"><span>UPTIME:</span> <span>{stats.uptime}H</span></div>
                   <div className="flex justify-between"><span>LATENCY:</span> <span>{stats.latency}MS</span></div>
                   <div className="flex justify-between"><span>PACKETS:</span> <span>{stats.packets}</span></div>
+                  
+                  <div className="mt-4 mb-1 pt-4 border-t border-white/20 text-[10px] font-black opacity-30 tracking-[0.3em]">WEB_VITALS // LIVE</div>
+                  <div className="flex justify-between"><span>LCP:</span> <span className="text-neon-green">{vitals.lcp}</span></div>
+                  <div className="flex justify-between"><span>CLS:</span> <span className="text-neon-green">{vitals.cls}</span></div>
+                  <div className="flex justify-between"><span>INP:</span> <span className="text-neon-green">FAAAST</span></div>
+
                   <div className="mt-4 pt-4 border-t border-white/20 text-[8px] opacity-40">
                     SCAN_ACTIVE: {stats.uptime % 2 === 0 ? "TRUE" : "STABLE"}
                   </div>

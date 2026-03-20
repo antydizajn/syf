@@ -16,9 +16,10 @@ export const TypographyGuardian: React.FC<{ children: React.ReactNode }> = ({ ch
     if (node.nodeType === Node.TEXT_NODE) {
       const text = node.textContent;
       if (text) {
-        // Regex: szuka spójników jednoznakowych otoczonych spacjami (lub na początku linii)
-        // Zamienia spację PO spójniku na twardą spację \u00A0
-        const fixedText = text.replace(/(^|[\s])([aiouwz])[\s]/gi, '$1$2\u00A0');
+        // Regex: szuka spójników jednoznakowych (a, i, o, u, w, z)
+        // Zamienia zwykłą spację PO spójniku na twardą (\u00A0),
+        // jeśli spójnik jest poprzedzony spacją, nawiasem lub jest na początku linii.
+        const fixedText = text.replace(/(^|[\s\(\[])([aiouwz])[\s]/gi, '$1$2\u00A0');
         if (fixedText !== text) {
           node.textContent = fixedText;
         }
