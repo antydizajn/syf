@@ -8,19 +8,19 @@ export const ASCIIMatrix: React.FC<{ rows?: number; cols?: number; className?: s
   cols = 80, 
   className = "" 
 }) => {
-  const [matrix, setMatrix] = useState<string[][]>([]);
+  const generate = React.useCallback(() => {
+    const chars = "ABCDEF0123456789$@#%&*+=-";
+    return Array.from({ length: rows }, () => 
+      Array.from({ length: cols }, () => chars[Math.floor(Math.random() * chars.length)])
+    );
+  }, [rows, cols]);
+
+  const [matrix, setMatrix] = useState<string[][]>(() => generate());
 
   useEffect(() => {
-    const generate = () => {
-      const chars = "ABCDEF0123456789$@#%&*+=-";
-      return Array.from({ length: rows }, () => 
-        Array.from({ length: cols }, () => chars[Math.floor(Math.random() * chars.length)])
-      );
-    };
-    setMatrix(generate());
     const interval = setInterval(() => setMatrix(generate()), 100);
     return () => clearInterval(interval);
-  }, [rows, cols]);
+  }, [generate]);
 
   return (
     <div className={`font-mono text-[8px] leading-tight overflow-hidden select-none pointer-events-none ${className}`}>

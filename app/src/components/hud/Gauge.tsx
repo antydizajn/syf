@@ -29,7 +29,7 @@ export const Gauge: React.FC<GaugeProps> = ({ value, label, max = 100, color = '
         </motion.span>
       </div>
       
-      <div className="h-1.5 bg-white/[0.03] border border-white/5 relative overflow-hidden rounded-full">
+      <div className="h-1.5 bg-white/3 border border-white/5 relative overflow-hidden rounded-full">
         <motion.div 
           initial={{ width: 0 }}
           animate={{ 
@@ -53,7 +53,7 @@ export const Gauge: React.FC<GaugeProps> = ({ value, label, max = 100, color = '
         {/* Diagnostic notches */}
         <div className="absolute inset-0 flex justify-between px-1 pointer-events-none mix-blend-overlay">
           {Array.from({ length: 20 }).map((_, i) => (
-            <div key={i} className={`w-[1px] h-full ${i % 5 === 0 ? 'bg-white/40' : 'bg-white/10'}`} />
+            <div key={i} className={`w-px h-full ${i % 5 === 0 ? 'bg-white/40' : 'bg-white/10'}`} />
           ))}
         </div>
       </div>

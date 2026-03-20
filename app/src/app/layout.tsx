@@ -76,6 +76,7 @@ export const metadata: Metadata = {
 };
 
 import { Footer } from "@/components/Footer";
+import { DottedSurface } from "@/components/ui/DottedSurface";
 
 export default function RootLayout({
   children,
@@ -89,7 +90,8 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <meta name="theme-color" content="#ffffff" />
       </head>
-      <body className="bg-white text-black min-h-screen flex flex-col">
+      <body className="bg-white text-black min-h-screen flex flex-col relative">
+        <DottedSurface />
         <a href="#main-content" className="skip-link">
           Przejdź do treści
         </a>
@@ -100,9 +102,10 @@ export default function RootLayout({
         {/* NOISE OVERLAY */}
         <div className="noise opacity-[0.05]" aria-hidden="true" />
         
-        <main id="main-content" className="flex-1">
+        <main id="main-content" className="flex-1 relative z-10">
           {children}
         </main>
+
 
         <Footer />
         <ScanlineOverlay />

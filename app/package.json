@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@types/three": "^0.183.1",
     "docx": "^9.5.1",
     "framer-motion": "^12.38.0",
     "gray-matter": "^4.0.3",
@@ -18,7 +19,8 @@
     "react-dom": "19.2.3",
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.1",
-    "remark-html": "^16.0.1"
+    "remark-html": "^16.0.1",
+    "three": "^0.183.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.2",

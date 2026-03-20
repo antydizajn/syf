@@ -1,9 +1,8 @@
 "use client";
 
-import { motion, AnimatePresence, useSpring, useTransform } from "framer-motion";
-import { useEffect, useState, useRef } from "react";
+import { motion, useSpring } from "framer-motion";
+import { useEffect, useState } from "react";
 import Link from 'next/link';
-import { RGBShift } from "@/components/hud/RGBShift";
 import { ItemData } from "@/lib/files";
 
 
@@ -12,22 +11,19 @@ const PAGE_SIZE = 30;
 export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSize: string }) {
   const [mounted, setMounted] = useState(false);
   const [page, setPage] = useState(0);
-  const [isCollapsing, setIsCollapsing] = useState(false);
   const [collapseX, setCollapseX] = useState(0);
   const laserY = useSpring(0, { stiffness: 100, damping: 20 });
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => setMounted(true), 0);
     const handleMouseMove = (e: MouseEvent) => {
       laserY.set(e.clientY);
     };
 
     const collapseInterval = setInterval(() => {
       if (Math.random() > 0.9) {
-        setIsCollapsing(true);
         setCollapseX((Math.random() - 0.5) * 40);
         setTimeout(() => {
-          setIsCollapsing(false);
           setCollapseX(0);
         }, 100 + Math.random() * 200);
       }
@@ -37,6 +33,7 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       clearInterval(collapseInterval);
+      clearTimeout(timer);
     };
   }, [laserY]);
 
@@ -61,7 +58,7 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
         className="max-w-7xl mx-auto flex flex-col min-h-screen"
       >
         {/* HEADER: CONCEPT 03 STYLE */}
-        <header className="border-b-[12px] border-black pb-8 mb-12 relative shrink-0">
+        <header className="border-b-12 border-black pb-8 mb-12 relative shrink-0">
           <div className="absolute top-0 right-0 text-right opacity-80 text-[12px] hidden md:block uppercase font-bold antialiased leading-tight">
             [ SYSTEM_VERSION: V2.0 ]<br/>
             [ TOTAL_CAPACITY: {totalSize} ]<br/>
@@ -83,7 +80,7 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
           </h1>
 
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-            <div className="bg-black text-white px-6 py-2 text-xl font-black italic tracking-widest uppercase mb-2">
+            <div className="bg-black text-white px-6 py-2 text-xl font-black italic tracking-widest uppercase mb-2 whitespace-nowrap">
               Wrzucasz .md → dostępne pod /NAZWA
             </div>
             
@@ -122,7 +119,7 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
                     transition={{ delay: i * 0.01 }}
                     className="group border-b border-black/10 py-2 flex items-center gap-4 hover:bg-black hover:text-white px-2 transition-colors cursor-crosshair relative"
                   >
-                    <span className="text-[10px] font-black opacity-20 group-hover:opacity-100 min-w-[2.5rem]">
+                    <span className="text-[10px] font-black opacity-20 group-hover:opacity-100 min-w-10">
                       {globalIndex.toString().padStart(3, '0')}
                     </span>
                     <span className={`text-sm font-black uppercase tracking-tighter truncate flex-1 ${item.type === 'folder' ? 'underline decoration-4 underline-offset-4' : ''}`}>
@@ -148,7 +145,7 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
                   {`<< PREV`}
                 </button>
                 <div className="bg-black text-white px-4 py-2">
-                   PAGE {page + 1} // {totalPages}
+                    PAGE {page + 1} / {totalPages}
                 </div>
                 <button 
                   onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
@@ -165,7 +162,7 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
       {/* SCANLINE INDICATOR */}
       <motion.div 
         style={{ y: laserY }}
-        className="fixed left-0 w-full h-[1px] bg-black/10 z-[60] pointer-events-none"
+        className="fixed left-0 w-full h-px bg-black/10 z-60 pointer-events-none"
       />
 
       <style jsx global>{`

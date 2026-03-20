@@ -58,8 +58,8 @@ export default async function CatchAllPage({ params }: Props) {
           </nav>
 
           {/* FOLDER HEADER */}
-          <header className="border-b-[12px] border-black pb-8 sticky top-[64px] bg-white z-50">
-            <h1 className="text-6xl md:text-8xl font-[1000] tracking-tighter uppercase break-words leading-[0.8]">
+          <header className="border-b-12 border-black pb-8 sticky top-[64px] bg-white z-50">
+            <h1 className="text-6xl md:text-8xl font-[1000] tracking-tighter uppercase wrap-break-word leading-[0.8]">
               {folderName}/
             </h1>
             <p className="mt-4 bg-black text-white px-4 py-1 inline-block text-xs font-black uppercase">
@@ -113,8 +113,8 @@ export default async function CatchAllPage({ params }: Props) {
         )}
 
         {/* FILE HEADER */}
-        <header className="border-b-[12px] border-black pb-8">
-          <h1 className="text-5xl md:text-7xl font-[1000] tracking-tighter uppercase leading-[0.9] break-words mb-6">
+        <header className="border-b-12 border-black pb-8">
+          <h1 className="text-5xl md:text-7xl font-[1000] tracking-tighter uppercase leading-[0.9] wrap-break-word mb-6">
             {file.title}
           </h1>
           <div className="flex flex-wrap gap-x-8 gap-y-2 text-[10px] font-black uppercase opacity-50">
@@ -141,11 +141,11 @@ export default async function CatchAllPage({ params }: Props) {
 
         {/* FILE NAVIGATION */}
         {(prev || next) && (
-          <nav className="grid grid-cols-1 md:grid-cols-2 border-t-[12px] border-black pt-12 gap-4">
+          <nav className="grid grid-cols-1 md:grid-cols-2 border-t-12 border-black pt-12 gap-4">
             {prev ? (
               <Link href={`/${prev.slug}`} className="border-4 border-black p-6 hover:bg-black hover:text-white transition-all group">
                 <span className="block text-[10px] font-black mb-2 opacity-50 uppercase tracking-widest">← PREVIOUS_FILE</span>
-                <span className="text-2xl font-[1000] tracking-tighter uppercase leading-none break-words block">
+                <span className="text-2xl font-[1000] tracking-tighter uppercase leading-none wrap-break-word block">
                   {prev.slug.split('/').pop()}
                 </span>
               </Link>
@@ -155,7 +155,7 @@ export default async function CatchAllPage({ params }: Props) {
             {next ? (
               <Link href={`/${next.slug}`} className="border-4 border-black p-6 hover:bg-black hover:text-white transition-all group text-right">
                 <span className="block text-[10px] font-black mb-2 opacity-50 uppercase tracking-widest text-right">NEXT_FILE →</span>
-                <span className="text-2xl font-[1000] tracking-tighter uppercase leading-none break-words block">
+                <span className="text-2xl font-[1000] tracking-tighter uppercase leading-none wrap-break-word block">
                   {next.slug.split('/').pop()}
                 </span>
               </Link>

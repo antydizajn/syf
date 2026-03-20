@@ -55,57 +55,58 @@
   &:focus {
     @apply top-4;
   }
-  /* 1-BIT MARKDOWN STYLES */
-  .markdown-body {
-    @apply text-black leading-relaxed max-w-none;
-    font-family: var(--font-mono);
-  }
+}
 
-  .markdown-body h1, .markdown-body h2, .markdown-body h3 {
-    @apply font-[1000] uppercase tracking-tighter mt-12 mb-6 border-b-4 border-black pb-2;
-  }
+/* 1-BIT MARKDOWN STYLES */
+.markdown-body {
+  @apply text-black leading-relaxed max-w-none;
+  font-family: var(--font-mono);
+}
 
-  .markdown-body h1 { @apply text-6xl; }
-  .markdown-body h2 { @apply text-4xl; }
-  .markdown-body h3 { @apply text-2xl; }
+.markdown-body h1, .markdown-body h2, .markdown-body h3 {
+  @apply font-[1000] uppercase tracking-tighter mt-12 mb-6 border-b-4 border-black pb-2;
+}
 
-  .markdown-body p { @apply mb-6 text-lg; }
-  
-  .markdown-body a {
-    @apply underline decoration-4 underline-offset-4 hover:bg-black hover:text-white transition-all;
-  }
+.markdown-body h1 { @apply text-6xl; }
+.markdown-body h2 { @apply text-4xl; }
+.markdown-body h3 { @apply text-2xl; }
 
-  .markdown-body code {
-    @apply bg-black text-white px-2 py-0.5 text-sm;
-  }
+.markdown-body p { @apply mb-6 text-lg; }
 
-  .markdown-body pre {
-    @apply bg-black text-white p-6 my-8 overflow-x-auto border-l-[12px] border-black;
-  }
+.markdown-body a {
+  @apply underline decoration-4 underline-offset-4 hover:bg-black hover:text-white transition-all;
+}
 
-  .markdown-body ul, .markdown-body ol { @apply mb-6 pl-6 list-none; }
-  .markdown-body li { @apply mb-2 relative; }
-  .markdown-body li::before {
-    content: "■";
-    @apply absolute -left-6 top-1 text-[10px];
-  }
+.markdown-body code {
+  @apply bg-black text-white px-2 py-0.5 text-sm;
+}
 
-  .markdown-body blockquote {
-    @apply border-l-[12px] border-black pl-6 py-2 my-8 italic font-bold text-xl;
-  }
+.markdown-body pre {
+  @apply bg-black text-white p-6 my-8 overflow-x-auto border-l-[12px] border-black;
+}
 
-  .markdown-body img {
-    @apply border-4 border-black grayscale contrast-125 my-8;
-  }
+.markdown-body ul, .markdown-body ol { @apply mb-6 pl-6 list-none; }
+.markdown-body li { @apply mb-2 relative; }
+.markdown-body li::before {
+  content: "■";
+  @apply absolute -left-6 top-1 text-[10px];
+}
 
-  /* UTILITIES */
-  .brutalist-button {
-    @apply border-4 border-black px-6 py-2 font-black text-sm uppercase hover:bg-black hover:text-white transition-all active:translate-y-1 inline-block;
-  }
+.markdown-body blockquote {
+  @apply border-l-[12px] border-black pl-6 py-2 my-8 italic font-bold text-xl;
+}
 
-  .brutalist-card {
-    @apply border-4 border-black p-6 bg-white hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all;
-  }
+.markdown-body img {
+  @apply border-4 border-black grayscale contrast-125 my-8;
+}
+
+/* UTILITIES */
+@utility brutalist-button {
+  @apply border-4 border-black px-6 py-2 font-black text-sm uppercase hover:bg-black hover:text-white transition-all active:translate-y-1 inline-block;
+}
+
+@utility brutalist-card {
+  @apply border-4 border-black p-6 bg-white hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all;
 }
 
 @utility glass-panel {
@@ -117,17 +118,6 @@
 @utility neon-border-yellow { @apply border border-neon-yellow shadow-sm; }
 @utility neon-border-red { @apply border border-neon-red shadow-sm; }
 @utility neon-border-blue { @apply border border-neon-blue shadow-sm; }
-.mt-2 { margin-top: 0.5rem; }
-.space-y-1 > * + * { margin-top: 0.25rem; }
-.space-y-4 > * + * { margin-top: 1rem; }
-.grid { display: grid; }
-.grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
-
-@media (min-width: 768px) {
-  .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .md\:col-span-3 { grid-column: span 3 / span 3; }
-}
 
 /* ============================================================
    HUD COMPONENTS

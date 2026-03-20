@@ -16,8 +16,8 @@ export const Reticle: React.FC = () => {
       <div className="absolute inset-10 rounded-full border-2 border-[#39FF14]/40" />
       {/* Inner Crosshair */}
       <div className="absolute inset-0 flex items-center justify-center">
-         <div className="w-full h-[1px] bg-[#39FF14]/40" />
-         <div className="h-full w-[1px] bg-[#39FF14]/40 absolute" />
+         <div className="w-full h-px bg-[#39FF14]/40" />
+         <div className="h-full w-px bg-[#39FF14]/40 absolute" />
          <div className="w-10 h-10 border border-[#39FF14] relative">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full text-[10px] text-[#39FF14] font-bold">LKD_ON</div>
          </div>

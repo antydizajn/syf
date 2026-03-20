@@ -20,7 +20,7 @@ export const NeuralMatrixGrid: React.FC = () => {
           rotateY: hoveredCell ? (hoveredCell.x - gridSize/2) * 0.5 : 0,
           rotateX: hoveredCell ? 35 + (hoveredCell.y - gridSize/2) * -0.5 : 35
         }}
-        className="grid grid-cols-15 gap-1 p-12 bg-neon-green/[0.01] border border-neon-green/10 rounded-sm relative z-10"
+        className="grid grid-cols-15 gap-1 p-12 bg-neon-green/1 border border-neon-green/10 rounded-sm relative z-10"
       >
         {cells.map((_, i) => {
           const x = i % gridSize;
@@ -83,7 +83,7 @@ export const NeuralMatrixGrid: React.FC = () => {
                key={i} 
                animate={{ height: [`${Math.random() * 100}%`, `${Math.random() * 100}%`] }}
                transition={{ duration: 0.2, repeat: Infinity }}
-               className="flex-grow bg-cyber-red/20" 
+               className="grow bg-cyber-red/20" 
              />
            ))}
         </div>
