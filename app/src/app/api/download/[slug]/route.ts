@@ -24,9 +24,9 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
         );
     }
 
-    const file = getFileBySlug(slug);
+    const file = await getFileBySlug(slug);
 
-    if (!file || !file.rawContent) {
+    if (!file || !file.content) {
         return NextResponse.json(
             { error: 'Plik nie znaleziony' },
             { status: 404 }
@@ -46,7 +46,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
                 break;
 
             case 'txt':
-                content = exportAsText(file.rawContent);
+                content = exportAsText(file.content);
                 contentType = 'text/plain; charset=utf-8';
                 extension = 'txt';
                 break;
@@ -59,7 +59,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 
             case 'md':
             default:
-                content = file.rawContent;
+                content = file.content;
                 contentType = 'text/markdown; charset=utf-8';
                 extension = 'md';
                 break;

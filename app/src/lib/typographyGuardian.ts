@@ -33,7 +33,8 @@ const walkAndSanitize = (node: Node) => {
     }
   } else if (
     node.nodeType === Node.ELEMENT_NODE &&
-    !['SCRIPT', 'STYLE', 'TEXTAREA', 'INPUT'].includes((node as Element).tagName)
+    !['SCRIPT', 'STYLE', 'TEXTAREA', 'INPUT'].includes((node as Element).tagName) &&
+    !(node as HTMLElement).dataset?.noTypo
   ) {
     node.childNodes.forEach(walkAndSanitize);
   }

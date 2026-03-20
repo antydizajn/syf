@@ -1,8 +1,8 @@
 import Header from '@/components/Header';
 import { getAllFiles } from '@/lib/files';
 
-export default function AboutPage() {
-  const allFiles = getAllFiles();
+export default async function AboutPage() {
+  const allFiles = await getAllFiles();
 
   return (
     <>

@@ -52,7 +52,7 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
   const paginatedItems = sortedItems.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
 
   return (
-    <div className="min-h-screen bg-white text-black p-4 md:p-10 font-mono selection:bg-black selection:text-white overflow-hidden relative">
+    <div className="min-h-screen bg-transparent text-black p-4 md:p-10 font-mono selection:bg-black selection:text-white overflow-hidden relative">
       <motion.div
         animate={{ x: collapseX }}
         className="max-w-7xl mx-auto flex flex-col min-h-screen relative z-10"

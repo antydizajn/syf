@@ -8,8 +8,8 @@ export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const slug = searchParams.get('slug') || '';
   
-  const isFolderPath = isFolder(slug);
-  const file = isFolderPath ? null : getFileBySlug(slug);
+  const isFolderPath = await isFolder(slug);
+  const file = isFolderPath ? null : await getFileBySlug(slug);
   const title = file?.title || slug.split('/').pop() || slug || 'SYF';
   const preview = file?.preview || (isFolderPath ? '📁 Folder' : '');
   const icon = isFolderPath ? '📁' : '📄';

@@ -3,7 +3,7 @@ import { JetBrains_Mono, Orbitron } from "next/font/google";
 import "./globals.css";
 import { ScanlineOverlay } from "@/components/ScanlineOverlay";
 import { Footer } from "@/components/Footer";
-import RevolutionBackground from "@/components/ui/RevolutionHero";
+import RevolutionBackground from "@/components/RevolutionBackground";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin", "latin-ext"],
@@ -83,7 +83,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pl" className={`${jetbrainsMono.variable} ${orbitron.variable} bg-white`}>
+    <html lang="pl" className={`${jetbrainsMono.variable} ${orbitron.variable}`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -98,7 +98,7 @@ export default function RootLayout({
         <RevolutionBackground />
         
         {/* 1-BIT SCANLINES */}
-        <div className="fixed inset-0 pointer-events-none z-[1001] opacity-[0.03] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%]" />
+        <div className="fixed inset-0 pointer-events-none z-1001 opacity-[0.03] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-size-[100%_4px,3px_100%]" />
         
         {/* NOISE OVERLAY */}
         <div className="noise opacity-[0.05]" aria-hidden="true" />

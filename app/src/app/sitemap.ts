@@ -1,8 +1,8 @@
 import { MetadataRoute } from 'next';
 import { getAllFiles } from '@/lib/files';
 
-export default function sitemap(): MetadataRoute.Sitemap {
-    const files = getAllFiles();
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+    const files = await getAllFiles();
     const baseUrl = 'https://syf.antydizajn.pl';
 
     // Static pages

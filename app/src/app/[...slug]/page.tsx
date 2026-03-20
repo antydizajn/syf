@@ -14,7 +14,7 @@ import {
 import { renderMarkdown } from '@/lib/markdown';
 
 export async function generateStaticParams() {
-  const slugs = getAllSlugs();
+  const slugs = await getAllSlugs();
   return slugs.map((slug) => ({
     slug: slug.split('/'),
   }));
@@ -29,12 +29,12 @@ export default async function CatchAllPage({ params }: Props) {
   const slug = slugArray.join('/');
   
   // Check if it's a folder
-  const allItems = getAllItems();
+  const allItems = await getAllItems();
   const items = allItems.filter(item => item.slug.startsWith(slug + '/') && !item.slug.slice(slug.length + 1).includes('/'));
   
   if (items.length > 0 || (allItems.some(item => item.slug === slug && item.type === 'folder'))) {
-    const totalSize = getTotalSize();
-    const breadcrumb = getBreadcrumb(slug);
+    const totalSize = await getTotalSize();
+    const breadcrumb = await getBreadcrumb(slugArray);
     const folderName = slug.split('/').pop() || slug;
     
     return (
@@ -46,12 +46,12 @@ export default async function CatchAllPage({ params }: Props) {
           <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest opacity-50">
             <Link href="/" className="hover:underline">SYF</Link>
             {breadcrumb.map((item, i) => (
-              <span key={item.slug} className="flex items-center gap-2">
+              <span key={item.href} className="flex items-center gap-2">
                 <span>/</span>
                 {i === breadcrumb.length - 1 ? (
-                  <span className="text-black">{item.name}</span>
+                  <span className="text-black">{item.title}</span>
                 ) : (
-                  <Link href={`/${item.slug}`} className="hover:underline">{item.name}</Link>
+                  <Link href={item.href} className="hover:underline">{item.title}</Link>
                 )}
               </span>
             ))}
@@ -83,15 +83,15 @@ export default async function CatchAllPage({ params }: Props) {
   }
   
   // Check if it's a file
-  const file = getFileBySlug(slug);
+  const file = await getFileBySlug(slug);
   
   if (!file || !file.content) {
     notFound();
   }
   
   const htmlContent = await renderMarkdown(file.content);
-  const { prev, next } = getAdjacentFiles(slug);
-  const breadcrumb = getBreadcrumb(slug);
+  const { prev, next } = await getAdjacentFiles(slug);
+  const breadcrumb = await getBreadcrumb(slugArray);
 
   return (
     <>
@@ -104,9 +104,9 @@ export default async function CatchAllPage({ params }: Props) {
           <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest opacity-50">
             <Link href="/" className="hover:underline">SYF</Link>
             {breadcrumb.slice(0, -1).map((item) => (
-              <span key={item.slug} className="flex items-center gap-2">
+              <span key={item.href} className="flex items-center gap-2">
                 <span>/</span>
-                <Link href={`/${item.slug}`} className="hover:underline">{item.name}</Link>
+                <Link href={item.href} className="hover:underline">{item.title}</Link>
               </span>
             ))}
           </nav>
