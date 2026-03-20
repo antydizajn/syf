@@ -76,19 +76,22 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
           <div className="bg-black text-white px-4 py-1 text-xs font-bold uppercase tracking-widest whitespace-nowrap">
             WRZUCASZ .MD → DOSTĘPNE POD /NAZWA
           </div>
-          
-          <nav className="flex flex-wrap gap-2">
-            {['PLIKI', 'O SYFIE', 'ANTYDIZAJN', 'GNIEWKA'].map((btn) => (
-              <Link 
-                key={btn}
-                href={btn === 'PLIKI' ? '/' : btn === 'O SYFIE' ? '/about' : btn === 'ANTYDIZAJN' ? 'https://antydizajn.pl' : '/gniewka'}
-                className="border-2 border-black px-4 py-1 font-black text-[10px] uppercase hover:bg-black hover:text-white transition-all block"
-              >
-                [ {btn} ]
-              </Link>
-            ))}
-          </nav>
         </div>
+
+        {/* Full-width HUD Navigation */}
+        <nav className="flex w-full gap-2 mt-8">
+          {['PLIKI', 'O SYFIE', 'ANTYDIZAJN', 'GNIEWKA'].map((btn) => (
+            <Link 
+              key={btn}
+              href={btn === 'PLIKI' ? '/' : btn === 'O SYFIE' ? '/about' : btn === 'ANTYDIZAJN' ? 'https://antydizajn.pl' : '/gniewka'}
+              className="flex-1 border-2 border-black bg-white/5 backdrop-blur-sm px-4 py-3 font-black text-[11px] md:text-sm uppercase hover:bg-black hover:text-white transition-all text-center group"
+            >
+              <span className="opacity-0 group-hover:opacity-100 transition-opacity">{"["}</span>
+              <span className="mx-2">{btn}</span>
+              <span className="opacity-0 group-hover:opacity-100 transition-opacity">{"]"}</span>
+            </Link>
+          ))}
+        </nav>
       </motion.header>
 
       {/* Grid Explorer */}
