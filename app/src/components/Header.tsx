@@ -7,7 +7,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="border-b-8 border-black bg-white sticky top-0 z-[1000] p-4 md:px-10 flex justify-between items-center font-mono">
+    <header className="border-b-8 border-black bg-white sticky top-0 z-1000 p-4 md:px-10 flex justify-between items-center font-mono">
       <Link href="/" className="text-2xl font-[1000] tracking-tighter uppercase group transition-all">
         SYF<span className="group-hover:translate-x-1 inline-block">.</span>OS
       </Link>
@@ -35,7 +35,7 @@ export default function Header() {
 
       {/* MOBILE MENU */}
       {menuOpen && (
-        <div className="fixed inset-0 top-[64px] bg-white z-[999] p-8 flex flex-col gap-4 border-t-8 border-black animate-in slide-in-from-top duration-300">
+        <div className="fixed inset-0 top-[64px] bg-white z-999 p-8 flex flex-col gap-4 border-t-8 border-black animate-in slide-in-from-top duration-300">
            {['PLIKI', 'O SYFIE', 'ANTYDIZAJN', 'GNIEWKA'].map((btn) => (
             <Link 
               key={btn}

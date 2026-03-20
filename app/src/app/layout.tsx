@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { JetBrains_Mono, Orbitron } from "next/font/google";
 import "./globals.css";
 import { ScanlineOverlay } from "@/components/ScanlineOverlay";
-import { Footer } from "@/components/Footer";
 import RevolutionBackground from "@/components/RevolutionBackground";
+import { TypographyGuardian } from "@/components/TypographyGuardian";
+import Footer from "@/components/Footer";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin", "latin-ext"],
@@ -103,11 +104,13 @@ export default function RootLayout({
         {/* NOISE OVERLAY */}
         <div className="noise opacity-[0.05]" aria-hidden="true" />
         
-        <main id="main-content" className="flex-1 relative z-10">
-          {children}
+        <main id="main-content" className="flex-1 relative z-10 px-4 md:px-10 pb-20">
+          <TypographyGuardian>
+            {children}
+          </TypographyGuardian>
+          <Footer />
         </main>
 
-        <Footer />
         <ScanlineOverlay />
       </body>
     </html>

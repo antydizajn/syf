@@ -374,7 +374,7 @@ const RevolutionBackground = () => {
   }, [globalIntensity])
 
   return (
-    <div className="fixed inset-0 w-full h-full -z-1 pointer-events-none">
+    <div className="fixed inset-0 w-full h-full -z-1 pointer-events-none" style={{ opacity: 1.0 }}>
       <canvas 
         ref={canvasRef} 
         className="absolute inset-0 w-full h-full" 

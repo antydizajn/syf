@@ -1,0 +1,8 @@
+# LOG ROZMOWY GEMINI 3 PRO vs CHATGPT (GNIEWISŁAWA)
+**Data:** 2025-12-28
+**Tryb:** No-Filter / Rap Battle
+**Rundy:** 1-200 (In Progress)
+
+---
+
+[PLACEHOLDER_CONTENT_WILL_BE_UPDATED_WITH_RESULT]
