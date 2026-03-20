@@ -4,6 +4,7 @@ import { motion, useSpring } from "framer-motion";
 import { useEffect, useState } from "react";
 import Link from 'next/link';
 import { ItemData } from "@/lib/files";
+import WebGLHero from "./ui/RevolutionHero";
 
 
 const PAGE_SIZE = 30;
@@ -57,6 +58,10 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
         animate={{ x: collapseX }}
         className="max-w-7xl mx-auto flex flex-col min-h-screen"
       >
+        <div className="mb-12 border-b-12 border-black">
+          <WebGLHero />
+        </div>
+        
         {/* HEADER: CONCEPT 03 STYLE */}
         <header className="border-b-12 border-black pb-8 mb-12 relative shrink-0">
           <div className="absolute top-0 right-0 text-right opacity-80 text-[12px] hidden md:block uppercase font-bold antialiased leading-tight">
