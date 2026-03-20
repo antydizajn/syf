@@ -1,8 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
+import { initConsoleFlex } from "@/lib/consoleFlex";
 
 export const ScanlineOverlay: React.FC = () => {
+  useEffect(() => {
+    initConsoleFlex();
+  }, []);
+
   return (
     <div 
       className="fixed inset-0 pointer-events-none z-[9999] opacity-10"
