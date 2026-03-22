@@ -16,10 +16,10 @@ const nextConfig: NextConfig = {
   },
 
   // Transpile heavy packages
-  transpilePackages: ['three', 'gsap'],
+  transpilePackages: [],
 
-  // Production Source Maps for Lighthouse
-  productionBrowserSourceMaps: true,
+  // Production Source Maps (Disabled for performance)
+  productionBrowserSourceMaps: false,
 
   // Compiler optimizations
   compiler: {

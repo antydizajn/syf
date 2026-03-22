@@ -9,11 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@types/three": "^0.183.1",
     "docx": "^9.5.1",
     "framer-motion": "^12.38.0",
     "gray-matter": "^4.0.3",
-    "gsap": "^3.14.2",
     "lucide-react": "^0.577.0",
     "next": "^16.2.0",
     "react": "19.2.3",
@@ -21,14 +19,14 @@
     "react-markdown": "^10.1.0",
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.1",
-    "remark-html": "^16.0.1",
-    "three": "^0.183.2"
+    "remark-html": "^16.0.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@webgpu/types": "^0.1.69",
     "autoprefixer": "^10.4.27",
     "eslint": "^9",
     "eslint-config-next": "^16.2.0",

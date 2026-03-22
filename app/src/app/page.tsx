@@ -6,11 +6,13 @@ export default async function HomePage() {
   const totalSize = await getTotalSize();
 
   // Root level items only (no slashes in slug)
-  const rootItems = allItems.filter(item => !item.slug.includes('/'));
+  const rootItems = allItems
+    .filter(item => !item.slug.includes('/'))
+    .map(({ content, ...rest }) => rest); // EXPLICITLY STRIP CONTENT FOR HYDRATION PERFORMANCE
 
   return (
     <HomeAesthetic 
-      items={rootItems} 
+      items={rootItems as any} 
       totalSize={totalSize} 
     />
   );

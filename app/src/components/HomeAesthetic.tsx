@@ -8,7 +8,7 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
   const [page, setPage] = useState(0);
 
   useEffect(() => {
-    console.log("%c [SYF_V5] SYSTEM_CORE: ONLINE. GNOZA_SHIELD: ACTIVE. ", "background: #000; color: #39FF14; font-weight: bold; border: 1px solid #39FF14; padding: 4px;");
+    // SYSTEM_CORE: ONLINE. GNOZA_SHIELD: ACTIVE. 
   }, []);
 
   const sortedItems = [...items].sort((a, b) => {

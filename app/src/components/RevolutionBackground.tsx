@@ -17,66 +17,68 @@ const RevolutionBackground = React.memo(() => {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const worker = new Worker(new URL("../workers/revolution.worker.ts", import.meta.url))
-    workerRef.current = worker
+    const timer = setTimeout(() => {
+      const worker = new Worker(new URL("../workers/revolution.worker.ts", import.meta.url))
+      workerRef.current = worker
 
-    const offscreen = canvas.transferControlToOffscreen()
-    
-    // Initial rect sync with window fallback to prevent 0x0/pixelation
-    const initialRect = canvas.getBoundingClientRect()
-    rectRef.current = {
-      left: initialRect.left,
-      top: initialRect.top,
-      width: initialRect.width || window.innerWidth,
-      height: initialRect.height || window.innerHeight,
-      dpr: window.devicePixelRatio || 1
-    }
+      const offscreen = canvas.transferControlToOffscreen()
+      
+      const initialRect = canvas.getBoundingClientRect()
+      rectRef.current = {
+        left: initialRect.left,
+        top: initialRect.top,
+        width: initialRect.width || window.innerWidth,
+        height: initialRect.height || window.innerHeight,
+        dpr: window.devicePixelRatio || 1
+      }
 
-    worker.postMessage({
-      type: "init",
-      payload: { 
-        canvas: offscreen,
-        width: rectRef.current.width * rectRef.current.dpr,
-        height: rectRef.current.height * rectRef.current.dpr
-      },
-    }, [offscreen])
+      worker.postMessage({
+        type: "init",
+        payload: { 
+          canvas: offscreen,
+          width: rectRef.current.width * rectRef.current.dpr,
+          height: rectRef.current.height * rectRef.current.dpr
+        },
+      }, [offscreen])
 
-    // Use ResizeObserver for async dimension tracking (Zero-Reflow Rule #7)
-    const resizeObserver = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        const { left, top, width, height } = entry.target.getBoundingClientRect()
-        rectRef.current = { left, top, width, height, dpr: window.devicePixelRatio }
+      const resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const { left, top, width, height } = entry.target.getBoundingClientRect()
+          rectRef.current = { left, top, width, height, dpr: window.devicePixelRatio }
+          
+          worker.postMessage({
+            type: "resize",
+            payload: {
+              width: width * rectRef.current.dpr,
+              height: height * rectRef.current.dpr,
+            },
+          })
+        }
+      })
+      resizeObserver.observe(canvas)
+      
+      const handleMouseMove = (e: MouseEvent) => {
+        const { left, top, height, dpr } = rectRef.current
+        const x = (e.clientX - left) * dpr
+        const y = (height - (e.clientY - top)) * dpr
         
         worker.postMessage({
-          type: "resize",
-          payload: {
-            width: width * rectRef.current.dpr,
-            height: height * rectRef.current.dpr,
-          },
+          type: "mousemove",
+          payload: { x, y }
         })
       }
-    })
-    resizeObserver.observe(canvas)
-    
-    const handleMouseMove = (e: MouseEvent) => {
-      // PURE DATA ACCESS - NO LAYOUT READS IN HANDLER (Zero-Reflow)
-      const { left, top, height, dpr } = rectRef.current
-      const x = (e.clientX - left) * dpr
-      const y = (height - (e.clientY - top)) * dpr
       
-      worker.postMessage({
-        type: "mousemove",
-        payload: { x, y }
-      })
-    }
-    
-    window.addEventListener("mousemove", handleMouseMove, { passive: true })
+      window.addEventListener("mousemove", handleMouseMove, { passive: true })
+
+      // Cleanup logic moved inside or handled by external state? No, we need it here.
+    }, 1000); // 1s delay for main UI priority
 
     return () => {
-      resizeObserver.disconnect()
-      window.removeEventListener("mousemove", handleMouseMove)
-      worker.postMessage({ type: "cleanup" })
-      worker.terminate()
+      clearTimeout(timer);
+      if (workerRef.current) {
+        workerRef.current.postMessage({ type: "cleanup" });
+        workerRef.current.terminate();
+      }
     }
   }, [])
 

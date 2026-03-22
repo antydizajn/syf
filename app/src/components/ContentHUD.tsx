@@ -17,7 +17,7 @@ interface ContentItem {
 interface ContentHUDProps {
   file?: {
     title: string;
-    content: string;
+    content?: string;
     modifiedDate?: string;
     modifiedAt?: string;
     slug: string;
@@ -25,6 +25,8 @@ interface ContentHUDProps {
   items?: ContentItem[];
   folderName?: string;
   slug?: string;
+  isFolder?: boolean;
+  breadcrumb?: { title: string; href: string }[];
 }
 
 const orphansGuard = (text: string) => {
@@ -35,7 +37,7 @@ const orphansGuard = (text: string) => {
     .replace(/^([aiouwzAIOWUZ]|że|ŻE|bo|czy|lecz|nad|pod|dla|przy|ale|do|po|są) /gi, '$1\u00A0');
 };
  
-export default function ContentHUD({ file, items, folderName, slug }: ContentHUDProps) {
+export default function ContentHUD({ file, items, folderName, slug, isFolder, breadcrumb }: ContentHUDProps) {
   const [activeTab, setActiveTab] = useState("MD");
  
   // CASE 1: DIRECTORY VIEW
@@ -247,7 +249,7 @@ export default function ContentHUD({ file, items, folderName, slug }: ContentHUD
                   hr: () => <hr className="my-12 border-t-4 border-white/10" />,
                 }}
               >
-                {file.content}
+                {file.content || ''}
               </ReactMarkdown>
             </div>
          </div>

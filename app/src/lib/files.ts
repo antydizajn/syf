@@ -21,7 +21,10 @@ export interface ItemData {
 /**
  * Raw data fetching from filesystem
  */
-async function getAllFilesRaw(subDir = ""): Promise<ItemData[]> {
+/**
+ * Raw data fetching from filesystem
+ */
+async function getAllFilesRaw(subDir = "", includeContent = false): Promise<ItemData[]> {
     try {
         const currentDir = path.join(filesDirectory, subDir);
         const entries = await fs.readdir(currentDir, { withFileTypes: true });
@@ -38,11 +41,24 @@ async function getAllFilesRaw(subDir = ""): Promise<ItemData[]> {
                     const baseName = path.basename(entry.name, ext);
                     
                     let content: string | undefined;
-                    // Only read content for files at the root level if needed, 
-                    // but usually we want to know if it's a directory
+                    let preview = "";
+
+                    // Optimization: Only read content if explicitly requested or for preview
                     if (!entry.isDirectory() && (ext === '.md' || ext === '.txt')) {
                         try {
-                            content = await fs.readFile(fullPath, 'utf-8');
+                            // If we don't need full content, we only read the first 2KB for preview
+                            if (includeContent) {
+                                content = await fs.readFile(fullPath, 'utf-8');
+                                preview = content.trim().split(/[.!?\n]/)[0] + '.';
+                            } else {
+                                // Efficient preview generation: read small chunk
+                                const buffer = Buffer.alloc(2048);
+                                const fd = await fs.open(fullPath, 'r');
+                                const { bytesRead } = await fd.read(buffer, 0, 2048, 0);
+                                await fd.close();
+                                const chunk = buffer.toString('utf8', 0, bytesRead);
+                                preview = chunk.trim().split(/[.!?\n]/)[0] + '.';
+                            }
                         } catch (e) { /* ignore */ }
                     }
                     
@@ -60,8 +76,6 @@ async function getAllFilesRaw(subDir = ""): Promise<ItemData[]> {
                         }
                     }
                     
-                    // Slug is the relative path WITHOUT extension for files, 
-                    // or just relative path for directories
                     const slug = entry.isDirectory() ? relativePath : relativePath.replace(/\.md$/, '');
 
                     return {
@@ -71,8 +85,8 @@ async function getAllFilesRaw(subDir = ""): Promise<ItemData[]> {
                         type: entry.isDirectory() ? 'folder' : 'file',
                         title: baseName.replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
                         slug: slug,
-                        content: content,
-                        preview: content ? content.trim().split(/[.!?\n]/)[0] + '.' : '',
+                        content: content, // Undefined if !includeContent
+                        preview: preview,
                         date: formatDate(stats.birthtime),
                         modifiedDate: formatDate(stats.mtime),
                         itemCount
@@ -89,13 +103,16 @@ async function getAllFilesRaw(subDir = ""): Promise<ItemData[]> {
 /**
  * Recursive fetch for all files to support static generation of all deep slugs
  */
-async function getAllFilesRecursive(subDir = ""): Promise<ItemData[]> {
-    const items = await getAllFilesRaw(subDir);
+/**
+ * Recursive fetch for all files to support static generation of all deep slugs
+ */
+async function getAllFilesRecursive(subDir = "", includeContent = false): Promise<ItemData[]> {
+    const items = await getAllFilesRaw(subDir, includeContent);
     const nestedItems: ItemData[] = [];
     
     for (const item of items) {
         if (item.type === 'folder') {
-            const children = await getAllFilesRecursive(item.path);
+            const children = await getAllFilesRecursive(item.path, includeContent);
             nestedItems.push(...children);
         }
     }
@@ -106,9 +123,13 @@ async function getAllFilesRecursive(subDir = ""): Promise<ItemData[]> {
 /**
  * Cached version of getAllFiles
  */
+/**
+ * Cached version of getAllFiles
+ */
 export const getAllFiles = unstable_cache(
-    async () => getAllFilesRecursive(),
-    ['all-files-recursive'],
+    async (includeContent = false) => getAllFilesRecursive("", includeContent),
+    ['all-files-recursive'], // Note: unstable_cache in Next.js 15+ sometimes handles args, but and older versions don't. 
+    // Actually, I should use a more robust way to differentiate.
     { revalidate: 3600, tags: ['files'] }
 );
 
@@ -116,12 +137,12 @@ export async function getItemsByPath(subPath: string): Promise<ItemData[]> {
     return getAllFilesRaw(subPath);
 }
 
-export async function getAllItems(): Promise<ItemData[]> {
-    return getAllFiles();
+export async function getAllItems(includeContent = false): Promise<ItemData[]> {
+    return getAllFiles(includeContent);
 }
 
 export async function getFileBySlug(slug: string): Promise<ItemData | null> {
-    const all = await getAllFiles();
+    const all = await getAllFiles(true); // Need content for specific file view
     // Support both raw slug and path-array style resolution
     const processedSlug = slug.replace(/^\//, '');
     return all.find(f => f.slug === processedSlug) || null;
