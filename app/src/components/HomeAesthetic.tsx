@@ -91,50 +91,54 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {paginatedItems.map((item, i) => {
             const globalIndex = page * PAGINATION_SIZE + i + 1;
+            const indexStr = globalIndex.toString().padStart(3, '0');
             const isFolder = item.type === 'folder';
             
             return (
-              <div key={item.slug} className="group bg-black">
+              <div key={item.slug} className="group relative">
                 <Link 
                   href={`/${item.slug}`}
-                  className={`relative flex flex-col h-full min-h-[220px] transition-all duration-150 p-10 no-underline hover:bg-white/3`}
+                  className={`relative flex flex-col h-full min-h-[110px] transition-all duration-300 p-6 no-underline border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] hover:-translate-x-1 hover:-translate-y-1 ${isFolder ? 'bg-black/80 text-white' : 'bg-white/80 text-black'}`}
                 >
-                  <div className="flex justify-between items-start mb-10">
-                    <span className="text-[10px] font-bold opacity-20">
-                      [{globalIndex.toString().padStart(3, '0')}]
-                    </span>
-                    <span className={`text-[8px] font-bold px-2 py-0.5 uppercase tracking-widest border border-white/20 text-white/40 group-hover:text-white group-hover:border-white transition-colors`}>
-                      {isFolder ? 'DIR' : 'FILE'}
-                    </span>
+                  {/* GIANT BACKGROUND INDEX (MOVES WITH LINK) */}
+                  <div className={`absolute right-5 bottom-0 text-[110px] leading-none font-black select-none pointer-events-none z-0 overflow-hidden ${isFolder ? 'text-white/20' : 'text-black/10'}`}>
+                    {indexStr}
                   </div>
-                  
-                  <div className="flex-1">
-                    <h3 className="text-3xl font-bold tracking-tight uppercase leading-[1.1] break-all text-white group-hover:text-white">
-                      {isFolder ? `${item.name}/` : item.name.toUpperCase()}
-                    </h3>
- 
-                    {item.preview && !isFolder && (
-                      <p className="mt-8 text-[11px] text-white/40 group-hover:text-white/60 line-clamp-3 leading-relaxed font-normal">
-                        {item.preview}
-                      </p>
-                    )}
-                  </div>
- 
-                  <div className="mt-12 flex items-center justify-between text-[9px] font-bold tracking-widest text-white/30 uppercase">
-                    <div className="flex gap-12">
-                      <div className="flex flex-col">
-                        <span className="mb-2 text-[7px] text-white/20">DATA</span>
-                        <span>{item.date}</span>
-                      </div>
-                      <div className="flex flex-col">
-                        <span className="mb-2 text-[7px] text-white/20">ROZMIAR</span>
-                        <span>{isFolder ? `${item.itemCount}_OBJ` : item.size}</span>
-                      </div>
+
+                  <div className="relative z-10 flex flex-col h-full">
+                    <div className="flex justify-between items-start mb-2">
+                      <h3 className="text-2xl font-black tracking-tight uppercase leading-none break-all">
+                        {isFolder ? `${item.name}/` : item.name.toUpperCase()}
+                      </h3>
+                      <span className={`text-[8px] font-black px-2 py-0.5 uppercase tracking-widest border border-current opacity-40 group-hover:opacity-100 transition-opacity`}>
+                        {isFolder ? 'DIR' : 'FILE'}
+                      </span>
                     </div>
-                    <span className="opacity-0 group-hover:opacity-100 transition-opacity">READ →</span>
+                    
+                    <div className="flex-1">
+                      {item.preview && !isFolder && (
+                        <p className="text-[10px] opacity-60 group-hover:opacity-100 line-clamp-1 leading-tight font-medium">
+                          {item.preview}
+                        </p>
+                      )}
+                    </div>
+   
+                    <div className="mt-4 flex items-center justify-between text-[8px] font-black tracking-widest opacity-40 uppercase">
+                      <div className="flex gap-6">
+                        <div className="flex flex-col">
+                          <span className="text-[7px] opacity-50">DATA</span>
+                          <span>{item.date}</span>
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-[7px] opacity-50">SIZE</span>
+                          <span>{isFolder ? `${item.itemCount}_OBJ` : item.size}</span>
+                        </div>
+                      </div>
+                      <span className="opacity-0 group-hover:opacity-100 transition-opacity">READ_LOG →</span>
+                    </div>
                   </div>
                 </Link>
               </div>

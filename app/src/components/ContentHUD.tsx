@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Link from 'next/link';
@@ -17,170 +17,196 @@ interface ContentHUDProps {
 
 const orphansGuard = (text: string) => {
   if (!text) return '';
-  return text.replace(/ (\w) /g, ' $1\u00A0');
+  // ZASADA SIEROTKI (Wikipedia Standard): a, i, o, u, w, z, że, bo, czy, lecz, nad, pod, dla, przy
+  return text
+    .replace(/ (a|i|o|u|w|z|że|bo|czy|lecz|nad|pod|dla|przy) /gi, ' $1\u00A0')
+    .replace(/^([aiouwzAIOWUZ]|że|ŻE|bo|czy|lecz|nad|pod|dla|przy) /gi, '$1\u00A0');
 };
-
+ 
 export default function ContentHUD({ file, items, folderName, isFolder, breadcrumb, slug }: ContentHUDProps) {
   const [activeTab, setActiveTab] = useState("MD");
-
+ 
   // CASE 1: DIRECTORY VIEW
   if (items && folderName) {
     return (
-      <div className="space-y-12">
-        <motion.header 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-4 border-l-4 border-radioactive pl-6"
-        >
-          <div className="flex flex-col">
-            <span className="text-[10px] font-black tracking-[0.5em] text-radioactive opacity-50 uppercase">DIR_EXPLORER_V5</span>
-            <h1 className="text-5xl md:text-7xl font-black tracking-tighter uppercase text-white leading-none">
-              {folderName}<span className="text-radioactive/50 opacity-50 px-2">/</span>
-            </h1>
+      <div className="space-y-12 pb-20">
+        <div className="flex flex-col gap-4">
+          <div className="flex justify-between items-center text-[10px] font-black tracking-[0.4em] text-white/50 uppercase border-b-2 border-white/10 pb-4 mb-4">
+            <span>{"//"} SECTOR_EXPLORER_V5</span>
+            <span>SYSTEM_READY</span>
           </div>
-        </motion.header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {items.map((item: any, idx: number) => (
-            <motion.div
-              key={item.slug}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: idx * 0.05 }}
+          <motion.header 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-black text-white p-8 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex justify-between items-center"
+          >
+            <div className="flex flex-col">
+              <span className="text-[10px] font-black tracking-[0.5em] text-white/40 uppercase mb-2">INDEX_HEADER</span>
+              <h1 className="text-4xl md:text-6xl font-black tracking-tighter uppercase leading-none">
+                {folderName}<span className="opacity-20 px-2">/</span>
+              </h1>
+            </div>
+            
+            <Link 
+              href="/" 
+              className="bg-white text-black px-6 py-3 font-black text-[12px] border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all uppercase"
             >
-              <Link 
-                href={`/${item.slug}`}
-                className={`group relative flex flex-col h-full min-h-[160px] transition-all duration-300 border border-white/10 overflow-hidden backdrop-blur-xl ${item.type === 'folder' ? "bg-black" : "bg-black/40"} hover:bg-white/5 shadow-xl hover:shadow-radioactive/5 hover:-translate-y-1`}
-              >
-                <div className="absolute top-2 right-4 text-[8px] font-black opacity-30 text-radioactive tracking-widest uppercase">
-                   NODE_0x{idx.toString(16)}
-                </div>
-
-                <div className={`scanlines absolute inset-0 pointer-events-none opacity-[0.05]`} />
-                
-                {/* Header Row */}
-                <div className={`flex justify-between items-start p-5 border-b border-white/5 bg-white/5`}>
-                  <div className="flex flex-col">
-                    <span className="text-[10px] font-black tracking-widest text-radioactive opacity-50 uppercase">
-                      {item.type === 'folder' ? 'DIR' : 'FILE'}
-                    </span>
-                  </div>
-                </div>
-                
-                <div className="p-6 flex-1 flex flex-col justify-end relative z-10">
-                  <h3 className="text-2xl font-black tracking-tighter uppercase leading-tight group-hover:text-radioactive transition-colors truncate">
-                    {item.type === 'folder' ? `${item.title}/` : item.title}
-                  </h3>
-                  
-                  <div className="mt-4 flex items-center justify-between text-[8px] font-black tracking-widest text-zinc-500 uppercase opacity-0 group-hover:opacity-100 transition-opacity">
-                    <span>{item.size || '--'}</span>
-                    <span>INITIALIZE →</span>
-                  </div>
-                </div>
-
-                <div className={`h-1 w-full bg-radioactive/0 group-hover:bg-radioactive/50 transition-all`} />
-              </Link>
-            </motion.div>
-          ))}
+              [ BACK_TO_HOME ]
+            </Link>
+          </motion.header>
         </div>
+ 
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {items.map((item: any, idx: number) => {
+            const indexStr = (idx + 1).toString().padStart(3, '0');
+            const isDir = item.type === 'folder';
+            
+            return (
+              <div key={item.slug} className="group relative">
+                <Link 
+                  href={`/${item.slug}`}
+                  className={`relative flex flex-col h-full min-h-[110px] transition-all duration-300 p-6 no-underline border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] hover:-translate-x-1 hover:-translate-y-1 ${isDir ? 'bg-black/80 text-white' : 'bg-white/80 text-black'}`}
+                >
+                  {/* GIANT BACKGROUND INDEX */}
+                  <div className={`absolute right-5 bottom-0 text-[110px] leading-none font-black select-none pointer-events-none z-0 overflow-hidden ${isDir ? 'text-white/20' : 'text-black/10'}`}>
+                    {indexStr}
+                  </div>
+
+                  <div className="relative z-10 flex flex-col h-full">
+                    <div className="flex justify-between items-start mb-2">
+                      <h3 className="text-2xl font-black tracking-tight uppercase leading-none break-all">
+                        {isDir ? `${item.title}/` : orphansGuard(item.title).toUpperCase()}
+                      </h3>
+                      <span className={`text-[8px] font-black px-2 py-0.5 uppercase tracking-widest border border-current opacity-40`}>
+                        {isDir ? 'DIR' : 'FILE'}
+                      </span>
+                    </div>
+                    
+                    <div className="flex-1 opacity-60">
+                       <span className="text-[9px] font-black tracking-widest">ID: {item.slug.substring(0, 8)}</span>
+                    </div>
+   
+                    <div className="mt-4 flex items-center justify-between text-[8px] font-black tracking-widest opacity-40 uppercase">
+                      <span>{item.size || '--'}</span>
+                      <span className="opacity-0 group-hover:opacity-100 transition-opacity">READ_LOG →</span>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            );
+          })}
+        </div>
+        
+        {/* BOTTOM MENU DUPLICATION */}
+        <nav className="flex flex-wrap gap-4 mt-20 pt-10 border-t-2 border-white/10">
+          <Link href="/" className="bg-black text-white px-8 py-4 font-black text-sm border-4 border-black shadow-[6px_6px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all uppercase">
+            [01] HOME_SECTOR
+          </Link>
+          <Link href="/about" className="bg-white text-black px-8 py-4 font-black text-sm border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all uppercase">
+            [02] ABOUT_OS
+          </Link>
+          <button className="bg-black text-white px-8 py-4 font-black text-sm border-4 border-black shadow-[6px_6px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all uppercase">
+            [03] CONTACT_LOG
+          </button>
+        </nav>
       </div>
     );
   }
-
+ 
   // CASE 2: FILE VIEW
   if (!file) return null;
-
-  const breadcrumbs = [
-    { label: "ROOT", href: "/" },
-    { label: folderName?.toUpperCase() || "SYF", href: "/" },
-    { label: file.title.toUpperCase(), href: `/${file.slug}` },
-  ];
-
+ 
+  const slugParts = slug?.split('/') || [];
+  const folderPath = slugParts.length > 1 ? `/${slugParts.slice(0, -1).join('/')}` : '/';
+ 
   return (
     <motion.article 
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="space-y-8 relative"
+      className="space-y-8 relative pb-20"
     >
       {/* HUD HEADER PANEL */}
-      <div className="hud-panel p-8 bg-white/3 relative overflow-hidden">
+      <div className="bg-white text-black p-8 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 relative z-10">
-          <div className="space-y-6 flex-1">
-            <nav className="flex items-center gap-2 text-[10px] font-black tracking-[0.2em] text-zinc-500 uppercase">
-              {breadcrumbs.map((crumb, idx) => (
-                <React.Fragment key={`${crumb.href}-${idx}`}>
-                  <Link href={crumb.href} className="hover:text-radioactive transition-colors">
-                    {crumb.label}
-                  </Link>
-                  {idx < breadcrumbs.length - 1 && <span>/</span>}
-                </React.Fragment>
-              ))}
-            </nav>
-
-            <h1 className="text-5xl sm:text-7xl font-black tracking-tighter leading-[0.85] wrap-break-word uppercase text-white shadow-radioactive">
-              {file.title}
+          <div className="space-y-4 flex-1">
+            <span className="text-[10px] font-black tracking-[0.5em] opacity-40 uppercase">DATA_STREAM_FILE</span>
+            <h1 className="text-4xl sm:text-6xl font-black tracking-tighter leading-none wrap-break-word uppercase">
+              {orphansGuard(file.title)}
             </h1>
           </div>
-
-          <div className="flex flex-wrap gap-8 text-[9px] font-black tracking-[0.3em] uppercase opacity-60 bg-black/40 p-4 border border-white/5">
+ 
+          <div className="flex flex-wrap gap-6 text-[9px] font-black tracking-[0.3em] uppercase bg-black text-white p-4 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)]">
             <div className="flex flex-col gap-1">
-              <span className="text-zinc-500">MODIFIED</span>
+              <span className="opacity-40">MODIFIED</span>
               <span>{file.modifiedDate || file.modifiedAt}</span>
             </div>
             <div className="flex flex-col gap-1">
-              <span className="text-zinc-500">PAYLOAD_ID</span>
-              <span className="text-radioactive">{file.slug.substring(0, 10)}</span>
+              <span className="opacity-40">PAYLOAD</span>
+              <span className="text-white">{file.slug.substring(0, 10)}</span>
             </div>
           </div>
         </div>
-        <div className="absolute inset-0 coordinate-grid opacity-[0.02] pointer-events-none" />
       </div>
-
-      {/* CONTENT TAB BAR */}
-      <div className="flex gap-2 relative z-20">
-        {["MD", "HTML", "TXT", "DUMP"].map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`px-6 py-2 text-[10px] font-black tracking-widest transition-all hud-clip-tl border ${
-              activeTab === tab 
-                ? "bg-radioactive text-black border-radioactive" 
-                : "bg-black/40 text-zinc-500 border-white/10 hover:border-white/30"
-            }`}
+ 
+      {/* CONSOLIDATED NAVIGATION & TABS BAR */}
+      <div className="flex flex-wrap items-center gap-4 relative z-20">
+        <Link 
+          href="/" 
+          className="bg-black text-white px-6 py-3 text-[10px] font-black tracking-widest transition-all border-4 border-black shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 uppercase"
+        >
+          [ HOME_SECTOR ]
+        </Link>
+        {slugParts.length > 1 && (
+          <Link 
+            href={folderPath}
+            className="bg-white text-black px-6 py-3 text-[10px] font-black tracking-widest transition-all border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 uppercase"
           >
-            {tab}_DATA_VIEW
-          </button>
-        ))}
-      </div>
+            [ BACK_TO_FOLDER ]
+          </Link>
+        )}
 
+        <div className="hidden md:block w-0.5 h-8 bg-white/10 mx-2" />
+
+        <div className="flex flex-wrap gap-4">
+          {["MD", "HTML", "TXT", "DUMP"].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`px-6 py-3 text-[10px] font-black tracking-widest transition-all border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] ${
+                activeTab === tab 
+                  ? "bg-black text-white shadow-none translate-x-1 translate-y-1" 
+                  : "bg-white text-black hover:bg-zinc-100"
+              }`}
+            >
+              {tab}_VIEW
+            </button>
+          ))}
+        </div>
+      </div>
+ 
       {/* MAIN CONTENT CONTAINER */}
-      <div className="hud-panel p-1 relative">
-         <div className="bg-black/60 p-8 md:p-16 relative overflow-hidden">
-            <div className="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-radioactive/30 pointer-events-none" />
-            <div className="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-radioactive/30 pointer-events-none" />
-            
+      <div className="border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] bg-white/5 backdrop-blur-sm p-1">
+         <div className="bg-black/80 p-8 md:p-16 relative overflow-hidden">
             <div className="prose prose-invert prose-zinc max-w-none 
               prose-headings:font-black prose-headings:tracking-tighter prose-headings:uppercase prose-headings:italic
-              prose-p:text-zinc-400 prose-p:leading-relaxed prose-p:text-lg
-              prose-a:text-radioactive prose-a:no-underline hover:prose-a:text-white transition-all
+              prose-p:text-zinc-300 prose-p:leading-relaxed prose-p:text-lg
+              prose-a:text-white prose-a:underline hover:prose-a:opacity-80 transition-all
               prose-strong:text-white prose-strong:font-black
-              prose-code:text-radioactive prose-code:bg-radioactive/10 prose-code:px-2 prose-code:py-0.5 prose-code:rounded-none
-              prose-pre:bg-black/80 prose-pre:border prose-pre:border-white/10 prose-pre:rounded-none
+              prose-code:text-white prose-code:bg-white/10 prose-code:px-2 prose-code:py-0.5 prose-code:rounded-none
+              prose-pre:bg-black/90 prose-pre:border-4 prose-pre:border-black prose-pre:rounded-none
               xl:prose-xl">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
+                  text: ({ node, ...props }) => (
+                    <>{orphansGuard(String(props.children))}</>
+                  ),
                   h2: ({ node, ...props }) => {
-                    const children = props.children;
-                    const content = typeof children === 'string' 
-                      ? children 
-                      : Array.isArray(children) 
-                        ? children.map(c => typeof c === 'string' ? c : '').join('')
-                        : '';
                     return (
-                      <h2 className="flex items-center gap-4 border-l-4 border-radioactive pl-6 my-12 group" {...props}>
-                        <span className="text-white group-hover:text-radioactive transition-colors">
-                          {orphansGuard(content)}
+                      <h2 className="flex items-center gap-4 border-l-8 border-white/20 pl-6 my-12 group" {...props}>
+                        <span className="text-white group-hover:translate-x-2 transition-transform">
+                          {props.children}
                         </span>
                       </h2>
                     );
@@ -194,25 +220,26 @@ export default function ContentHUD({ file, items, folderName, isFolder, breadcru
                         : '';
                     const sectionId = content.substring(0, 4).toUpperCase().replace(/\W/g, "") || "NULL";
                     return (
-                      <h3 className="relative flex items-center gap-4 my-8" {...props}>
-                        <span className="text-[10px] font-black tracking-widest opacity-30 text-zinc-500 bg-white/5 px-2 py-1">
-                          [ SECTION_ID: {sectionId} ]
+                      <h3 className="relative flex flex-col gap-2 my-10" {...props}>
+                        <span className="text-[10px] font-black tracking-widest opacity-30 uppercase">
+                          [ SECTOR_ID: {sectionId} ]
                         </span>
-                        <span className="text-xl text-radioactive">
-                          {orphansGuard(content)}
+                        <span className="text-2xl text-white font-black uppercase tracking-tight">
+                          {props.children}
                         </span>
+                        <div className="h-1 w-20 bg-white/20" />
                       </h3>
                     );
                   },
                   p: ({ node, ...props }) => (
                     <p className="mb-6 last:mb-0">
-                      {orphansGuard(String(props.children))}
+                      {props.children}
                     </p>
                   ),
                   li: ({ node, ...props }) => (
                     <li className="flex gap-4 mb-4 list-none group">
-                       <span className="text-radioactive font-black group-hover:translate-x-1 transition-transform">{`>>`}</span>
-                       <span className="flex-1">{orphansGuard(String(props.children))}</span>
+                       <span className="text-white/40 font-black group-hover:translate-x-1 transition-transform">{`>>`}</span>
+                       <span className="flex-1 font-medium">{props.children}</span>
                     </li>
                   ),
                 }}
@@ -222,6 +249,19 @@ export default function ContentHUD({ file, items, folderName, isFolder, breadcru
             </div>
          </div>
       </div>
+
+      {/* BOTTOM MENU DUPLICATION */}
+      <nav className="flex flex-wrap gap-4 mt-20 pt-10 border-t-2 border-white/10">
+        <Link href="/" className="bg-black text-white px-8 py-4 font-black text-sm border-4 border-black shadow-[6px_6px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all uppercase">
+          [01] HOME_SECTOR
+        </Link>
+        <Link href="/about" className="bg-white text-black px-8 py-4 font-black text-sm border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all uppercase">
+          [02] ABOUT_OS
+        </Link>
+        <button className="bg-black text-white px-8 py-4 font-black text-sm border-4 border-black shadow-[6px_6px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all uppercase">
+          [03] CONTACT_LOG
+        </button>
+      </nav>
     </motion.article>
   );
 }
