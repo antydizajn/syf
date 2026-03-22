@@ -32,7 +32,7 @@ echo "🧾 Local bundle hash: $LOCAL_HASH"
 
 # 2. UPLOAD STANDALONE (BEZ --delete bo usuwa app.js!)
 echo "▶️  Uploading standalone..."
-rsync -avz .next/standalone/AI/ANTIGRAVITY/gniewka_next/ danveld@s61.mydevil.net:domains/syf.antydizajn.pl/public_nodejs/
+rsync -avz .next/standalone/ danveld@s61.mydevil.net:domains/syf.antydizajn.pl/public_nodejs/
 
 # 3. UPLOAD STATIC
 echo "▶️  Uploading static..."
