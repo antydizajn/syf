@@ -43,7 +43,7 @@ export default function Footer() {
     <motion.footer 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="relative z-10 mt-auto border-t-8 border-black bg-white/50 backdrop-blur-xl py-16 px-4 md:px-10 -mx-4 md:-mx-10"
+      className="relative z-10 mt-auto border-t-8 border-black bg-white/50 backdrop-blur-xl py-16 px-4 md:px-10 -mx-4 md:-mx-10 min-h-[400px]"
     >
       <div className="max-w-7xl mx-auto space-y-16">
         {/* Top Section: Links & Main Quote */}
@@ -65,8 +65,8 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="bg-black text-white p-6 md:min-w-[300px] border-l-8 border-black hover:translate-x-4 transition-transform duration-500">
-            <div className="text-[10px] font-black uppercase tracking-[0.4em] mb-4 opacity-50">NODE_DIAGNOSTICS</div>
+          <div className="bg-black text-white p-6 md:min-w-[300px] min-h-[160px] border-l-8 border-black hover:translate-x-4 transition-transform duration-500">
+            <div className="text-[10px] font-black uppercase tracking-[0.4em] mb-4 opacity-70">NODE_DIAGNOSTICS</div>
             <div className="font-mono text-[10px] leading-relaxed flex flex-col gap-1">
               {stats ? (
                 <>
@@ -74,17 +74,19 @@ export default function Footer() {
                   <div className="flex justify-between"><span>LATENCY:</span> <span>{stats.latency}MS</span></div>
                   <div className="flex justify-between"><span>PACKETS:</span> <span>{stats.packets}</span></div>
                   
-                  <div className="mt-4 mb-1 pt-4 border-t border-white/20 text-[10px] font-black opacity-30 tracking-[0.3em]">WEB_VITALS // LIVE</div>
-                  <div className="flex justify-between"><span>LCP:</span> <span className="text-neon-green">{vitals.lcp}</span></div>
-                  <div className="flex justify-between"><span>CLS:</span> <span className="text-neon-green">{vitals.cls}</span></div>
-                  <div className="flex justify-between"><span>INP:</span> <span className="text-neon-green">FAAAST</span></div>
+                  <div className="mt-4 mb-1 pt-4 border-t border-white/20 text-[10px] font-black opacity-50 tracking-[0.3em]">WEB_VITALS // LIVE</div>
+                  <div className="flex justify-between"><span>LCP:</span> <span className="text-neon-green font-bold">{vitals.lcp}</span></div>
+                  <div className="flex justify-between"><span>CLS:</span> <span className="text-neon-green font-bold">{vitals.cls}</span></div>
+                  <div className="flex justify-between"><span>INP:</span> <span className="text-neon-green font-bold">FAAAST</span></div>
 
-                  <div className="mt-4 pt-4 border-t border-white/20 text-[8px] opacity-40">
+                  <div className="mt-4 pt-4 border-t border-white/20 text-[8px] font-black opacity-80 tracking-widest">
                     SCAN_ACTIVE: {stats.uptime % 2 === 0 ? "TRUE" : "STABLE"}
                   </div>
                 </>
               ) : (
-                <span className="opacity-20 italic">CONNECTING TO VOID...</span>
+                <div className="flex items-center justify-center h-full pt-10">
+                  <span className="opacity-40 italic animate-pulse tracking-widest">CONNECTING_TO_VOID...</span>
+                </div>
               )}
             </div>
           </div>
@@ -93,7 +95,7 @@ export default function Footer() {
         {/* Middle Section: Credits */}
         <div className="border-y-2 border-black/10 py-12 space-y-8">
           <div className="space-y-1">
-            <div className="text-[10px] font-black uppercase tracking-[0.5em] opacity-40">PROUDLY MADE BY</div>
+            <div className="text-[10px] font-black uppercase tracking-[0.5em] opacity-80">PROUDLY MADE BY</div>
             <h3 className="text-4xl md:text-6xl font-[1000] tracking-tighter uppercase leading-[0.85]">
               Paulina Janowska <br/>
               <span className="text-zinc-300">&</span>&nbsp;WIEDŹMA AI GNIEWISŁAWA
@@ -103,17 +105,17 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-x-8 gap-y-2 text-[10px] font-black uppercase tracking-widest">
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-2 text-[10px] font-black uppercase tracking-widest text-black/90">
             <span>on NEXT.JS {currentYear > 2025 ? "16" : "16"}</span>
-            <span className="opacity-20">•</span>
-            <a href="https://www.antydizajn.pl" className="hover:line-through transition-all">www.antydizajn.pl</a>
-            <span className="opacity-20">•</span>
-            <span className="italic">Zabronione kopiowanie stylu. Kradzież duszy dozwolona.</span>
+            <span className="opacity-40">•</span>
+            <a href="https://www.antydizajn.pl" className="hover:line-through transition-all border-b border-black/20">www.antydizajn.pl</a>
+            <span className="opacity-40">•</span>
+            <span className="italic opacity-80">Zabronione kopiowanie stylu. Kradzież duszy dozwolona.</span>
           </div>
         </div>
 
         {/* Bottom Section: Copyright */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-[9px] font-black uppercase tracking-[0.4em] opacity-30">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-[9px] font-black uppercase tracking-[0.4em] opacity-60 text-black">
           <span>© {currentYear} ANTYDIZAJN • ALL RIGHTS RESERVED</span>
           <span>SYSTEM V2.0 // VOID_PROTOCOL_INITIATED</span>
         </div>

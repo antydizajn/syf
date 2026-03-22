@@ -19,40 +19,30 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug: slugArray } = await params;
   const slug = slugArray.join('/');
   
-  // Check if it's a folder
-  const allItems = await getAllItems();
-  const folderItems = allItems.filter(item => 
-    item.slug.startsWith(slug + '/') && 
-    !item.slug.slice(slug.length + 1).includes('/')
-  );
+  const item = await getFileBySlug(slug);
   
-  const isFolder = folderItems.length > 0 || allItems.some(item => item.slug === slug && item.type === 'folder');
-
-  if (isFolder) {
-    const folderName = slug.split('/').pop() || slug;
-    const itemsCount = folderItems.length;
+  if (item?.type === 'folder') {
     return {
-      title: `${folderName.toUpperCase()} /`,
-      description: `Katalog ${folderName} zawierający ${itemsCount} plików w systemie SYF.`,
+      title: `${item.title.toUpperCase()} /`,
+      description: `Katalog ${item.title} zawierający ${item.itemCount} plików w systemie SYF.`,
       openGraph: {
-        title: `${folderName.toUpperCase()} | SYF.ANTYDIZAJN.PL`,
-        description: `Eksploruj zawartość folderu ${folderName}.`,
+        title: `${item.title.toUpperCase()} | SYF.ANTYDIZAJN.PL`,
+        description: `Eksploruj zawartość folderu ${item.title}.`,
         type: 'website',
       }
     };
   }
 
-  const file = await getFileBySlug(slug);
-  if (file) {
+  if (item?.type === 'file') {
     return {
-      title: file.title,
-      description: file.preview || `Dokument ${file.title} w dumpie SYF.`,
+      title: item.title,
+      description: item.preview || `Dokument ${item.title} w dumpie SYF.`,
       openGraph: {
-        title: `${file.title} | SYF.ANTYDIZAJN.PL`,
-        description: file.preview,
+        title: `${item.title} | SYF.ANTYDIZAJN.PL`,
+        description: item.preview,
         type: 'article',
-        publishedTime: file.date,
-        modifiedTime: file.modifiedDate,
+        publishedTime: item.date,
+        modifiedTime: item.modifiedDate,
       }
     };
   }
@@ -66,40 +56,39 @@ export default async function Page({ params }: { params: Promise<{ slug: string[
   const { slug: slugArray } = await params;
   const slug = slugArray.join('/');
   
-  // Check if it's a folder
-  const allItems = await getAllItems();
-  const folderItems = allItems.filter(item => 
-    item.slug.startsWith(slug + '/') && 
-    !item.slug.slice(slug.length + 1).includes('/')
-  );
+  const item = await getFileBySlug(slug);
   
-  const isFolder = folderItems.length > 0 || allItems.some(item => item.slug === slug && item.type === 'folder');
+  if (!item) {
+    notFound();
+  }
+  
   const breadcrumb = await getBreadcrumb(slugArray);
 
-  if (isFolder) {
-    const folderName = slug.split('/').pop() || slug;
+  if (item.type === 'folder') {
+    // Get items within this folder
+    const allItems = await getAllItems();
+    const folderItems = allItems.filter(child => {
+      // Must start with parent slug + /
+      const prefix = `${slug}/`;
+      return child.slug.startsWith(prefix) && 
+             !child.slug.slice(prefix.length).includes('/');
+    });
+
     return (
       <ContentHUD 
         isFolder={true} 
         items={folderItems} 
         breadcrumb={breadcrumb} 
         slug={slug} 
-        folderName={folderName} 
+        folderName={item.title} 
       />
     );
-  }
-  
-  // Check if it's a file
-  const file = await getFileBySlug(slug);
-  
-  if (!file) {
-    notFound();
   }
   
   return (
     <ContentHUD 
       isFolder={false} 
-      file={file} 
+      file={item} 
       breadcrumb={breadcrumb} 
       slug={slug} 
     />

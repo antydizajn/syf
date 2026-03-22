@@ -18,6 +18,14 @@ const nextConfig: NextConfig = {
   // Transpile heavy packages
   transpilePackages: ['three', 'gsap'],
 
+  // Production Source Maps for Lighthouse
+  productionBrowserSourceMaps: true,
+
+  // Compiler optimizations
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production" ? { exclude: ["error", "warn"] } : false,
+  },
+
   // Security and caching headers
   async headers() {
     return [

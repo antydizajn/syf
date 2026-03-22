@@ -4,20 +4,15 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import Link from 'next/link';
 import { ItemData } from "@/lib/files";
+import { orphansGuard } from "@/lib/typography";
 
 
 export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSize: string }) {
-  const [mounted, setMounted] = useState(false);
   const [page, setPage] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => {
-    // Avoid synchronous setState in useEffect
-    const timer = setTimeout(() => setMounted(true), 0);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (!mounted) return null;
+  // Removed hydration block to eliminate CLS (Cumulative Layout Shift)
+  // components now render identical initial state on server/client
 
   const sortedItems = [...items].sort((a, b) => {
     if (a.type === 'folder' && b.type !== 'folder') return -1;
@@ -32,27 +27,25 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
   return (
     <div className="max-w-7xl mx-auto flex flex-col min-h-[calc(100vh-160px)]">
       {/* RESTORED HEADER STYLE FROM SCREENSHOT */}
-      <motion.header 
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mb-12 border-b-8 border-black pb-8 pt-4 relative bg-transparent -mx-4 px-4 md:-mx-10 md:px-10"
-      >
-        <div className="absolute top-4 right-4 md:right-10 text-right text-white opacity-80 text-[10px] hidden md:block uppercase font-bold tracking-widest leading-tight">
+      <header className="mb-12 border-b-8 border-black pb-8 pt-4 relative bg-transparent -mx-4 px-4 md:-mx-10 md:px-10">
+        <div className="absolute top-4 right-4 md:right-10 text-right text-white opacity-90 text-[10px] hidden md:block uppercase font-bold tracking-widest leading-tight">
           [ SYSTEM_VERSION: V2.0 ]<br/>
           [ TOTAL_CAPACITY: {totalSize} ]<br/>
           [ NODE_COUNT: {items.length} ]
         </div>
         
-        <h1 className="font-black text-4xl md:text-7xl leading-[0.85] tracking-tighter uppercase mb-6 text-white border-b-4 border-black pb-2">
-          SYF.ANTYDIZAJN.PL
+        <h1 className="font-display font-black text-4xl md:text-7xl leading-[0.85] tracking-tighter uppercase mb-6 text-white border-b-4 border-black pb-2">
+          <Link href="/" className="hover:text-radioactive transition-colors cursor-pointer inline-block">
+            SYF.ANTYDIZAJN.PL
+          </Link>
         </h1>
 
         <div className="flex flex-col gap-2 mb-6">
-          <div className="bg-black text-white px-4 py-2 text-6xl md:text-[9.5rem] font-black uppercase tracking-tighter w-fit leading-none">
+          <div className="bg-black text-white px-4 py-2 text-6xl md:text-[9.5rem] font-display font-black uppercase tracking-tighter w-fit leading-none">
             PUBLICZNY
           </div>
-          <div className="bg-black text-white px-4 py-2 text-5xl md:text-[7.8rem] font-black uppercase tracking-tighter w-fit leading-none">
-            DUMP PLIKÓW
+          <div className="bg-black text-white px-4 py-2 text-5xl md:text-[7.8rem] font-display font-black uppercase tracking-tighter w-fit leading-none">
+            {orphansGuard("DUMP PLIKÓW")}
           </div>
         </div>
 
@@ -74,7 +67,7 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
 
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 overflow-x-auto">
           <div className="bg-black text-white px-4 py-1 text-xs font-bold uppercase tracking-widest whitespace-nowrap">
-            WRZUCASZ .MD → DOSTĘPNE POD /NAZWA
+            {orphansGuard("WRZUCASZ .MD → DOSTĘPNE POD /NAZWA")}
           </div>
         </div>
 
@@ -84,7 +77,7 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
             <Link 
               key={btn}
               href={btn === 'PLIKI' ? '/' : btn === 'O SYFIE' ? '/about' : btn === 'ANTYDIZAJN' ? 'https://antydizajn.pl' : '/gniewka'}
-              className="flex-1 border-2 border-black bg-white/60 backdrop-blur-sm px-4 py-3 font-black text-[11px] md:text-sm uppercase hover:bg-black hover:text-white transition-all text-center group"
+              className="flex-1 border-2 border-black bg-white/70 backdrop-blur-md px-4 py-3 font-black text-[11px] md:text-sm uppercase text-black hover:bg-black hover:text-white transition-all text-center group"
             >
               <span className="opacity-0 group-hover:opacity-100 transition-opacity">{"["}</span>
               <span className="mx-2">{btn}</span>
@@ -92,14 +85,14 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
             </Link>
           ))}
         </nav>
-      </motion.header>
+      </header>
 
       {/* Grid Explorer */}
       <div className="flex flex-col gap-6 px-4 md:px-0 mt-8 mb-12">
-        <div className="flex justify-between items-center text-[10px] font-black tracking-[0.3em] text-black/40 uppercase border-b-2 border-black/10 pb-2">
+        <h2 className="flex justify-between items-center text-[10px] font-black tracking-[0.3em] text-white/60 uppercase border-b-2 border-black/10 pb-2">
           <span>{"//"} DIRECTORY_EXPLORER_V2.0 (PAGE_{page + 1})</span>
           <span>SYF_SYSTEM_OS</span>
-        </div>
+        </h2>
 
         {/* Top Pagination HUD */}
         {totalPages > 1 && (
@@ -149,61 +142,40 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
               >
                 <Link 
                   href={`/${item.slug}`}
-                  className={`group relative flex flex-col h-full min-h-[220px] transition-all duration-300 border-2 border-black overflow-hidden backdrop-blur-sm ${
-                    isFolder 
-                      ? "bg-black text-white hover:bg-zinc-900" 
-                      : "bg-[#fdfdfd]/80 text-black hover:bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:-translate-x-1 hover:-translate-y-1"
-                  }`}
+                  className={`group relative flex flex-col h-full min-h-[160px] transition-all duration-300 border border-white/10 overflow-hidden backdrop-blur-xl ${isFolder ? "bg-black" : "bg-black/40"} hover:bg-white/5 shadow-xl hover:shadow-radioactive/5 hover:-translate-y-1`}
                 >
                   {/* Visual Polish Elements */}
-                  <div className={`scanlines absolute inset-0 pointer-events-none opacity-[0.03] ${isFolder ? 'invert' : ''}`} />
+                  <div className={`scanlines absolute inset-0 pointer-events-none opacity-[0.05]`} />
                   
                   {/* Header Row */}
-                  <div className={`flex justify-between items-start p-4 border-b ${isFolder ? 'border-white/10' : 'border-black/5'}`}>
+                  <div className={`flex justify-between items-start p-5 border-b border-white/5 bg-white/5`}>
                     <div className="flex flex-col">
-                      <span className="text-[10px] font-black tracking-widest opacity-50">
-                        NO_{globalIndex.toString().padStart(3, '0')}
+                      <span className="text-[10px] font-black tracking-widest text-radioactive opacity-50">
+                        NODE_0x{globalIndex.toString(16).padStart(3, '0')}
                       </span>
-                      <span className="text-[10px] font-mono opacity-50 mt-1">
-                        {item.date}
+                      <span className="text-[8px] font-mono text-zinc-500 mt-1 uppercase">
+                        INITIALIZED: {item.date}
                       </span>
                     </div>
                     <div className="text-right">
-                      <span className={`text-[10px] font-black px-2 py-0.5 uppercase tracking-tighter ${
-                        isFolder ? 'bg-white text-black' : 'bg-black text-white'
-                      }`}>
-                        {isFolder ? 'FOLDER' : 'FILE_MD'}
+                      <span className={`text-[9px] font-black px-2 py-0.5 uppercase tracking-tighter bg-radioactive/10 text-radioactive border border-radioactive/20`}>
+                        {isFolder ? 'DIR' : 'FILE'}
                       </span>
-                      {isFolder && item.itemCount !== undefined && (
-                        <div className="text-[10px] font-bold mt-1 opacity-60">
-                          [ {item.itemCount}_OBJECTS ]
-                        </div>
-                      )}
-                      {!isFolder && (
-                        <div className="text-[10px] font-bold mt-1 opacity-60 uppercase">
-                          SIZE: {item.size}
-                        </div>
-                      )}
                     </div>
                   </div>
                   
-                  {/* Content Area */}
-                  <div className="p-6 flex-1 flex flex-col justify-center">
-                    <h3 className={`text-3xl md:text-4xl font-black tracking-tighter uppercase leading-[0.9] mb-4 wrap-break-word transition-transform duration-300 group-hover:scale-[1.02] origin-left ${
-                      isFolder ? 'text-white' : 'text-black'
-                    }`}>
-                      {isFolder ? item.name : item.title}
+                  <div className="p-6 flex-1 flex flex-col justify-end">
+                    <h3 className="text-xl md:text-2xl font-black tracking-tighter uppercase leading-none group-hover:text-radioactive transition-colors truncate">
+                      {isFolder ? `${item.name}/` : item.name}
                     </h3>
                     
-                    {!isFolder && item.preview && (
-                      <p className="text-xs font-medium leading-relaxed opacity-60 line-clamp-3 md:line-clamp-4">
-                        {item.preview}
-                      </p>
-                    )}
+                    <div className="mt-4 flex items-center justify-between text-[8px] font-black tracking-widest text-zinc-500 uppercase opacity-0 group-hover:opacity-100 transition-opacity">
+                      <span>{isFolder ? `${item.itemCount}_OBJECTS` : `SIZE: ${item.size}`}</span>
+                      <span>ACCESS_POINT →</span>
+                    </div>
                   </div>
 
-                  {/* Footer Decoration */}
-                  <div className={`h-1 w-full ${isFolder ? 'bg-white/20' : 'bg-black/5'}`} />
+                  <div className={`h-1 w-full bg-radioactive/0 group-hover:bg-radioactive/50 transition-all`} />
                 </Link>
               </motion.div>
             );

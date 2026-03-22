@@ -1,0 +1,8 @@
+# SYF v6 Uber Auditor Modern Browser Target
+# WebGPU Support: Chrome 113+, Edge 113+, Safari 17.4+, Firefox 117+
+
+chrome >= 113
+edge >= 113
+safari >= 17.4
+firefox >= 117
+not dead

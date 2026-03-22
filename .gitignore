@@ -9,13 +9,15 @@
 /app/*.tsbuildinfo
 /app/next-env.d.ts
 
-# OS
-.DS_Store
+# Diagnostic Traces & Media
+*.json
+*.png
+*.webp
+*.gz
+*.gz.json
 
-# Misc
-*.log
-*.pem
-.env*
+# System Files
+.DS_Store
 .boot_errors
 .watchdog_alert
 .context_status

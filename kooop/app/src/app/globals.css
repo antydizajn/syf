@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+  --font-mono: var(--font-mono);
+  --font-display: var(--font-display);
+}
+
+:root {
+  --neon-green: #39FF14;
+  --neon-red: #FF003C;
+  --radioactive-yellow: #CCFF00;
+  --void-black: #000101;
+  --pure-white: #FFFFFF;
+  --panel-blur: 16px;
+  --scanline-opacity: 0.05;
+  --dither-opacity: 0.1;
+  --hud-border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@layer base {
+  body {
+    @apply bg-zinc-950 text-zinc-100 selection:bg-green-500/30 font-mono;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  .hud-glass {
+    @apply bg-white/20 backdrop-blur-md border border-white/10;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  }
+
+  .scanlines {
+    background: linear-gradient(
+      to bottom,
+      transparent 50%,
+      rgba(0, 0, 0, 0.1) 50%
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+  }
+
+  .dither-grid {
+    background-image: radial-gradient(circle, currentColor 1px, transparent 1px);
+    background-size: 4px 4px;
+    opacity: var(--dither-opacity);
+  }
+}
+
+/* Visually hidden skip link */
+.skip-link {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.skip-link:focus {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1001;
+  width: auto;
+  height: auto;
+  clip: auto;
+  margin: 0;
+  padding: 1rem;
+  background: black;
+  color: white;
+  border: 4px solid white;
+  font-weight: bold;
+}
