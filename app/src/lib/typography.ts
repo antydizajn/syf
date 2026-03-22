@@ -7,7 +7,7 @@ export function orphansGuard(text: string | null | undefined): string {
   
   // Rules for Polish connectors: a, i, o, u, w, z (case insensitive)
   // and some common multi-letter ones if needed, but pure Sierotki is single-letter.
-  const connectors = ["a", "i", "o", "u", "w", "z", "A", "I", "O", "U", "W", "Z"];
+  const connectors = ["a", "i", "o", "u", "w", "z", "ale", "do", "po", "są", "A", "I", "O", "U", "W", "Z", "ALE", "DO", "PO", "SĄ"];
   
   let result = text;
   

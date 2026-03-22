@@ -23,8 +23,8 @@ const orphansGuard = (text: string) => {
   if (!text) return '';
   // ZASADA SIEROTKI (Wikipedia Standard): a, i, o, u, w, z, że, bo, czy, lecz, nad, pod, dla, przy
   return text
-    .replace(/ (a|i|o|u|w|z|że|bo|czy|lecz|nad|pod|dla|przy) /gi, ' $1\u00A0')
-    .replace(/^([aiouwzAIOWUZ]|że|ŻE|bo|czy|lecz|nad|pod|dla|przy) /gi, '$1\u00A0');
+    .replace(/ (a|i|o|u|w|z|że|bo|czy|lecz|nad|pod|dla|przy|ale|do|po|są) /gi, ' $1\u00A0')
+    .replace(/^([aiouwzAIOWUZ]|że|ŻE|bo|czy|lecz|nad|pod|dla|przy|ale|do|po|są) /gi, '$1\u00A0');
 };
  
 export default function ContentHUD({ file, items, folderName, slug }: ContentHUDProps) {
