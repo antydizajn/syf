@@ -1,0 +1,28 @@
+▲ Next.js 16.2.0
+- Local:         http://localhost:3000
+- Network:       http://0.0.0.0:3000
+✓ Ready in 0ms
+(node:2293) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+Error reading files: Error: ENOENT: no such file or directory, scandir '/Users/paulinajanowska/AI/ANTIGRAVITY/syfnew/app/.next/files'
+    at async f (.next/server/chunks/ssr/_0ahtbmh._.js:18:43437)
+    at async g (.next/server/chunks/ssr/_0ahtbmh._.js:18:44586)
+    at async (.next/server/chunks/ssr/_0ahtbmh._.js:18:28640)
+    at async j (.next/server/chunks/ssr/_0ahtbmh._.js:18:44863)
+    at async h (.next/server/chunks/ssr/[root-of-the-server]__0y__1f8._.js:1:11579) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: '/Users/paulinajanowska/AI/ANTIGRAVITY/syfnew/app/.next/files'
+}
+Error reading files: Error: ENOENT: no such file or directory, scandir '/Users/paulinajanowska/AI/ANTIGRAVITY/syfnew/app/.next/files'
+    at async f (.next/server/chunks/ssr/_0ahtbmh._.js:18:43437)
+    at async g (.next/server/chunks/ssr/_0ahtbmh._.js:18:44586)
+    at async (.next/server/chunks/ssr/_0ahtbmh._.js:18:28640)
+    at async j (.next/server/chunks/ssr/_0ahtbmh._.js:18:44863)
+    at async Module.g [as generateMetadata] (.next/server/chunks/ssr/[root-of-the-server]__0y__1f8._.js:1:10953) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: '/Users/paulinajanowska/AI/ANTIGRAVITY/syfnew/app/.next/files'
+}

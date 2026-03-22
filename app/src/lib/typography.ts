@@ -1,22 +1,33 @@
 /**
- * Polish Typography Guardian (Sierotki)
- * Replaces spaces after single-letter connectors with non-breaking spaces.
+ * SYF_CORE Typography Guardian
+ * Unifies Polish orphans (Sierotki) and ASCII normalization for SYF branding.
  */
 export function orphansGuard(text: string | null | undefined): string {
   if (!text) return "";
-  
-  // Rules for Polish connectors: a, i, o, u, w, z (case insensitive)
-  // and some common multi-letter ones if needed, but pure Sierotki is single-letter.
-  const connectors = ["a", "i", "o", "u", "w", "z", "ale", "do", "po", "są", "A", "I", "O", "U", "W", "Z", "ALE", "DO", "PO", "SĄ"];
-  
-  let result = text;
-  
-  connectors.forEach(c => {
-    // Match connector at the beginning of string or after space/punctuation, 
-    // and followed by exactly one space.
-    const regex = new RegExp(`(^|[\\s\\(\\)\\[\\]\\{\\}"'])(${c})\\s+`, "g");
-    result = result.replace(regex, `$1$2\u00A0`);
+
+  // 1. Normalize Dashes (—, – -> -) and Quotes (“”, „” -> ")
+  // This is critical for hydration sync and SYF aesthetic.
+  let result = text
+    .replace(/[\u2013\u2014]/g, '-')
+    .replace(/[\u201C\u201D\u201E]/g, '"');
+
+  // 2. Polish Orphans (Sierotki)
+  // Comprehensive list of connectors that shouldn't hang at the end of a line.
+  const connectors = [
+    'a', 'i', 'o', 'u', 'w', 'z', 
+    'że', 'bo', 'czy', 'lecz', 'nad', 'pod', 'dla', 'przy', 
+    'ale', 'do', 'po', 'są', 'za'
+  ];
+
+  // Create a pattern for all connectors (case-insensitive)
+  // We match them at start of string or after space/punctuation, followed by exactly one space.
+  const pattern = `(^|[\\s\\(\\)\\[\\]\\{\\}"'])(${connectors.join('|')})\\s+`;
+  const regex = new RegExp(pattern, 'gi');
+
+  // Replace trailing space with non-breaking space (NBSP)
+  result = result.replace(regex, (match, p1, p2) => {
+    return `${p1}${p2}\u00A0`;
   });
-  
+
   return result;
 }

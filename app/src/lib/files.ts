@@ -133,7 +133,7 @@ export const getAllFiles = unstable_cache(
     { revalidate: 3600, tags: ['files'] }
 );
 
-export async function getItemsByPath(subPath: string): Promise<ItemData[]> {
+async function getItemsByPath(subPath: string): Promise<ItemData[]> {
     return getAllFilesRaw(subPath);
 }
 
@@ -163,7 +163,7 @@ export async function getAllSlugs(): Promise<string[]> {
     return all.map(f => f.slug);
 }
 
-export async function getAdjacentFiles(slug: string): Promise<{ prev: ItemData | null, next: ItemData | null }> {
+async function getAdjacentFiles(slug: string): Promise<{ prev: ItemData | null, next: ItemData | null }> {
     const all = await getAllFiles();
     const index = all.findIndex(f => f.slug === slug);
     if (index === -1) return { prev: null, next: null };
@@ -220,9 +220,10 @@ export const getTotalSize = unstable_cache(
 /**
  * Transform flat list of items into a recursive tree structure for the HUD Sidebar
  */
-export function buildFileTree(items: ItemData[]): any[] {
+function buildFileTree(items: ItemData[]): any[] {
   const root: any[] = [];
   const map: Record<string, any> = {};
+  // ... rest of implementation (skipped for brevity)
 
   // First, create all nodes and map them by slug
   items.forEach(item => {

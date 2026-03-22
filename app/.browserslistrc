@@ -1,6 +1,4 @@
 last 2 versions
-> 0.5%
 not dead
-not op_mini all
-not android < 5
-not ios < 12
+supports es6-module
+maintained node versions

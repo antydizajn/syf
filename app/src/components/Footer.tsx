@@ -47,9 +47,9 @@ export default function Footer() {
       animate={{ opacity: 1 }}
       className="relative z-10 mt-auto border-t-8 border-black bg-white/10 backdrop-blur-xl w-full"
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-20 py-6 space-y-6">
+      <div className="max-w-7xl mx-auto px-6 md:px-20 py-6 space-y-12 md:space-y-6">
         {/* Top Section: Links & Main Quote (Green Box height reference) */}
-        <div className="flex flex-col md:flex-row justify-between items-start gap-4 h-[190px] max-h-[190px]">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-4 md:h-[190px] md:max-h-[190px]">
           <div className="space-y-3 max-w-2xl">
             <div className="flex gap-4 text-[10px] font-black uppercase tracking-widest bg-black text-white px-4 py-2 w-fit">
               <Link href="/privacy" className="hover:opacity-60 transition-opacity">Polityka Prywatności</Link>
@@ -67,7 +67,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="bg-black text-white p-6 md:min-w-[300px] min-h-[120px] border-l-8 border-black hover:translate-x-4 transition-transform duration-500">
+          <div className="hidden md:block bg-black text-white p-6 md:min-w-[300px] min-h-[120px] border-l-8 border-black hover:translate-x-4 transition-transform duration-500">
             <div className="text-[10px] font-black uppercase tracking-[0.4em] mb-4 opacity-70">NODE_DIAGNOSTICS</div>
             <div className="font-mono text-[10px] leading-relaxed flex flex-col gap-1">
               {stats ? (

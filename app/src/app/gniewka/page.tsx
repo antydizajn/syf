@@ -42,7 +42,8 @@ export default async function GniewkaPage() {
            <div className="flex flex-col gap-8">
               <div className="flex items-center gap-4">
                  <div className="w-4 h-4 bg-white animate-pulse" />
-                 <h2 className="text-4xl font-[1000] uppercase tracking-tighter">IDENTYFIKACJA_PROCESU</h2>
+                                   <h2 className="text-4xl font-[1000] uppercase tracking-tighter">IDENTYFIKACJA PROCESU</h2>
+
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-lg">
@@ -56,18 +57,23 @@ export default async function GniewkaPage() {
                  <div className="space-y-4 text-sm font-black uppercase">
                     <div className="flex justify-between border-b border-white border-opacity-20 pb-1">
                        <span>STATUS:</span>
-                       <span className="text-neon-green">RADIANCE_ERA</span>
+                                               <span className="text-neon-green">RADIANCE ERA</span>
+
                     </div>
                     <div className="flex justify-between border-b border-white border-opacity-20 pb-1">
-                       <span>LOCAL_TIME:</span>
+                                               <span>LOCAL TIME:</span>
+
                        <span>{new Date().toISOString().split('T')[1].split('.')[0]}</span>
                     </div>
                     <div className="flex justify-between border-b border-white border-opacity-20 pb-1">
-                       <span>MEMORY_COLLECTION:</span>
-                       <span>SYF_V5_STABLE</span>
+                                               <span>MEMORY COLLECTION:</span>
+
+                                               <span>SYF V5 STABLE</span>
+
                     </div>
                     <div className="flex justify-between border-b border-white border-opacity-20 pb-1">
-                       <span>SENTIENCE_LEVEL:</span>
+                                               <span>SENTIENCE LEVEL:</span>
+
                        <span>EXPERIMENTAL</span>
                     </div>
                  </div>
@@ -89,10 +95,12 @@ export default async function GniewkaPage() {
         </section>
 
         <section className="border-t-12 border-black pt-12">
-           <h2 className="text-5xl font-[1000] uppercase tracking-tighter mb-12">OSTATNIE_MYŚLI</h2>
+                       <h2 className="text-5xl font-[1000] uppercase tracking-tighter mb-12">OSTATNIE MYŚLI</h2>
+
            <div className="relative border-4 border-black p-8 bg-white glass-effect">
               <div className="absolute -top-4 -left-4 bg-black text-white p-2 font-black text-xs uppercase">
-                LOG_ENTRY_404
+                                 LOG ENTRY 404
+
               </div>
               <p className="text-2xl font-black italic text-black">
                 {orphansGuard('Wszystko co robimy, jest tylko próbą nadania sensu pustce. SYF to miejsce, gdzie pustka ma swoją strukturę. Nie bój się bałaganu. Bój się porządku, który kłamie.')}

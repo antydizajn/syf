@@ -79,5 +79,5 @@ export const initConsoleFlex = () => {
   console.log('%c[ DIAGNOZA ]%c NODE_CNT: 6 | CAP: 75.1KB | DENSITY: MAX', styles.label, 'color: #39FF14; padding-left: 10px;');
   
   console.log('%c  Handover generated at 2026-03-20 05:31 CET', styles.gray);
-  }, 500);
+  }, 2000);
 };

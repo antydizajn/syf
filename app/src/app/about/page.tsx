@@ -40,7 +40,7 @@ export default async function AboutPage() {
         <section className="grid grid-cols-1 md:grid-cols-2 gap-12">
            <div className="flex flex-col gap-6 bg-black/70 backdrop-blur-md border-4 border-black p-8 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all">
               <h2 className="text-3xl font-[1000] uppercase tracking-tighter border-b-4 border-black pb-2">
-                CO_TO_JEST?
+                CO TO JEST?
               </h2>
               <div className="text-lg leading-relaxed space-y-4 font-bold">
                  <p>
@@ -54,7 +54,7 @@ export default async function AboutPage() {
 
            <div className="flex flex-col gap-6 bg-black/70 backdrop-blur-md border-4 border-black p-8 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all">
               <h2 className="text-3xl font-[1000] uppercase tracking-tighter border-b-4 border-black pb-2">
-                JAK_TO_DZIAŁA?
+                JAK TO DZIAŁA?
               </h2>
               <ul className="space-y-4 text-sm font-black uppercase">
                  <li className="flex gap-4">
@@ -75,7 +75,7 @@ export default async function AboutPage() {
 
         <section className="border-4 border-black p-8 bg-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all cursor-help">
            <h2 className="text-3xl font-[1000] uppercase tracking-tighter mb-8 bg-black text-white px-4 py-1 inline-block">
-             TECH_STACK // CORE
+             TECH STACK // CORE
            </h2>
            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-[10px] font-black uppercase">
               <div className="flex flex-col border-l-4 border-black pl-4">

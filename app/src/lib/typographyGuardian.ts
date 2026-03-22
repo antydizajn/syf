@@ -1,40 +1,41 @@
 /**
  * SYF.OS TYPOGRAPHY_GUARDIAN
  * Enforces strict Polish typography rules (Sierotki) and ASCII connectors.
+ * Optimized for performance: scoped observation, debouncing, and de-duplication.
  */
 
-const SIEROTKI_REGEX = /(?:^|[\s\u00A0])([aiouwzAIOUWZ])(?:\s+)/g;
-const DASH_REGEX = /[\u2013\u2014]/g; // en dash and em dash
-const QUOTE_REGEX = /[\u201C\u201D]/g; // smart quotes
+import { orphansGuard } from './typography';
+
+const SANITIZED_ATTR = 'data-tg-sanitized';
 
 /**
  * Sanitizes a text string according to SYF branding rules.
  */
-export const sanitizeText = (text: string): string => {
-  return text
-    .replace(SIEROTKI_REGEX, (match, p1) => {
-      // Replaces the space after a single-letter word with a non-breaking space
-      const prefix = match.startsWith(' ') || match.startsWith('\u00A0') ? match[0] : '';
-      return `${prefix}${p1}\u00A0`;
-    })
-    .replace(DASH_REGEX, '-')
-    .replace(QUOTE_REGEX, '"');
+const sanitizeText = (text: string): string => {
+  return orphansGuard(text);
 };
 
 /**
  * Recursively walks the DOM and sanitizes text nodes.
+ * Skips already sanitized elements to prevent layout thrashing.
  */
 const walkAndSanitize = (node: Node) => {
   if (node.nodeType === Node.TEXT_NODE) {
+    const parent = node.parentElement;
+    if (parent && parent.getAttribute(SANITIZED_ATTR)) return;
+
     const original = node.nodeValue || '';
     const sanitized = sanitizeText(original);
+    
     if (original !== sanitized) {
       node.nodeValue = sanitized;
+      if (parent) parent.setAttribute(SANITIZED_ATTR, '1');
     }
   } else if (
     node.nodeType === Node.ELEMENT_NODE &&
-    !['SCRIPT', 'STYLE', 'TEXTAREA', 'INPUT'].includes((node as Element).tagName) &&
-    !(node as HTMLElement).dataset?.noTypo
+    !['SCRIPT', 'STYLE', 'TEXTAREA', 'INPUT', 'CODE', 'PRE'].includes((node as Element).tagName) &&
+    !(node as HTMLElement).dataset?.noTypo &&
+    !(node as HTMLElement).getAttribute(SANITIZED_ATTR)
   ) {
     node.childNodes.forEach(walkAndSanitize);
   }
@@ -46,28 +47,51 @@ const walkAndSanitize = (node: Node) => {
 export const initTypographyGuardian = () => {
   if (typeof window === 'undefined' || typeof MutationObserver === 'undefined') return;
 
-  // Initial pass
-  walkAndSanitize(document.body);
+  const targetNode = document.querySelector('main') || document.body;
 
-  // Observe changes
+  // Initial pass: Batch processing to avoid blocking hydration
+  const processAll = () => {
+    if (window.requestIdleCallback) {
+        window.requestIdleCallback(() => walkAndSanitize(targetNode), { timeout: 2000 });
+    } else {
+        setTimeout(() => walkAndSanitize(targetNode), 500);
+    }
+  };
+
+  processAll();
+
+  // Mutation logic with micro-batching
+  let mutationQueue: Node[] = [];
+  let frameId: number | null = null;
+
+  const flushQueue = () => {
+    const batch = mutationQueue.splice(0, 50); // Process in chunks
+    batch.forEach(node => walkAndSanitize(node));
+    
+    if (mutationQueue.length > 0) {
+      frameId = requestAnimationFrame(flushQueue);
+    } else {
+      frameId = null;
+    }
+  };
+
   const observer = new MutationObserver((mutations) => {
+    let needsFlush = false;
     mutations.forEach((mutation) => {
       mutation.addedNodes.forEach((node) => {
-        walkAndSanitize(node);
+        mutationQueue.push(node);
+        needsFlush = true;
       });
+      
       if (mutation.type === 'characterData') {
-        const node = mutation.target;
-        const original = node.nodeValue || '';
-        const sanitized = sanitizeText(original);
-        if (original !== sanitized) {
-          // Disconnect to avoid infinite loops if we were observing characterData too closely,
-          // but usually characterData mutation target is the text node itself.
-          observer.disconnect();
-          node.nodeValue = sanitized;
-          observer.observe(document.body, observerConfig);
-        }
+        mutationQueue.push(mutation.target);
+        needsFlush = true;
       }
     });
+
+    if (needsFlush && !frameId) {
+      frameId = requestAnimationFrame(flushQueue);
+    }
   });
 
   const observerConfig = {
@@ -76,9 +100,10 @@ export const initTypographyGuardian = () => {
     characterData: true,
   };
 
-  observer.observe(document.body, observerConfig);
+  // Start observing
+  observer.observe(targetNode, observerConfig);
 
-  console.log('%c[ TYPO_GUARDIAN ]%c ACTIVE: SIEROTKI & ASCII_ONLY ENABLED', 
+  console.log('%c[ TYPO_GUARDIAN ]%c OPTIMIZED: SCOPED_BATCH_MODE ACTIVE', 
     'color: #FFFFFF; background: #000000; font-weight: bold; padding: 2px 4px;', 
     'color: #00FF00; font-weight: bold;'
   );

@@ -5,7 +5,7 @@ import remarkGfm from 'remark-gfm';
 /**
  * Konwertuje Markdown do HTML
  */
-export async function markdownToHtml(markdown: string): Promise<string> {
+async function markdownToHtml(markdown: string): Promise<string> {
   const result = await remark()
     .use(remarkGfm)  // Tabele, strikethrough, tasklists
     .use(html, { sanitize: false })
@@ -18,7 +18,7 @@ export async function markdownToHtml(markdown: string): Promise<string> {
  * Przetwarza HTML dodając neonowe style do list
  * (zamienia standardowe bullets na kolorowe)
  */
-export function processHtmlForNeonStyle(html: string): string {
+function processHtmlForNeonStyle(html: string): string {
   let processed = html;
 
   // Wszystkie linki otwierają się w nowym tabie
@@ -39,7 +39,7 @@ export function processHtmlForNeonStyle(html: string): string {
 /**
  * Pełna konwersja MD -> styled HTML
  */
-export async function renderMarkdown(markdown: string): Promise<string> {
+async function renderMarkdown(markdown: string): Promise<string> {
   const rawHtml = await markdownToHtml(markdown);
   return processHtmlForNeonStyle(rawHtml);
 }

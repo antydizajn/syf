@@ -1,0 +1,42 @@
+
+> app@0.1.0 build
+> next build
+
+▲ Next.js 16.2.0 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 14.8s
+  Running TypeScript ...
+  Finished TypeScript in 8.1s ...
+  Collecting page data using 7 workers ...
+(node:1957) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+  Generating static pages using 7 workers (0/116) ...
+  Generating static pages using 7 workers (29/116) 
+  Generating static pages using 7 workers (58/116) 
+  Generating static pages using 7 workers (87/116) 
+`z-index` is currently not supported.
+✓ Generating static pages using 7 workers (116/116) in 6.7s
+  Finalizing page optimization ...
+
+Route (app)                   Revalidate  Expire
+┌ ○ /                                 1h      1y
+├ ○ /_not-found
+├ ● /[...slug]                        1h      1y
+│ ├ /02_antyhalucynacje               1h      1y
+│ ├ /07_ARCHITEKTURA_WIEDZMY          1h      1y
+│ ├ /2025-12-21_dostalam_dom          1h      1y
+│ └ [+104 more paths]
+├ ○ /about
+├ ○ /ai-artists-design
+├ ƒ /api/download/[slug]
+├ ƒ /api/og
+├ ○ /gniewka
+├ ○ /opengraph-image
+└ ○ /sitemap.xml                      1h      1y
+
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
