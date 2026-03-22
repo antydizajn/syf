@@ -33,6 +33,8 @@ export default async function RootLayout({
   return (
     <html lang="pl" className={`${jetbrainsMono.variable}`}>
        <head>
+          <link rel="preconnect" href="https://syf.antydizajn.pl" />
+          <link rel="dns-prefetch" href="https://syf.antydizajn.pl" />
           <meta name="theme-color" content="#000101" />
        </head>
        <body className="font-mono overflow-hidden bg-void-black text-white selection:bg-radioactive/30">

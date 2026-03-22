@@ -24,7 +24,8 @@ const nextConfig: NextConfig = {
 
   // Compiler optimizations
   compiler: {
-    removeConsole: process.env.NODE_ENV === "production" ? { exclude: ["error", "warn"] } : false,
+    // Console allowed because the user wants "dojebane console flex" on production.
+    removeConsole: false,
   },
 
   // Security and caching headers

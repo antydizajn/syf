@@ -13,6 +13,7 @@ interface HUDLayoutProps {
 
 export default function HUDLayout({ children }: HUDLayoutProps) {
   useEffect(() => {
+    // CRITICAL: CONSOLE_FLEX - ZAKAZ USUWANIA (USER RULES)
     initConsoleFlex();
     initTypographyGuardian();
   }, []);

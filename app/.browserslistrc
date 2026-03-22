@@ -1,5 +1,6 @@
-chrome >= 113
-edge >= 113
-safari >= 17.4
-firefox >= 117
+last 2 versions
+> 0.5%
 not dead
+not op_mini all
+not android < 5
+not ios < 12
