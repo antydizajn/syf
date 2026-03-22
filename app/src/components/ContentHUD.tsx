@@ -10,6 +10,9 @@ interface ContentHUDProps {
   file?: any;
   items?: any[];
   folderName?: string;
+  isFolder?: boolean;
+  breadcrumb?: any[];
+  slug?: string;
 }
 
 const orphansGuard = (text: string) => {
@@ -17,7 +20,7 @@ const orphansGuard = (text: string) => {
   return text.replace(/ (\w) /g, ' $1\u00A0');
 };
 
-export default function ContentHUD({ file, items, folderName }: ContentHUDProps) {
+export default function ContentHUD({ file, items, folderName, isFolder, breadcrumb, slug }: ContentHUDProps) {
   const [activeTab, setActiveTab] = useState("MD");
 
   // CASE 1: DIRECTORY VIEW

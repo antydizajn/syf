@@ -1,18 +1,15 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import Link from 'next/link';
 import { ItemData } from "@/lib/files";
-import { orphansGuard } from "@/lib/typography";
-
 
 export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSize: string }) {
   const [page, setPage] = useState(0);
-  const [menuOpen, setMenuOpen] = useState(false);
 
-  // Removed hydration block to eliminate CLS (Cumulative Layout Shift)
-  // components now render identical initial state on server/client
+  useEffect(() => {
+    console.log("%c [SYF_V5] SYSTEM_CORE: ONLINE. GNOZA_SHIELD: ACTIVE. ", "background: #000; color: #39FF14; font-weight: bold; border: 1px solid #39FF14; padding: 4px;");
+  }, []);
 
   const sortedItems = [...items].sort((a, b) => {
     if (a.type === 'folder' && b.type !== 'folder') return -1;
@@ -25,195 +22,154 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
   const paginatedItems = sortedItems.slice(page * PAGINATION_SIZE, (page + 1) * PAGINATION_SIZE);
 
   return (
-    <div className="max-w-7xl mx-auto flex flex-col min-h-[calc(100vh-160px)]">
-      {/* RESTORED HEADER STYLE FROM SCREENSHOT */}
-      <header className="mb-12 border-b-8 border-black pb-8 pt-4 relative bg-transparent -mx-4 px-4 md:-mx-10 md:px-10">
-        <div className="absolute top-4 right-4 md:right-10 text-right text-white opacity-90 text-[10px] hidden md:block uppercase font-bold tracking-widest leading-tight">
-          [ SYSTEM_VERSION: V2.0 ]<br/>
-          [ TOTAL_CAPACITY: {totalSize} ]<br/>
-          [ NODE_COUNT: {items.length} ]
+    <div className="flex flex-col min-h-screen font-mono">
+      {/* SHARP & IMPACTFUL HEADER */}
+      <header className="mb-24 pt-4 relative">
+        <div className="absolute top-0 right-0 text-right text-white/50 text-[9px] hidden md:block uppercase font-bold tracking-[0.3em] leading-tight">
+          [ SYSTEM: SYF_V5.0 ]<br/>
+          [ LOAD: {totalSize} ]<br/>
+          [ ITEMS_COUNT: {items.length} ]
         </div>
-        
-        <h1 className="font-display font-black text-4xl md:text-7xl leading-[0.85] tracking-tighter uppercase mb-6 text-white border-b-4 border-black pb-2">
-          <Link href="/" className="hover:text-radioactive transition-colors cursor-pointer inline-block">
-            SYF.ANTYDIZAJN.PL
-          </Link>
-        </h1>
 
-        <div className="flex flex-col gap-2 mb-6">
-          <div className="bg-black text-white px-4 py-2 text-6xl md:text-[9.5rem] font-display font-black uppercase tracking-tighter w-fit leading-none">
+        <Link href="/" className="block text-xl md:text-[4vw] font-bold tracking-tight uppercase mb-8 text-white leading-[0.85] hover:tracking-[-0.05em] transition-all duration-300 no-underline">
+          SYF.ANTYDIZAJN.PL
+        </Link>
+
+        <div className="flex flex-col gap-1 mb-6">
+          <div className="bg-black text-white px-6 py-2 text-4xl md:text-8xl font-bold uppercase tracking-tighter w-fit leading-none">
             PUBLICZNY
           </div>
-          <div className="bg-black text-white px-4 py-2 text-5xl md:text-[7.8rem] font-display font-black uppercase tracking-tighter w-fit leading-none">
-            {orphansGuard("DUMP PLIKÓW")}
+          <div className="bg-black text-white px-6 py-2 text-3xl md:text-7xl font-bold uppercase tracking-tighter w-fit leading-none">
+            DUMP PLIKÓW
           </div>
         </div>
 
-        {/* MOBILE MENU */}
-        {menuOpen && (
-          <div className="fixed inset-0 top-[64px] bg-white z-999 p-8 flex flex-col gap-4 border-t-8 border-black animate-in slide-in-from-top duration-300">
-            {['PLIKI', 'O SYFIE', 'ANTYDIZAJN', 'GNIEWKA'].map((btn) => (
-              <Link 
-                key={btn}
-                href={btn === 'PLIKI' ? '/' : btn === 'O SYFIE' ? '/about' : btn === 'ANTYDIZAJN' ? 'https://antydizajn.pl' : '/gniewka'}
-                onClick={() => setMenuOpen(false)}
-                className="text-4xl font-black tracking-tighter uppercase border-b-4 border-black pb-2"
-              >
-                [ {btn} ]
-              </Link>
-            ))}
-          </div>
-        )}
-
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 overflow-x-auto">
-          <div className="bg-black text-white px-4 py-1 text-xs font-bold uppercase tracking-widest whitespace-nowrap">
-            {orphansGuard("WRZUCASZ .MD → DOSTĘPNE POD /NAZWA")}
-          </div>
+        <div className="text-[10px] md:text-xs font-bold tracking-[0.4em] text-white uppercase mb-16 bg-black px-4 py-2 w-fit">
+          WRZUCASZ .MD <span className="text-white/60">→</span> DOSTĘPNE POD /NAZWA
         </div>
 
-        {/* Full-width HUD Navigation */}
-        <nav className="flex w-full gap-2 mt-8">
+        <nav className="flex w-full gap-1 flex-wrap">
           {['PLIKI', 'O SYFIE', 'ANTYDIZAJN', 'GNIEWKA'].map((btn) => (
             <Link 
               key={btn}
               href={btn === 'PLIKI' ? '/' : btn === 'O SYFIE' ? '/about' : btn === 'ANTYDIZAJN' ? 'https://antydizajn.pl' : '/gniewka'}
-              className="flex-1 border-2 border-black bg-white/70 backdrop-blur-md px-4 py-3 font-black text-[11px] md:text-sm uppercase text-black hover:bg-black hover:text-white transition-all text-center group"
+              className="flex-1 min-w-[140px] border-4 border-black bg-white px-4 py-8 font-black text-sm md:text-lg uppercase text-black hover:bg-black hover:text-white transition-all duration-300 text-center no-underline tracking-[0.2em] [clip-path:polygon(20px_0,100%_0,100%_100%,0_100%,0_20px)] drop-shadow-[8px_8px_0px_rgba(0,0,0,1)] hover:drop-shadow-[12px_12px_0px_rgba(0,0,0,1)] hover:-translate-x-1 hover:-translate-y-1 hover:z-20"
             >
-              <span className="opacity-0 group-hover:opacity-100 transition-opacity">{"["}</span>
-              <span className="mx-2">{btn}</span>
-              <span className="opacity-0 group-hover:opacity-100 transition-opacity">{"]"}</span>
+              {btn}
             </Link>
           ))}
         </nav>
       </header>
 
-      {/* Grid Explorer */}
-      <div className="flex flex-col gap-6 px-4 md:px-0 mt-8 mb-12">
-        <h2 className="flex justify-between items-center text-[10px] font-black tracking-[0.3em] text-white/60 uppercase border-b-2 border-black/10 pb-2">
-          <span>{"//"} DIRECTORY_EXPLORER_V2.0 (PAGE_{page + 1})</span>
-          <span>SYF_SYSTEM_OS</span>
-        </h2>
+      {/* GRID SYSTEM */}
+      <div className="flex flex-col gap-6 mb-16">
+        <div className="flex justify-between items-center text-[10px] font-black tracking-[0.4em] text-white/80 uppercase border-b-2 border-white/20 pb-4 mb-4">
+          <span>{"//"} SECTOR_{page + 1}_INDEX</span>
+          <span>SYF_OS_V5</span>
+        </div>
 
-        {/* Top Pagination HUD */}
+        {/* TOP PAGINATION HUD (LEGACY STYLE) */}
         {totalPages > 1 && (
-          <motion.div 
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center justify-between gap-4 p-2 bg-white/30 backdrop-blur-sm border-2 border-black"
-          >
+          <div className="flex items-center justify-between gap-4 p-2 bg-white border-4 border-black mb-12">
             <button 
-              onClick={() => { setPage(p => Math.max(0, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              onClick={() => { setPage(p => Math.max(0, p - 1)); window.scrollTo({ top: 0, behavior: 'instant' }); }}
               disabled={page === 0}
-              className="bg-black text-white px-8 py-3 text-xs font-black uppercase tracking-widest disabled:opacity-20 hover:bg-zinc-800 transition-colors"
+              className="bg-black text-white px-8 py-3 text-[10px] font-black uppercase tracking-widest disabled:opacity-20 transition-all duration-300 hover:-translate-x-1 hover:-translate-y-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,0.5)]"
             >
-              PREV_SECTOR
+              [ PREV_SECTOR ]
             </button>
-            <div className="text-black px-4 py-2 text-xs font-black uppercase tracking-[0.3em] hidden md:block">
-              SECTOR_{page + 1} / {totalPages}
+            <div className="text-black text-[10px] font-black uppercase tracking-[0.4em] hidden md:block border-x-2 border-black/20 px-10">
+              SECTOR_{String(page + 1).padStart(2, '0')} {" // "} {String(totalPages).padStart(2, '0')}
             </div>
             <button 
-              onClick={() => { setPage(p => Math.min(totalPages - 1, p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              onClick={() => { setPage(p => Math.min(totalPages - 1, p + 1)); window.scrollTo({ top: 0, behavior: 'instant' }); }}
               disabled={page === totalPages - 1}
-              className="bg-black text-white px-8 py-3 text-xs font-black uppercase tracking-widest disabled:opacity-20 hover:bg-zinc-800 transition-colors"
+              className="bg-black text-white px-8 py-3 text-[10px] font-black uppercase tracking-widest disabled:opacity-20 transition-all duration-300 hover:-translate-x-1 hover:-translate-y-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,0.5)]"
             >
-              NEXT_SECTOR
+              [ NEXT_SECTOR ]
             </button>
-          </motion.div>
+          </div>
         )}
 
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.1 }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
-        >
-          {/* ... (items remain same) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
           {paginatedItems.map((item, i) => {
             const globalIndex = page * PAGINATION_SIZE + i + 1;
             const isFolder = item.type === 'folder';
             
             return (
-              <motion.div
-                key={item.slug}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.02 }}
-                className="h-full"
-              >
+              <div key={item.slug} className="group bg-black">
                 <Link 
                   href={`/${item.slug}`}
-                  className={`group relative flex flex-col h-full min-h-[160px] transition-all duration-300 border border-white/10 overflow-hidden backdrop-blur-xl ${isFolder ? "bg-black" : "bg-black/40"} hover:bg-white/5 shadow-xl hover:shadow-radioactive/5 hover:-translate-y-1`}
+                  className={`relative flex flex-col h-full min-h-[220px] transition-all duration-150 p-10 no-underline hover:bg-white/3`}
                 >
-                  {/* Visual Polish Elements */}
-                  <div className={`scanlines absolute inset-0 pointer-events-none opacity-[0.05]`} />
-                  
-                  {/* Header Row */}
-                  <div className={`flex justify-between items-start p-5 border-b border-white/5 bg-white/5`}>
-                    <div className="flex flex-col">
-                      <span className="text-[10px] font-black tracking-widest text-radioactive opacity-50">
-                        NODE_0x{globalIndex.toString(16).padStart(3, '0')}
-                      </span>
-                      <span className="text-[8px] font-mono text-zinc-500 mt-1 uppercase">
-                        INITIALIZED: {item.date}
-                      </span>
-                    </div>
-                    <div className="text-right">
-                      <span className={`text-[9px] font-black px-2 py-0.5 uppercase tracking-tighter bg-radioactive/10 text-radioactive border border-radioactive/20`}>
-                        {isFolder ? 'DIR' : 'FILE'}
-                      </span>
-                    </div>
+                  <div className="flex justify-between items-start mb-10">
+                    <span className="text-[10px] font-bold opacity-20">
+                      [{globalIndex.toString().padStart(3, '0')}]
+                    </span>
+                    <span className={`text-[8px] font-bold px-2 py-0.5 uppercase tracking-widest border border-white/20 text-white/40 group-hover:text-white group-hover:border-white transition-colors`}>
+                      {isFolder ? 'DIR' : 'FILE'}
+                    </span>
                   </div>
                   
-                  <div className="p-6 flex-1 flex flex-col justify-end">
-                    <h3 className="text-xl md:text-2xl font-black tracking-tighter uppercase leading-none group-hover:text-radioactive transition-colors truncate">
-                      {isFolder ? `${item.name}/` : item.name}
+                  <div className="flex-1">
+                    <h3 className="text-3xl font-bold tracking-tight uppercase leading-[1.1] break-all text-white group-hover:text-white">
+                      {isFolder ? `${item.name}/` : item.name.toUpperCase()}
                     </h3>
-                    
-                    <div className="mt-4 flex items-center justify-between text-[8px] font-black tracking-widest text-zinc-500 uppercase opacity-0 group-hover:opacity-100 transition-opacity">
-                      <span>{isFolder ? `${item.itemCount}_OBJECTS` : `SIZE: ${item.size}`}</span>
-                      <span>ACCESS_POINT →</span>
-                    </div>
+ 
+                    {item.preview && !isFolder && (
+                      <p className="mt-8 text-[11px] text-white/40 group-hover:text-white/60 line-clamp-3 leading-relaxed font-normal">
+                        {item.preview}
+                      </p>
+                    )}
                   </div>
-
-                  <div className={`h-1 w-full bg-radioactive/0 group-hover:bg-radioactive/50 transition-all`} />
+ 
+                  <div className="mt-12 flex items-center justify-between text-[9px] font-bold tracking-widest text-white/30 uppercase">
+                    <div className="flex gap-12">
+                      <div className="flex flex-col">
+                        <span className="mb-2 text-[7px] text-white/20">DATA</span>
+                        <span>{item.date}</span>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="mb-2 text-[7px] text-white/20">ROZMIAR</span>
+                        <span>{isFolder ? `${item.itemCount}_OBJ` : item.size}</span>
+                      </div>
+                    </div>
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity">READ →</span>
+                  </div>
                 </Link>
-              </motion.div>
+              </div>
             );
           })}
-        </motion.div>
+        </div>
 
-        {/* Bottom Pagination HUD */}
+        {/* BOTTOM PAGINATION HUD (LEGACY STYLE) */}
         {totalPages > 1 && (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-4 flex items-center justify-center gap-6"
-          >
+          <div className="mt-12 flex items-center justify-center gap-6">
             <button 
-              onClick={() => { setPage(p => Math.max(0, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              onClick={() => { setPage(p => Math.max(0, p - 1)); window.scrollTo({ top: 0, behavior: 'instant' }); }}
               disabled={page === 0}
-              className="bg-black text-white px-10 py-4 text-sm font-black uppercase tracking-widest disabled:opacity-20 hover:bg-zinc-800 transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]"
+              className="bg-black text-white px-10 py-5 text-xs font-black uppercase tracking-widest disabled:opacity-20 hover:bg-zinc-800 transition-all duration-300 hover:-translate-x-1 hover:-translate-y-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,0.5)]"
             >
               PREV_SECTOR
             </button>
-            <div className="bg-white border-4 border-black text-black px-12 py-4 text-sm font-black uppercase tracking-[0.4em] shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-              {page + 1} / {totalPages}
+            <div className="bg-white border-4 border-black text-black px-12 py-5 text-sm font-black uppercase tracking-[0.4em] transition-all duration-300 hover:-translate-x-1 hover:-translate-y-1 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
+              {String(page + 1).padStart(2, '0')} / {String(totalPages).padStart(2, '0')}
             </div>
             <button 
-              onClick={() => { setPage(p => Math.min(totalPages - 1, p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              onClick={() => { setPage(p => Math.min(totalPages - 1, p + 1)); window.scrollTo({ top: 0, behavior: 'instant' }); }}
               disabled={page === totalPages - 1}
-              className="bg-black text-white px-10 py-4 text-sm font-black uppercase tracking-widest disabled:opacity-20 hover:bg-zinc-800 transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]"
+              className="bg-black text-white px-10 py-5 text-xs font-black uppercase tracking-widest disabled:opacity-20 hover:bg-zinc-800 transition-all duration-300 hover:-translate-x-1 hover:-translate-y-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,0.5)]"
             >
               NEXT_SECTOR
             </button>
-          </motion.div>
+          </div>
         )}
       </div>
 
       <style jsx global>{`
-        .line-clamp-2 {
+        .line-clamp-3 {
           display: -webkit-box;
-          -webkit-line-clamp: 2;
+          -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
           overflow: hidden;
         }

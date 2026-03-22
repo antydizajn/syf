@@ -1,22 +1,30 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Orbitron } from "next/font/google";
+import localFont from 'next/font/local';
 import "./globals.css";
 import RevolutionBackground from "@/components/RevolutionBackground";
 import HUDLayout from "@/components/hud/HUDLayout";
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  display: "swap",
-  preload: false,
-});
-
-const orbitron = Orbitron({
-  subsets: ["latin"],
-  variable: "--font-display",
-  display: "swap",
-  weight: ["900"],
-  preload: false,
+const jetbrainsMono = localFont({
+  src: [
+    { path: '../../public/fonts/JetBrainsMono-Thin.woff2', weight: '100', style: 'normal' },
+    { path: '../../public/fonts/JetBrainsMono-ThinItalic.woff2', weight: '100', style: 'italic' },
+    { path: '../../public/fonts/JetBrainsMono-ExtraLight.woff2', weight: '200', style: 'normal' },
+    { path: '../../public/fonts/JetBrainsMono-ExtraLightItalic.woff2', weight: '200', style: 'italic' },
+    { path: '../../public/fonts/JetBrainsMono-Light.woff2', weight: '300', style: 'normal' },
+    { path: '../../public/fonts/JetBrainsMono-LightItalic.woff2', weight: '300', style: 'italic' },
+    { path: '../../public/fonts/JetBrainsMono-Regular.woff2', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/JetBrainsMono-Italic.woff2', weight: '400', style: 'italic' },
+    { path: '../../public/fonts/JetBrainsMono-Medium.woff2', weight: '500', style: 'normal' },
+    { path: '../../public/fonts/JetBrainsMono-MediumItalic.woff2', weight: '500', style: 'italic' },
+    { path: '../../public/fonts/JetBrainsMono-SemiBold.woff2', weight: '600', style: 'normal' },
+    { path: '../../public/fonts/JetBrainsMono-SemiBoldItalic.woff2', weight: '600', style: 'italic' },
+    { path: '../../public/fonts/JetBrainsMono-Bold.woff2', weight: '700', style: 'normal' },
+    { path: '../../public/fonts/JetBrainsMono-BoldItalic.woff2', weight: '700', style: 'italic' },
+    { path: '../../public/fonts/JetBrainsMono-ExtraBold.woff2', weight: '800', style: 'normal' },
+    { path: '../../public/fonts/JetBrainsMono-ExtraBoldItalic.woff2', weight: '800', style: 'italic' },
+  ],
+  variable: '--font-mono',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -28,24 +36,19 @@ export const metadata: Metadata = {
   description: "Publiczny dump plików Markdown. Syf, chaos, bałagan myśli.",
 };
 
-import { getAllItems, buildFileTree } from "@/lib/files";
-
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const allItems = await getAllItems();
-  const fileTree = buildFileTree(allItems);
-
   return (
-    <html lang="pl" className={`${jetbrainsMono.variable} ${orbitron.variable}`}>
+    <html lang="pl" className={`${jetbrainsMono.variable}`}>
        <head>
           <meta name="theme-color" content="#000101" />
        </head>
        <body className="font-mono overflow-hidden bg-void-black text-white selection:bg-radioactive/30">
           <RevolutionBackground />
-          <HUDLayout items={fileTree}>
+          <HUDLayout>
              {children}
           </HUDLayout>
        </body>
