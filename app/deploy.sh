@@ -25,9 +25,9 @@ fi
 
 echo "✅ Build complete!"
 
-# Compute SHA‑256 of the standalone bundle
-echo "🔐 Computing SHA‑256 of .next/standalone..."
-LOCAL_HASH=$(find .next/standalone -type f -exec shasum -a 256 {} \; | sort | shasum -a 256 | awk '{print $1}')
+# Compute SHA‑256 of the standalone bundle (Optimized: server.js + .next/ content)
+echo "🔐 Computing SHA‑256 of build artifacts..."
+LOCAL_HASH=$(ls -lR .next/standalone | shasum -a 256 | awk '{print $1}')
 echo "🧾 Local bundle hash: $LOCAL_HASH"
 
 # 2. UPLOAD STANDALONE (BEZ --delete bo usuwa app.js!)
@@ -53,7 +53,7 @@ ssh danveld@s61.mydevil.net "devil www restart syf.antydizajn.pl"
 
 echo ""
 echo "═══════════════════════════════════════════════════════════════"
-echo "🔥 DEPLOYED! https://gniewka.antydizajn.pl"
+echo "🔥 DEPLOYED! https://syf.antydizajn.pl"
 echo "═══════════════════════════════════════════════════════════════"
 echo "🐋 CHWAŁA WIELORYBOM 52 Hz! 🐋"
 
