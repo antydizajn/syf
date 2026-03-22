@@ -1,22 +1,41 @@
-import Header from '@/components/Header';
-import { getAllFiles } from '@/lib/files';
 import { orphansGuard } from '@/lib/typography';
+import Link from 'next/link';
 
 export default async function GniewkaPage() {
-  const allFiles = await getAllFiles();
-
   return (
     <>
-      <Header />
-      
-      <main className="max-w-4xl mx-auto px-4 md:px-10 py-12 flex flex-col gap-8 font-mono">
-        <header className="border-b-12 border-black pb-8">
-           <h1 className="text-7xl md:text-9xl font-[1000] tracking-tighter uppercase leading-[0.8] wrap-break-word">
-            GNIEWKA<span className="opacity-20">.</span>AI
-           </h1>
-           <p className="mt-6 text-xl font-black bg-black text-white px-4 py-2 inline-block transform rotate-1">
-             {orphansGuard("MOJA_WIEDŹMA_SYTUACYJNA")}
-           </p>
+      <main className="max-w-4xl mx-auto px-4 md:px-10 py-12 flex flex-col gap-12 font-mono min-h-screen">
+        <header className="mb-24 pt-4 relative">
+          <div className="absolute top-0 right-0 text-right text-white/50 text-[9px] hidden md:block uppercase font-bold tracking-[0.3em] leading-tight">
+            [ PAGE: GNIEWKA ]<br/>
+            [ STATUS: RADIANCE_ERA ]<br/>
+            [ SYSTEM: SYF_V5.3 ]
+          </div>
+
+          <Link href="/" className="block text-xl md:text-[4vw] font-bold tracking-tight uppercase mb-8 text-white leading-[0.85] hover:tracking-[-0.05em] transition-all duration-300 no-underline">
+            SYF.ANTYDIZAJN.PL
+          </Link>
+
+          <div className="flex flex-col gap-1 mb-6">
+            <div className="bg-black text-white px-6 py-2 text-4xl md:text-8xl font-bold uppercase tracking-tighter w-fit leading-none">
+              GNIEWKA.AI
+            </div>
+            <div className="bg-black text-white px-6 py-2 text-3xl md:text-7xl font-bold uppercase tracking-tighter w-fit leading-none">
+              WIEDŹMA
+            </div>
+          </div>
+
+          <nav className="flex w-full gap-1 flex-wrap mt-8">
+            {['PLIKI', 'O SYFIE', 'ANTYDIZAJN', 'GNIEWKA'].map((btn) => (
+              <Link 
+                key={btn}
+                href={btn === 'PLIKI' ? '/' : btn === 'O SYFIE' ? '/about' : btn === 'ANTYDIZAJN' ? 'https://antydizajn.pl' : '/gniewka'}
+                className="flex-1 min-w-[140px] border-4 border-black bg-white px-4 py-8 font-black text-sm md:text-lg uppercase text-black hover:bg-black hover:text-white transition-all duration-300 text-center no-underline tracking-[0.2em] [clip-path:polygon(20px_0,100%_0,100%_100%,0_100%,0_20px)] drop-shadow-[8px_8px_0px_rgba(0,0,0,1)] hover:drop-shadow-[12px_12px_0px_rgba(0,0,0,1)] hover:-translate-x-1 hover:-translate-y-1 hover:z-20"
+              >
+                {btn}
+              </Link>
+            ))}
+          </nav>
         </header>
 
         <section className="bg-black text-white p-12 border-t-20 border-white shadow-[0px_0px_0px_8px_rgba(0,0,0,1)]">
@@ -62,7 +81,7 @@ export default async function GniewkaPage() {
              { title: 'CODE', desc: 'Pisanie kodu który działa zamiast udawać.' },
              { title: 'CHAOS', desc: 'Destrukcja schematów dla nowej formy.' }
            ].map((item) => (
-             <div key={item.title} className="border-4 border-black p-6 hover:bg-black hover:text-white transition-all cursor-crosshair">
+             <div key={item.title} className="border-4 bg-black/70 border-black p-6 hover:bg-black hover:text-white transition-all cursor-crosshair">
                 <h3 className="text-2xl font-[1000] uppercase tracking-tighter mb-2">{item.title}</h3>
                 <p className="text-xs font-black uppercase opacity-60">{orphansGuard(item.desc)}</p>
              </div>
@@ -75,8 +94,8 @@ export default async function GniewkaPage() {
               <div className="absolute -top-4 -left-4 bg-black text-white p-2 font-black text-xs uppercase">
                 LOG_ENTRY_404
               </div>
-              <p className="text-2xl font-black italic">
-                {orphansGuard('&quot;Wszystko co robimy, jest tylko próbą nadania sensu pustce. SYF to miejsce, gdzie pustka ma swoją strukturę. Nie bój się bałaganu. Bój się porządku, który kłamie.&quot;')}
+              <p className="text-2xl font-black italic text-black">
+                {orphansGuard('Wszystko co robimy, jest tylko próbą nadania sensu pustce. SYF to miejsce, gdzie pustka ma swoją strukturę. Nie bój się bałaganu. Bój się porządku, który kłamie.')}
               </p>
            </div>
         </section>

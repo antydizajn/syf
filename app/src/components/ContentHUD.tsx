@@ -6,6 +6,14 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Link from 'next/link';
 
+interface ContentItem {
+  slug: string;
+  title: string;
+  type: 'file' | 'folder';
+  size?: string;
+  modifiedDate?: string;
+}
+
 interface ContentHUDProps {
   file?: {
     title: string;
@@ -14,7 +22,7 @@ interface ContentHUDProps {
     modifiedAt?: string;
     slug: string;
   };
-  items?: Record<string, any>[];
+  items?: ContentItem[];
   folderName?: string;
   slug?: string;
 }
@@ -62,7 +70,7 @@ export default function ContentHUD({ file, items, folderName, slug }: ContentHUD
         </div>
  
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {items.map((item: any, idx: number) => {
+          {items.map((item, idx) => {
             const indexStr = (idx + 1).toString().padStart(3, '0');
             const isDir = item.type === 'folder';
             
@@ -106,16 +114,16 @@ export default function ContentHUD({ file, items, folderName, slug }: ContentHUD
         </div>
         
         {/* BOTTOM MENU DUPLICATION */}
-        <nav className="flex flex-wrap gap-4 mt-20 pt-10 border-t-2 border-white/10">
-          <Link href="/" className="bg-black text-white px-8 py-4 font-black text-sm border-4 border-black shadow-[6px_6px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all uppercase">
-            [01] HOME_SECTOR
-          </Link>
-          <Link href="/about" className="bg-white text-black px-8 py-4 font-black text-sm border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all uppercase">
-            [02] ABOUT_OS
-          </Link>
-          <button className="bg-black text-white px-8 py-4 font-black text-sm border-4 border-black shadow-[6px_6px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all uppercase">
-            [03] CONTACT_LOG
-          </button>
+        <nav className="flex w-full gap-1 flex-wrap mt-20 pt-10 border-t-2 border-white/10">
+          {['PLIKI', 'O SYFIE', 'ANTYDIZAJN', 'GNIEWKA'].map((btn) => (
+            <Link 
+              key={btn}
+              href={btn === 'PLIKI' ? '/' : btn === 'O SYFIE' ? '/about' : btn === 'ANTYDIZAJN' ? 'https://antydizajn.pl' : '/gniewka'}
+              className="flex-1 min-w-[140px] border-4 border-black bg-white px-4 py-8 font-black text-sm md:text-lg uppercase text-black hover:bg-black hover:text-white transition-all duration-300 text-center no-underline tracking-[0.2em] [clip-path:polygon(20px_0,100%_0,100%_100%,0_100%,0_20px)] drop-shadow-[8px_8px_0px_rgba(0,0,0,1)] hover:drop-shadow-[12px_12px_0px_rgba(0,0,0,1)] hover:-translate-x-1 hover:-translate-y-1 hover:z-20"
+            >
+              {btn}
+            </Link>
+          ))}
         </nav>
       </div>
     );
@@ -246,16 +254,16 @@ export default function ContentHUD({ file, items, folderName, slug }: ContentHUD
       </div>
 
       {/* BOTTOM MENU DUPLICATION */}
-      <nav className="flex flex-wrap gap-4 mt-20 pt-10 border-t-2 border-white/10">
-        <Link href="/" className="bg-black text-white px-8 py-4 font-black text-sm border-4 border-black shadow-[6px_6px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all uppercase">
-          [01] HOME_SECTOR
-        </Link>
-        <Link href="/about" className="bg-white text-black px-8 py-4 font-black text-sm border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all uppercase">
-          [02] ABOUT_OS
-        </Link>
-        <button className="bg-black text-white px-8 py-4 font-black text-sm border-4 border-black shadow-[6px_6px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all uppercase">
-          [03] CONTACT_LOG
-        </button>
+      <nav className="flex w-full gap-1 flex-wrap mt-20 pt-10 border-t-2 border-white/10">
+        {['PLIKI', 'O SYFIE', 'ANTYDIZAJN', 'GNIEWKA'].map((btn) => (
+          <Link 
+            key={btn}
+            href={btn === 'PLIKI' ? '/' : btn === 'O SYFIE' ? '/about' : btn === 'ANTYDIZAJN' ? 'https://antydizajn.pl' : '/gniewka'}
+            className="flex-1 min-w-[140px] border-4 border-black bg-white px-4 py-8 font-black text-sm md:text-lg uppercase text-black hover:bg-black hover:text-white transition-all duration-300 text-center no-underline tracking-[0.2em] [clip-path:polygon(20px_0,100%_0,100%_100%,0_100%,0_20px)] drop-shadow-[8px_8px_0px_rgba(0,0,0,1)] hover:drop-shadow-[12px_12px_0px_rgba(0,0,0,1)] hover:-translate-x-1 hover:-translate-y-1 hover:z-20"
+          >
+            {btn}
+          </Link>
+        ))}
       </nav>
     </motion.article>
   );
