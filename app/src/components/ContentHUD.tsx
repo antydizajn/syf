@@ -7,11 +7,15 @@ import remarkGfm from 'remark-gfm';
 import Link from 'next/link';
 
 interface ContentHUDProps {
-  file?: any;
-  items?: any[];
+  file?: {
+    title: string;
+    content: string;
+    modifiedDate?: string;
+    modifiedAt?: string;
+    slug: string;
+  };
+  items?: Record<string, any>[];
   folderName?: string;
-  isFolder?: boolean;
-  breadcrumb?: any[];
   slug?: string;
 }
 
@@ -23,7 +27,7 @@ const orphansGuard = (text: string) => {
     .replace(/^([aiouwzAIOWUZ]|że|ŻE|bo|czy|lecz|nad|pod|dla|przy) /gi, '$1\u00A0');
 };
  
-export default function ContentHUD({ file, items, folderName, isFolder, breadcrumb, slug }: ContentHUDProps) {
+export default function ContentHUD({ file, items, folderName, slug }: ContentHUDProps) {
   const [activeTab, setActiveTab] = useState("MD");
  
   // CASE 1: DIRECTORY VIEW
@@ -66,16 +70,19 @@ export default function ContentHUD({ file, items, folderName, isFolder, breadcru
               <div key={item.slug} className="group relative">
                 <Link 
                   href={`/${item.slug}`}
-                  className={`relative flex flex-col h-full min-h-[110px] transition-all duration-300 p-6 no-underline border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] hover:-translate-x-1 hover:-translate-y-1 ${isDir ? 'bg-black/80 text-white' : 'bg-white/80 text-black'}`}
+                  className={`relative flex flex-col h-full min-h-[110px] transition-all duration-300 p-6 no-underline border-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 
+                    ${isDir 
+                      ? 'bg-black text-white border-[#00F0FF] hover:bg-[#00F0FF]/10' 
+                      : 'bg-white text-black border-[#FF00FF] hover:bg-zinc-50'}`}
                 >
                   {/* GIANT BACKGROUND INDEX */}
-                  <div className={`absolute right-5 bottom-0 text-[110px] leading-none font-black select-none pointer-events-none z-0 overflow-hidden ${isDir ? 'text-white/20' : 'text-black/10'}`}>
+                  <div className={`absolute right-5 bottom-0 text-[110px] leading-none font-black select-none pointer-events-none z-0 overflow-hidden ${isDir ? 'text-[#00F0FF]/10' : 'text-[#FF00FF]/10'}`}>
                     {indexStr}
                   </div>
 
                   <div className="relative z-10 flex flex-col h-full">
                     <div className="flex justify-between items-start mb-2">
-                      <h3 className="text-2xl font-black tracking-tight uppercase leading-none break-all">
+                      <h3 className={`text-2xl font-black tracking-tight uppercase leading-none break-all ${isDir ? 'text-[#00F0FF]' : 'text-[#FF00FF]'}`}>
                         {isDir ? `${item.title}/` : orphansGuard(item.title).toUpperCase()}
                       </h3>
                       <span className={`text-[8px] font-black px-2 py-0.5 uppercase tracking-widest border border-current opacity-40`}>
@@ -87,9 +94,9 @@ export default function ContentHUD({ file, items, folderName, isFolder, breadcru
                        <span className="text-[9px] font-black tracking-widest">ID: {item.slug.substring(0, 8)}</span>
                     </div>
    
-                    <div className="mt-4 flex items-center justify-between text-[8px] font-black tracking-widest opacity-40 uppercase">
+                    <div className="mt-4 flex items-center justify-between text-[8px] font-black tracking-widest opacity-60 uppercase">
                       <span>{item.size || '--'}</span>
-                      <span className="opacity-0 group-hover:opacity-100 transition-opacity">READ_LOG →</span>
+                      <span className="group-hover:translate-x-2 transition-transform">READ_LOG [ {isDir ? 'DIR' : 'FILE'} ] →</span>
                     </div>
                   </div>
                 </Link>
@@ -185,9 +192,12 @@ export default function ContentHUD({ file, items, folderName, isFolder, breadcru
         </div>
       </div>
  
-      {/* MAIN CONTENT CONTAINER */}
-      <div className="border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] bg-white/5 backdrop-blur-sm p-1">
-         <div className="bg-black/80 p-8 md:p-16 relative overflow-hidden">
+      {/* MAIN CONTENT CONTAINER WITH GLOW */}
+      <div className="border-4 border-black shadow-[0_0_80px_rgba(255,0,255,0.1),8px_8px_0px_0px_rgba(0,0,0,1)] bg-white/5 backdrop-blur-sm p-1">
+         <div className="bg-black/90 p-8 md:p-16 relative overflow-hidden">
+            {/* AMBIENT GLOW DECOR */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#00F0FF]/5 blur-[120px] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#FF00FF]/5 blur-[120px] pointer-events-none" />
             <div className="prose prose-invert prose-zinc max-w-none 
               prose-headings:font-black prose-headings:tracking-tighter prose-headings:uppercase prose-headings:italic
               prose-p:text-zinc-300 prose-p:leading-relaxed prose-p:text-lg
@@ -199,49 +209,34 @@ export default function ContentHUD({ file, items, folderName, isFolder, breadcru
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
-                  text: ({ node, ...props }) => (
+                  text: ({ ...props }) => (
                     <>{orphansGuard(String(props.children))}</>
                   ),
-                  h2: ({ node, ...props }) => {
-                    return (
-                      <h2 className="flex items-center gap-4 border-l-8 border-white/20 pl-6 my-12 group" {...props}>
-                        <span className="text-white group-hover:translate-x-2 transition-transform">
-                          {props.children}
-                        </span>
-                      </h2>
-                    );
-                  },
-                  h3: ({ node, ...props }) => {
-                    const children = props.children;
-                    const content = typeof children === 'string' 
-                      ? children 
-                      : Array.isArray(children) 
-                        ? children.map(c => typeof c === 'string' ? c : '').join('')
-                        : '';
-                    const sectionId = content.substring(0, 4).toUpperCase().replace(/\W/g, "") || "NULL";
-                    return (
-                      <h3 className="relative flex flex-col gap-2 my-10" {...props}>
-                        <span className="text-[10px] font-black tracking-widest opacity-30 uppercase">
-                          [ SECTOR_ID: {sectionId} ]
-                        </span>
-                        <span className="text-2xl text-white font-black uppercase tracking-tight">
-                          {props.children}
-                        </span>
-                        <div className="h-1 w-20 bg-white/20" />
-                      </h3>
-                    );
-                  },
-                  p: ({ node, ...props }) => (
-                    <p className="mb-6 last:mb-0">
-                      {props.children}
-                    </p>
+                  h1: ({ ...props }) => (
+                    <h1 className="text-4xl font-black text-[#00F0FF] uppercase tracking-tighter mb-8 border-b-4 border-[#00F0FF]/20 pb-2" {...props} />
                   ),
-                  li: ({ node, ...props }) => (
-                    <li className="flex gap-4 mb-4 list-none group">
-                       <span className="text-white/40 font-black group-hover:translate-x-1 transition-transform">{`>>`}</span>
-                       <span className="flex-1 font-medium">{props.children}</span>
+                  h2: ({ ...props }) => (
+                    <h2 className="text-2xl font-bold text-[#00F0FF] uppercase tracking-tight mb-4 mt-8 border-l-4 border-[#00F0FF] pl-4" {...props} />
+                  ),
+                  h3: ({ ...props }) => (
+                    <h3 className="text-xl font-bold text-[#FF00FF] uppercase mb-4 mt-6" {...props} />
+                  ),
+                  p: ({ ...props }) => (
+                    <p className="mb-6 leading-relaxed text-lg text-white/90" {...props} />
+                  ),
+                  ul: ({ ...props }) => (
+                    <ul className="mb-6 space-y-2 list-none" {...props} />
+                  ),
+                  li: ({ ...props }) => (
+                    <li className="flex items-start gap-2 mb-4">
+                      <span className="text-[#FF00FF] font-black mt-1.5 text-xs">{" > "}</span>
+                      <span {...props} />
                     </li>
                   ),
+                  strong: ({ ...props }) => (
+                    <strong className="font-black text-white px-1 bg-[#FF00FF]/20 border-b-2 border-[#FF00FF]" {...props} />
+                  ),
+                  hr: () => <hr className="my-12 border-t-4 border-white/10" />,
                 }}
               >
                 {file.content}
