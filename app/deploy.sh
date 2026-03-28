@@ -50,7 +50,8 @@ rsync -avz --delete ../files/ danveld@s61.mydevil.net:domains/syf.antydizajn.pl/
 
 # 5. CREATE APP.JS (zawsze, bo standalone go nie ma!)
 echo "▶️  Creating app.js..."
-ssh danveld@s61.mydevil.net "echo \"process.env.PORT = process.env.PORT || '51236'; require('./server.js');\" > domains/syf.antydizajn.pl/public_nodejs/app.js"
+ssh danveld@s61.mydevil.net "echo \"process.env.PORT = process.env.PORT || '51236'; require('./syfnew/app/server.js');\" > domains/syf.antydizajn.pl/public_nodejs/app.js"
+
 
 # 6. RESTART
 echo "▶️  Restarting server..."
