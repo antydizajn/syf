@@ -50,18 +50,18 @@ export const TechGrantHUD = () => {
 
       <div className="col-span-full mt-12 grid grid-cols-1 lg:grid-cols-3 gap-12">
         {/* Hormozi Value Proposition */}
-        <div className="lg:col-span-2 border-4 border-white p-10 bg-white text-black shadow-[20px_20px_0px_#39FF14]">
+        <div className="lg:col-span-2 border-4 border-white/20 p-10 bg-white/5 backdrop-blur-3xl text-white shadow-[20px_20px_0px_#39FF14]">
           <h3 className="text-4xl font-black uppercase mb-8 leading-none tracking-tighter">
-            THE <span className="text-neon-green bg-black px-3">GRAND SLAM</span> INFRASTRUCTURE
+            THE <span className="text-neon-green bg-white/10 px-3 underline decoration-neon-green">GRAND SLAM</span> INFRASTRUCTURE
           </h3>
           <div className="space-y-8 font-mono">
-            <div className="bg-black/5 p-6 border-l-8 border-black">
-              <p className="text-2xl font-black mb-2 uppercase leading-none">01. DREAM OUTCOME</p>
-              <p className="text-sm font-bold opacity-70 italic">Autonomous production chains. Zero human management. A system that scales while you sleep.</p>
+            <div className="bg-white/5 p-6 border-l-8 border-white/40">
+              <p className="text-2xl font-black mb-2 uppercase leading-none text-neon-green">01. DREAM OUTCOME</p>
+              <p className="text-sm font-bold opacity-70 italic text-white/80">Autonomous production chains. Zero human management. A system that scales while you sleep.</p>
             </div>
-            <div className="bg-black/5 p-6 border-l-8 border-neon-green">
-              <p className="text-2xl font-black mb-2 uppercase leading-none">02. TIME DELAY: ZERO</p>
-              <p className="text-sm font-bold opacity-70 italic">Legacy AI &quot;chats&quot;. We execute. Deployment happens in milliseconds, not months.</p>
+            <div className="bg-white/5 p-6 border-l-8 border-neon-green">
+              <p className="text-2xl font-black mb-2 uppercase leading-none text-neon-green">02. TIME DELAY: ZERO</p>
+              <p className="text-sm font-bold opacity-70 italic text-white/80">Legacy AI &quot;chats&quot;. We execute. Deployment happens in milliseconds, not months.</p>
             </div>
           </div>
         </div>

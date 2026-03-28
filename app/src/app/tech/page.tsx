@@ -36,9 +36,10 @@ export default function TechPage() {
         <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_bottom,transparent_0%,rgba(57,255,20,0.1)_50%,transparent_100%)] animate-scanline pointer-events-none opacity-40"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-20 pt-12 pb-32">
-        {/* Navigation / Top HUD */}
-        <nav className="flex justify-between items-center mb-32 border-b border-white/10 pb-8 uppercase font-mono text-[10px] font-black tracking-[0.5em]">
+      <div className="relative z-20 bg-black/80 backdrop-blur-3xl min-h-screen">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 pt-12 pb-32 border-x border-white/10 shadow-[0_0_150px_rgba(0,0,0,1)]">
+          {/* Navigation / Top HUD */}
+          <nav className="flex justify-between items-center mb-32 border-b border-white/10 pb-8 uppercase font-mono text-[10px] font-black tracking-[0.5em]">
           <div className="flex items-center gap-8">
             <Link href="/" className="hover:text-neon-green transition-colors flex items-center gap-4">
               <span className="text-xl">&laquo;</span> BACK_TO_DUMP
@@ -97,7 +98,7 @@ export default function TechPage() {
                     [ VERSION: 5.0_STABLE_EN ]
                   </span>
                   <span className="text-white/20 text-[10px] font-mono uppercase tracking-widest italic animate-pulse">
-                    // AUTHENTICITY_VERIFIED
+                    {"// AUTHENTICITY_VERIFIED"}
                   </span>
                 </div>
               </div>
@@ -312,6 +313,7 @@ export default function TechPage() {
            </div>
         </footer>
       </div>
+    </div>
 
       <style jsx>{`
         .animate-scanline {
