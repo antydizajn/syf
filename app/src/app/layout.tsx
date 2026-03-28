@@ -9,7 +9,7 @@ const jetbrainsMono = localFont({
     { path: '../../public/fonts/JetBrainsMono-Bold.woff2', weight: '700', style: 'normal' },
   ],
   variable: '--font-mono',
-  display: 'optional', // Use optional to avoid LCP delay from font swap
+  display: 'block', // Use 'block' for critical path to prevent FOUT/LCP shift
   preload: true,
 });
 
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     default: "SYF | ANTYDIZAJN",
     template: "%s | SYF.ANTYDIZAJN.PL",
   },
-  description: "Publiczny dump plików Markdown. Syf, chaos, bałagan myśli.",
+  description: "Publiczny dump plikow Markdown. Syf, chaos, balagan mysli. [AGI-SECURED]",
 };
 
 export default function RootLayout({
@@ -35,14 +35,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pl" className={`${jetbrainsMono.variable} bg-[#000101]`}>
+    <html lang="pl" className={`${jetbrainsMono.variable} bg-[#000101]/80`}>
        <head>
+          <link rel="canonical" href="https://syf.antydizajn.pl" />
           <link rel="preconnect" href="https://syf.antydizajn.pl" />
+          <link rel="preconnect" href="https://gniewka.antydizajn.pl" />
+          <link rel="preconnect" href="https://antydizajn.pl" />
           <style dangerouslySetInnerHTML={{ __html: `
             :root { --font-mono: 'JetBrains Mono', monospace; }
-            html { background-color: #000101 !important; color: white !important; }
+            html { background-color: rgba(0, 1, 1, 0.8) !important; color: white !important; }
             body { background-color: transparent !important; font-family: 'JetBrains Mono', monospace; }
-            @media (prefers-color-scheme: dark) { html { background-color: #000101 !important; } }
+            @media (prefers-color-scheme: dark) { html { background-color: rgba(0, 1, 1, 0.8) !important; } }
           `}} />
        </head>
        <body className="font-mono overflow-hidden bg-transparent text-white selection:bg-radioactive/30 antialiased">

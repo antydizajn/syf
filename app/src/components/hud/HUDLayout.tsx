@@ -26,6 +26,7 @@ export default function HUDLayout({ children }: HUDLayoutProps) {
   return (
     <div className="h-screen w-screen flex flex-col text-white relative overflow-hidden coordinate-grid selection:bg-radioactive/30">
       <RevolutionBackground />
+      <div className="dither-overlay" />
       
       {/* MAIN CONTENT SURFACE: ONE SURFACE DESIGN */}
       <main className="flex-1 overflow-y-auto custom-scrollbar relative z-10">
