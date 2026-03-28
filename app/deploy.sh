@@ -30,18 +30,23 @@ echo "🔐 Computing SHA‑256 of build artifacts..."
 LOCAL_HASH=$(ls -lR .next/standalone | shasum -a 256 | awk '{print $1}')
 echo "🧾 Local bundle hash: $LOCAL_HASH"
 
-# 2. UPLOAD STANDALONE (BEZ --delete bo usuwa app.js!)
+# 2. UPLOAD STANDALONE (With --delete for clean build sync, but careful with server.js and static if manually edited)
 echo "▶️  Uploading standalone..."
-rsync -avz .next/standalone/ danveld@s61.mydevil.net:domains/syf.antydizajn.pl/public_nodejs/
+rsync -avz --delete .next/standalone/ danveld@s61.mydevil.net:domains/syf.antydizajn.pl/public_nodejs/
 
 # 3. UPLOAD STATIC
 echo "▶️  Uploading static..."
 ssh danveld@s61.mydevil.net "mkdir -p domains/syf.antydizajn.pl/public_nodejs/.next/static"
-rsync -avz .next/static/ danveld@s61.mydevil.net:domains/syf.antydizajn.pl/public_nodejs/.next/static/
+rsync -avz --delete .next/static/ danveld@s61.mydevil.net:domains/syf.antydizajn.pl/public_nodejs/.next/static/
 
 # 4. UPLOAD PUBLIC
 echo "▶️  Uploading public..."
-rsync -avz public/ danveld@s61.mydevil.net:domains/syf.antydizajn.pl/public_nodejs/public/
+rsync -avz --delete public/ danveld@s61.mydevil.net:domains/syf.antydizajn.pl/public_nodejs/public/
+
+# 5. UPLOAD FILES (Knowledge Base Content)
+echo "▶️  Uploading files directory..."
+rsync -avz --delete ../files/ danveld@s61.mydevil.net:domains/syf.antydizajn.pl/files/
+
 
 # 5. CREATE APP.JS (zawsze, bo standalone go nie ma!)
 echo "▶️  Creating app.js..."
