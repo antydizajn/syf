@@ -18,23 +18,22 @@ export function HomeHeader({ totalSize, itemsCount }: { totalSize?: string, item
 
       <div className="flex flex-col gap-1 mb-6">
         <div className="bg-black/80 text-white px-6 py-2 text-4xl md:text-8xl font-bold uppercase tracking-tighter w-fit leading-none">
-          PUBLICZNY
+          PUBLIC
         </div>
         <div className="bg-black/80 text-white px-6 py-2 text-3xl md:text-7xl font-bold uppercase tracking-tighter w-fit leading-none">
-          DUMP PLIKÓW
+          FILE DUMP
         </div>
       </div>
 
       <div className="text-[10px] md:text-xs font-bold tracking-[0.4em] text-white uppercase mb-16 bg-black/80 px-4 py-2 w-fit">
-        {orphansGuard("WRZUCASZ .MD")} <span className="text-white/60">→</span> {orphansGuard("DOSTĘPNE POD /NAZWA")}
+        {orphansGuard("DROP .MD")} <span className="text-white/60">→</span> {orphansGuard("AVAILABLE AT /NAME")}
       </div>
 
       <nav className="flex w-full gap-1 flex-wrap">
         {[
-          { label: 'PLIKI', href: '/' },
-          { label: 'O\u00A0SYFIE', href: '/about' },
-          { label: 'TECH/AGI', href: '/tech' },
-          { label: 'GNIEWKA', href: '/gniewka' }
+          { label: 'FILES', href: '/' },
+          { label: 'ABOUT', href: '/about' },
+          { label: 'TECH/AGI', href: '/tech' }
         ].map((btn) => (
             <Link 
               key={btn.label}

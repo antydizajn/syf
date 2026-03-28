@@ -17,18 +17,18 @@ export default async function AboutPage() {
 
           <div className="flex flex-col gap-1 mb-6">
             <div className="bg-black text-white px-6 py-2 text-4xl md:text-8xl font-bold uppercase tracking-tighter w-fit leading-none">
-              O SYFIE
+              ABOUT SYF
             </div>
             <div className="bg-black text-white px-6 py-2 text-3xl md:text-7xl font-bold uppercase tracking-tighter w-fit leading-none">
-              DUMP PLIKÓW
+              FILE DUMP
             </div>
           </div>
 
           <nav className="flex w-full gap-1 flex-wrap mt-8">
-            {['PLIKI', 'O SYFIE', 'ANTYDIZAJN', 'GNIEWKA'].map((btn) => (
+            {['FILES', 'ABOUT', 'ANTYDIZAJN', 'TECH/AGI'].map((btn) => (
               <Link 
                 key={btn}
-                href={btn === 'PLIKI' ? '/' : btn === 'O SYFIE' ? '/about' : btn === 'ANTYDIZAJN' ? 'https://antydizajn.pl' : '/gniewka'}
+                href={btn === 'FILES' ? '/' : btn === 'ABOUT' ? '/about' : btn === 'ANTYDIZAJN' ? 'https://antydizajn.pl' : '/tech'}
                 className="flex-1 min-w-[140px] border-4 border-black bg-white px-4 py-8 font-black text-sm md:text-lg uppercase text-black hover:bg-black hover:text-white transition-all duration-300 text-center no-underline tracking-[0.2em] [clip-path:polygon(20px_0,100%_0,100%_100%,0_100%,0_20px)] drop-shadow-[8px_8px_0px_rgba(0,0,0,1)] hover:drop-shadow-[12px_12px_0px_rgba(0,0,0,1)] hover:-translate-x-1 hover:-translate-y-1 hover:z-20"
               >
                 {btn}
@@ -39,35 +39,35 @@ export default async function AboutPage() {
 
         <section className="grid grid-cols-1 md:grid-cols-2 gap-12">
            <div className="flex flex-col gap-6 bg-black/70 backdrop-blur-md border-4 border-black p-8 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all">
-              <h2 className="text-3xl font-[1000] uppercase tracking-tighter border-b-4 border-black pb-2">
-                CO TO JEST?
+              <h2 className="text-3xl font-[1000] uppercase tracking-tighter border-b-4 border-black pb-2 text-white">
+                WHAT IS THIS?
               </h2>
-              <div className="text-lg leading-relaxed space-y-4 font-bold">
+              <div className="text-lg leading-relaxed space-y-4 font-bold text-white">
                  <p>
-                   {orphansGuard("SYF to publiczny dump plików Markdown. Bez bazy danych, bez logowania, bez bullshitu.")}
+                   {orphansGuard("SYF is a public dump of Markdown files. No database, no login, no bullshit.")}
                  </p>
                  <p>
-                   {orphansGuard("Wrzucasz plik .md do folderu → automatycznie dostępny pod /NAZWA.")}
+                   {orphansGuard("Drop an .md file into the folder → it's automatically available at /NAME.")}
                  </p>
               </div>
            </div>
 
            <div className="flex flex-col gap-6 bg-black/70 backdrop-blur-md border-4 border-black p-8 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all">
-              <h2 className="text-3xl font-[1000] uppercase tracking-tighter border-b-4 border-black pb-2">
-                JAK TO DZIAŁA?
+              <h2 className="text-3xl font-[1000] uppercase tracking-tighter border-b-4 border-black pb-2 text-white">
+                HOW DOES IT WORK?
               </h2>
-              <ul className="space-y-4 text-sm font-black uppercase">
+              <ul className="space-y-4 text-sm font-black uppercase text-white">
                  <li className="flex gap-4">
-                   <span className="bg-black text-white px-2">01</span>
-                   <span>Plik <code>manifest.md</code> → /manifest</span>
+                   <span className="bg-white text-black px-2">01</span>
+                   <span>File <code>manifest.md</code> → /manifest</span>
                  </li>
                  <li className="flex gap-4">
-                   <span className="bg-black text-white px-2">02</span>
-                   <span>Plik <code>research-ai.md</code> → /research-ai</span>
+                   <span className="bg-white text-black px-2">02</span>
+                   <span>File <code>research-ai.md</code> → /research-ai</span>
                  </li>
                  <li className="flex gap-4 opacity-30">
-                   <span className="bg-black text-white px-2">03</span>
-                   <span>{orphansGuard("I tak dalej. Zero magii. Czysty filesystem.")}</span>
+                   <span className="bg-white text-black px-2">03</span>
+                   <span>{orphansGuard("And so on. No magic. Pure filesystem.")}</span>
                  </li>
               </ul>
            </div>
@@ -97,9 +97,9 @@ export default async function AboutPage() {
            <div className="absolute top-0 right-0 p-4 text-[60px] font-[1000] opacity-10 leading-none select-none">
              SYF SYF SYF SYF
            </div>
-           <h3 className="text-4xl font-[1000] tracking-tighter uppercase mb-6 relative z-10">DLACZEGO &quot;SYF&quot;?</h3>
+           <h3 className="text-4xl font-[1000] tracking-tighter uppercase mb-6 relative z-10">WHY &quot;SYF&quot;?</h3>
            <p className="text-xl font-bold italic border-l-8 border-white pl-6 relative z-10">
-             {orphansGuard("Bo to jest syf. Chaotyczny zbiór plików, myśli, researchu. Nie udajemy, że to jest eleganckie. To jest brutalne i szczere. W morzu wypolerowanych interfejsów, wybieramy brud.")}
+             {orphansGuard("Because it's a mess. A chaotic collection of files, thoughts, research. We don't pretend it's elegant. It is brutal and honest. In a sea of polished interfaces, we choose the dirt.")}
            </p>
         </section>
       </main>

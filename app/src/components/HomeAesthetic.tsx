@@ -28,7 +28,7 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
             <button 
               onClick={() => { setPage(p => Math.max(0, p - 1)); window.scrollTo({ top: 0, behavior: 'instant' }); }}
               disabled={page === 0}
-              aria-label="PREV_SECTOR: Poprzedni sektor"
+              aria-label="PREV_SECTOR: Previous sector"
               className="bg-black text-white px-8 py-3 text-[10px] font-black uppercase tracking-widest disabled:opacity-20 transition-all duration-300 hover:-translate-x-1 hover:-translate-y-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,0.5)]"
             >
               [ PREV_SECTOR ]
@@ -39,7 +39,7 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
             <button 
               onClick={() => { setPage(p => Math.min(totalPages - 1, p + 1)); window.scrollTo({ top: 0, behavior: 'instant' }); }}
               disabled={page === totalPages - 1}
-              aria-label="NEXT_SECTOR: Następny sektor"
+              aria-label="NEXT_SECTOR: Next sector"
               className="bg-black text-white px-8 py-3 text-[10px] font-black uppercase tracking-widest disabled:opacity-20 transition-all duration-300 hover:-translate-x-1 hover:-translate-y-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,0.5)]"
             >
               [ NEXT_SECTOR ]
@@ -111,7 +111,7 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
             <button 
               onClick={() => { setPage(p => Math.max(0, p - 1)); window.scrollTo({ top: 0, behavior: 'instant' }); }}
               disabled={page === 0}
-              aria-label="PREV_SECTOR: Poprzedni sektor"
+              aria-label="PREV_SECTOR: Previous sector"
               className="bg-black text-white px-10 py-5 text-xs font-black uppercase tracking-widest disabled:opacity-20 hover:bg-zinc-800 transition-all duration-300 hover:-translate-x-1 hover:-translate-y-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,0.5)]"
             >
               PREV_SECTOR
@@ -122,7 +122,7 @@ export function HomeAesthetic({ items, totalSize }: { items: ItemData[]; totalSi
             <button 
               onClick={() => { setPage(p => Math.min(totalPages - 1, p + 1)); window.scrollTo({ top: 0, behavior: 'instant' }); }}
               disabled={page === totalPages - 1}
-              aria-label="NEXT_SECTOR: Następny sektor"
+              aria-label="NEXT_SECTOR: Next sector"
               className="bg-black text-white px-10 py-5 text-xs font-black uppercase tracking-widest disabled:opacity-20 hover:bg-zinc-800 transition-all duration-300 hover:-translate-x-1 hover:-translate-y-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,0.5)]"
             >
               NEXT_SECTOR

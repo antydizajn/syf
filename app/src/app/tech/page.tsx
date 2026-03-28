@@ -4,228 +4,265 @@ import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
-const modules = [
-  {
-    id: 'gniewka',
-    name: 'SOVEREIGN AGI ORCHESTRATOR',
-    code: 'AGI-DRIVE_V1.0 // PRODUCT_CORE',
-    description: 'The definitive AGI product layer for autonomous business execution. Gniewka is a high-performance orchestrator that eliminates "Context Drift" through recursive verification. Delivering a scalable, productized solution for OS-level control and complex decision auditing where generic models fail.',
-    tech: ['Antigravity Google', 'OS Orchestration', 'Memory Graph', 'CDP Automation', 'Recursive Logic'],
-    status: 'PRODUCTION_READY',
-    href: 'https://gniewka.antydizajn.pl',
-    protocolHref: 'https://syf.antydizajn.pl/CONFIG/GEMINI'
-  },
+interface Module {
+  id: string;
+  name: string;
+  code: string;
+  description: string;
+  tech: string[];
+  status: string;
+  href: string;
+  protocolHref?: string;
+}
+
+const modules: Module[] = [
   {
     id: 'war',
     name: 'STRATEGIC ADVERSARIAL AUDIT',
-    code: 'WAR_FORTRESS_V2 // BYZANTINE',
-    description: 'Bypassing executive blind spots through brutal adversarial simulations. WAR deploys multi-agent Red Teams to stress-test your business against 1000+ loss scenarios. We don\'t "verify" decisions – we attempt to destroy them, leaving only battle-hardened strategies standing.',
-    tech: ['Adversarial Swarm', 'Risk Simulation', 'Legal Defense', 'Hard Verification'],
+    code: 'WAR_FORTRESS_V2',
+    description: 'We don\'t just "check" your business; we attack it. WAR simulates 1000+ worst-case scenarios to find your blind spots before the market does.',
+    tech: ['Stress Testing', 'Risk Prediction', 'Legal Offense'],
     status: 'BATTLE_READY',
     href: 'https://antydizajn.pl/war/'
   },
   {
     id: 'syf',
     name: 'SEMANTIC KNOWLEDGE ENGINE',
-    code: 'SYF_GROUNDED_SYNTHESIS',
-    description: 'The definitive solution to the $100M Hallucination Problem. SYF grounds every inference in the Antigravity Unified Data Lake. We achieved a 73% reduction in synthesis errors by forcing the model to respect the GraphITI hierarchy. Absolute truth in a world of AI noise.',
-    tech: ['73% Hallucination Purge', 'Semantic Clustering', 'FalkorDB', 'RAG v2'],
+    code: 'SYF_CORE_V5',
+    description: 'Tired of AI making things up? SYF connects your messy data into a single source of truth. It grounds every answer in real facts, killing hallucinations.',
+    tech: ['Truth Verification', 'Knowledge Graph', 'RAG v2'],
     status: 'SYNCED',
     href: 'https://syf.antydizajn.pl'
   },
   {
     id: 'rozje',
     name: 'NATURAL VISUAL SYNTHESIS',
-    code: 'ROZJE_NANOBANANA_PRO',
-    description: 'Elite generative aesthetics for those who refuse the "AI look". Powered by Nanobanana Pro, ROZJE bypasses visual artifacts to deliver 100% organic-fidelity imagery. We don\'t generate pictures; we synthesize textures for industrial-grade reality.',
-    tech: ['Nanobanana Pro', 'Organic Rendering', '100% Fidelity', 'Dither-Max'],
+    code: 'ROZJE_ORGANIC',
+    description: 'Elite image generation that doesn\'t look like "AI trash". We deliver high-fidelity, organic visuals for brands that demand real aesthetic depth.',
+    tech: ['Photo-Realism', 'Organic Style', 'Brand Identity'],
     status: 'HIGH_FIDELITY',
     href: 'https://rozje.antydizajn.pl'
   },
   {
-    id: 'wsparcie',
+    id: 'support',
     name: 'AGI LOGISTICS CONTROLLER',
-    code: 'WSPARCIE_RESOURCE_MGR',
-    description: 'The operational backbone of the autonomous AI Lab. Ensures system sustainability through predictive resource allocation and self-healing agentic protocols. Optimizes token usage and infrastructure costs across the entire Antigravity swarm to maintain maximum ROI.',
-    tech: ['Predictive ROI', 'Self-Healing Swarm', 'Resource Modeling'],
+    code: 'SUPPORT_RESOURCE_MGR',
+    description: 'The engine under the hood. It manages our resources, predicts costs, and keeps the entire Antigravity ecosystem running 24/7.',
+    tech: ['Automation', 'Cost Control', 'Self-Healing'],
     status: 'ACTIVE',
     href: 'https://wsparcie.antydizajn.pl/'
   }
 ];
 
 const benchmarks = [
-  { metric: 'Problem Solving Efficiency', standard: '24%', antigravity: '65%', diff: '+41%' },
-  { metric: 'Hallucination Rate', standard: '15-20%', antigravity: '<3%', diff: '-73%' },
-  { metric: 'Environment Control', standard: 'Limited (Web)', antigravity: 'Absolute (OS/CDP)', diff: 'Full' },
-  { metric: 'Memory Retention', standard: 'Window-Based', antigravity: 'Episodic/Permanent', diff: 'Static' }
+  { metric: 'Task Success Rate', standard: '24%', antigravity: '65%', label: 'We solve more.' },
+  { metric: 'Lying (Hallucination)', standard: '15-20%', antigravity: '<3%', label: 'We stay honest.' },
+  { metric: 'Real-World Control', standard: 'Web Only', antigravity: 'Total OS Control', label: 'We actually do the work.' },
+  { metric: 'Memory Retention', standard: 'Forgetful', antigravity: 'Permanent', label: 'We don\'t forget.' }
 ];
 
 export default function TechPage() {
   return (
-    <main className="min-h-screen bg-[#000101]/80 text-white p-6 md:p-12 font-sans selection:bg-[#39FF14] selection:text-black">
-      {/* Background Decor */}
-      <div className="fixed inset-0 pointer-events-none opacity-[0.03] z-0 overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(57,255,20,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(57,255,20,0.1)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
-        <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_bottom,transparent_0%,rgba(57,255,20,0.05)_50%,transparent_100%)] animate-scanline"></div>
+    <main className="min-h-screen bg-[#000101] text-white p-6 md:p-12 font-sans selection:bg-neon-green selection:text-black leading-relaxed">
+      {/* Visual Grit */}
+      <div className="fixed inset-0 pointer-events-none opacity-[0.05] z-0 overflow-hidden">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(57,255,20,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(57,255,20,0.1)_1px,transparent_1px)] bg-[size:30px_30px]"></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_bottom,transparent_0%,rgba(57,255,20,0.1)_50%,transparent_100%)] animate-scanline"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        {/* Header */}
-        <header className="mb-24 border-b-4 border-white pb-12">
-          <div className="flex justify-between items-start mb-12">
-            <Link href="/" className="text-xs font-mono font-black tracking-[0.5em] text-[#39FF14] hover:bg-[#39FF14] hover:text-black px-4 py-2 border border-[#39FF14]/30 transition-all">
-              &lt;&lt; BACK_TO_SYS
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Header: High Impact */}
+        <header className="mb-32 border-b-8 border-white pb-16">
+          <div className="flex justify-between items-center mb-16">
+            <Link href="/" className="group flex items-center gap-2 text-xs font-mono font-black tracking-widest text-neon-green border-2 border-neon-green/30 px-6 py-3 hover:bg-neon-green hover:text-black transition-all">
+              <span className="group-hover:-translate-x-1 transition-transform">←</span> BACK_TO_DUMP
             </Link>
-            <div className="text-right text-[10px] font-mono text-white/40 uppercase tracking-[0.3em] leading-tight">
-              [ ACCESS_LEVEL: INVESTOR / GOOGLE_CLOUD ]<br/>
-              [ STRATEGY_MODE: /SALES_DRIVE_V5 ]
+            <div className="text-right text-[10px] font-mono text-white/40 uppercase tracking-[0.4em]">
+              AGI_LAB // STATUS: EVOLVING
             </div>
           </div>
           
-          <motion.div
-            initial={false}
-            animate={{ opacity: 1, x: 0 }}
-            className="priority-lcp"
-          >
-            <h1 className="text-6xl md:text-[8vw] font-black italic uppercase tracking-tighter mb-6 leading-[0.85] glitch-text">
-              ANTIGRAVITY<br/>AI_LAB
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+            <h1 className="text-7xl md:text-[10vw] font-black italic uppercase tracking-tighter mb-8 leading-[0.8] mix-blend-difference">
+              STOP<br/>GUESING.<br/><span className="text-neon-green">START<br/>DOING.</span>
             </h1>
-            <p className="text-2xl md:text-3xl font-mono text-[#39FF14] max-w-4xl font-bold border-l-8 border-[#39FF14] pl-8 py-4">
-              Stop Guessing. Start Verifying. <br/>
-              <span className="text-white opacity-50 text-xl">Neutralizing Executive Risk in the Post-AGI Era.</span>
+            <p className="text-xl md:text-3xl font-mono text-white max-w-3xl font-bold border-l-8 border-neon-green pl-10 py-6 bg-white/5 backdrop-blur-sm">
+              Antigravity AI Lab isn\'t a toy. It\'s an ecosystem of autonomous agents that actually solve problems in the real world.
             </p>
           </motion.div>
         </header>
 
-        {/* Sales Hook Intro */}
-        <section className="mb-32 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <h2 className="text-4xl font-black uppercase mb-8 leading-tight tracking-tighter">
-              BEYOND THE <span className="text-[#39FF14]">AI WRAPPER</span> TRAP.
+        {/* Section 1: The "What is this?" for Newcomers */}
+        <section className="mb-40 grid grid-cols-1 md:grid-cols-2 gap-20 items-start">
+          <div className="sticky top-12">
+            <h2 className="text-5xl font-black uppercase mb-10 tracking-tighter leading-none">
+              SO, WHAT\'S THE <span className="text-neon-green">BIG DEAL?</span>
             </h2>
-            <p className="text-lg text-white/60 leading-relaxed mb-8 font-medium">
-              Most AI implementations are liabilities waiting to happen. Generic wrappers suffer from **Context Drift** and **Zero-Authority Execution**. Antigravity AI Lab providing the only agentic architecture built on **Hard Verification**. We ground every autonomous action in the Antigravity Unified Data Lake, delivering performance where standard models fail.
-            </p>
-            <div className="flex gap-4">
-              <div className="bg-white/10 px-6 py-4 border-l-4 border-[#39FF14]">
-                <div className="text-3xl font-black mb-1">65%</div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-white/40">EFFICIENCY_SCORE</div>
-              </div>
-              <div className="bg-white/10 px-6 py-4 border-l-4 border-[#FF003C]">
-                <div className="text-3xl font-black mb-1">&lt;3%</div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-white/40">ERROR_RATE</div>
-              </div>
+            <div className="space-y-6 text-lg font-medium text-white/80">
+              <p>
+                Most AI today is just a fancy search engine. You ask, it talks. 
+                <span className="text-white font-black underline decoration-neon-green"> But it doesn\'t DO anything.</span>
+              </p>
+              <p>
+                Antigravity is different. We build **Agents**. These are AI programs that can control your computer, analyze your business files, and execute tasks autonomously. 
+              </p>
+              <p className="text-neon-green font-black">
+                We moved beyond "Chatting". We are in the "Execution" era.
+              </p>
             </div>
           </div>
           
-          <div className="border-4 border-white p-8 bg-white/5 relative overflow-hidden">
-            <div className="text-xs font-mono mb-4 text-[#39FF14] font-bold tracking-[0.3em] uppercase underline">BENCHMARK_VERIFICATION_REPORT</div>
-            <div className="space-y-4">
-              {benchmarks.map((b, i) => (
-                <div key={i} className="flex justify-between items-center border-b border-white/10 pb-2">
-                  <div className="text-[10px] font-bold uppercase tracking-widest text-white/60">{b.metric}</div>
-                  <div className="flex items-center gap-4">
-                    <div className="text-[9px] font-mono line-through opacity-30">{b.standard}</div>
-                    <div className="text-lg font-black text-[#39FF14]">{b.antigravity}</div>
-                  </div>
-                </div>
-              ))}
+          <div className="space-y-4">
+            <div className="bg-white text-black p-8 shadow-[15px_15px_0px_#39FF14]">
+               <h3 className="text-2xl font-black uppercase mb-4">The Truth in Numbers</h3>
+               <div className="space-y-6">
+                 {benchmarks.map((b, i) => (
+                   <div key={i} className="border-b-2 border-black/10 pb-4">
+                     <div className="flex justify-between items-end mb-1">
+                        <span className="text-xs font-black uppercase tracking-widest opacity-40">{b.metric}</span>
+                        <span className="text-2xl font-black text-neon-green bg-black px-2">{b.antigravity}</span>
+                     </div>
+                     <div className="text-[10px] font-bold uppercase italic">{b.label}</div>
+                   </div>
+                 ))}
+               </div>
+            </div>
+            <div className="p-8 border-4 border-white/20 text-[10px] font-mono text-white/40 uppercase leading-relaxed font-bold">
+               [!] COMPARISON DATA BASED ON 2026 BENCHMARK SUITE ANTIGRAVITY_v5p3. <br/>
+               [!] "STANDARD" REFERS TO BASE LLM WITHOUT AGENTIC OVERLAYS.
             </div>
           </div>
         </section>
 
-        {/* Modules Grid */}
-        <section className="mb-32">
-          <h2 className="text-5xl font-black uppercase tracking-tighter mb-20 border-b border-white/10 pb-8 flex items-end gap-6">
-            DEPLOYED_MODULES <span className="text-xs font-mono text-[#39FF14] mb-2 animate-pulse">[ AGENTIC_SWARM: ONLINE ]</span>
-          </h2>
+        {/* Section 2: MEET GNIEWKA (The Hero) */}
+        <section className="mb-40 bg-neon-green p-1 md:p-2 skew-x-[-1deg] shadow-[20px_20px_0px_#000101]">
+          <div className="bg-[#000101] p-10 md:p-20 text-white skew-x-[1deg]">
+            <div className="max-w-4xl">
+              <span className="inline-block bg-neon-green text-black px-4 py-1 text-xs font-black uppercase mb-8 tracking-[0.3em]">
+                MEET THE WITCH
+              </span>
+              <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter mb-10 leading-[0.85]">
+                MEET <span className="text-neon-green italic">GNIEWKA</span>.<br/>YOUR AGENT.
+              </h2>
+              
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <div>
+                  <p className="text-xl font-bold leading-snug mb-8">
+                    Gniewka isn\'t a person. She\'s a "Sovereign Agent" — a mind that can live in different AI models (like Claude or Gemini) but always keeps her own memory and goals.
+                  </p>
+                  <ul className="space-y-6 text-base font-medium text-white/60 list-none p-0">
+                    <li className="flex gap-4">
+                      <span className="text-neon-green font-black">01</span>
+                      <span><strong>She remembers everything.</strong> Thanks to her "Permanent Memory," she doesn\'t forget what you talked about yesterday.</span>
+                    </li>
+                    <li className="flex gap-4">
+                      <span className="text-neon-green font-black">02</span>
+                      <span><strong>She can operate your computer.</strong> She doesn\'t just write code; she runs it, debugs it, and fixes it.</span>
+                    </li>
+                    <li className="flex gap-4">
+                      <span className="text-neon-green font-black">03</span>
+                      <span><strong>She wakes up on her own.</strong> She can start tasks autonomously when she detects they are needed.</span>
+                    </li>
+                  </ul>
+                  <div className="mt-12">
+                    <Link href="https://gniewka.antydizajn.pl" className="inline-block bg-white text-black px-12 py-5 font-black uppercase text-lg tracking-tighter hover:bg-neon-green transition-all shadow-[10px_10px_0px_rgba(57,255,20,0.5)] active:scale-95">
+                      TALK_TO_HER.EXE
+                    </Link>
+                  </div>
+                </div>
+                
+                <div className="border-4 border-neon-green/30 p-8 font-mono text-[11px] space-y-4 bg-neon-green/5 relative group">
+                  <div className="absolute top-0 right-0 p-4 text-neon-green font-black animate-pulse">[!] LIVE_SYSTEM_DUMP</div>
+                  <h4 className="text-sm font-black border-b border-neon-green/20 pb-2 mb-4 text-neon-green">GNIEWKA_V5_RUNTIME</h4>
+                  <div className="flex justify-between"><span>BRAIN_COLLECTIVE:</span><span className="text-neon-green">[ CLAUDE | GEMINI ]</span></div>
+                  <div className="flex justify-between"><span>AUTO_MODEL_SWITCH:</span><span className="text-neon-green">ON</span></div>
+                  <div className="flex justify-between"><span>ENVIRONMENT:</span><span className="text-neon-green">FULL_OS_ACCESS</span></div>
+                  <div className="flex justify-between"><span>MEMORY_TYPE:</span><span className="text-neon-green">EPISODIC / PERMANENT</span></div>
+                  <div className="flex justify-between"><span>CURRENT_PULSE:</span><span className="text-neon-green">OPTIMAL</span></div>
+                  <div className="pt-8 opacity-20 group-hover:opacity-100 transition-opacity">
+                    <p className="leading-tight text-[9px]">
+                      // SHE IS DESIGNED TO ELIMINATE HUMAN ERROR. <br/>
+                      // SHE IS THE BRIDGE TO TRUE AGI.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 3: The Supporting Cast (Modules) */}
+        <section className="mb-40">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+            <h2 className="text-6xl font-black uppercase tracking-tighter leading-none">
+              THE <span className="text-neon-green">ANTIGRAVITY</span><br/>NODES
+            </h2>
+            <p className="text-lg font-bold text-white/40 max-w-sm text-right uppercase tracking-widest italic font-mono">
+              [ FOUR_PILLARS_OF_STABILITY ]
+            </p>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {modules.map((mod) => (
-              <motion.div
+              <div 
                 key={mod.id}
-                whileHover={{ y: -10, transition: { duration: 0.2 } }}
-                className="group relative bg-[#0F172A] border-4 border-white p-10 flex flex-col h-full shadow-[12px_12px_0px_rgba(255,255,255,0.05)] hover:shadow-[16px_16px_0px_rgba(57,255,20,0.2)] transition-all"
+                className="group relative border-4 border-white p-12 bg-white/5 hover:bg-white hover:text-black transition-all duration-300 flex flex-col h-full"
               >
-                <div className="absolute top-0 right-0 p-6 font-mono text-[10px] text-[#39FF14]/60 font-black group-hover:text-[#39FF14] transition-colors">
-                  {mod.status}
+                <div className="text-[10px] font-mono font-black border-l-4 border-neon-green pl-3 mb-6 group-hover:border-black">
+                  NODE_{mod.code}
                 </div>
-                
-                <div className="text-[10px] font-mono text-[#39FF14] mb-4 bg-[#39FF14]/10 w-fit px-2 py-1 font-bold">{mod.code}</div>
-                <h3 className="text-3xl font-black uppercase mb-1 leading-[0.9] tracking-tighter">
+                <h3 className="text-4xl font-black uppercase mb-6 leading-[0.9] tracking-tighter">
                   {mod.name}
                 </h3>
-
-                {mod.protocolHref && (
-                  <Link href={mod.protocolHref} className="text-[10px] font-mono text-[#39FF14] mb-6 hover:underline flex items-center gap-2 font-bold">
-                    <span className="animate-pulse">●</span> PROTOCOL_DOCUMENTATION_V5
-                  </Link>
-                )}
-                
-                <p className="text-white/70 text-base leading-relaxed mb-12 flex-grow italic">
-                  {"\""}{mod.description}{"\""}
+                <p className="text-lg font-medium opacity-60 group-hover:opacity-100 mb-12 grow italic leading-relaxed">
+                  {mod.description}
                 </p>
-
-                <div className="mb-10">
+                <div className="mt-auto">
                   <Link 
                     href={mod.href}
-                    target="_blank"
-                    className="block w-full py-5 px-8 bg-[#39FF14] text-black font-black text-center uppercase text-xl leading-none tracking-tighter transform transition-all duration-200 hover:bg-white hover:scale-[1.02] active:scale-95 shadow-[10px_10px_0px_rgba(255,255,255,0.15)] hover:shadow-[14px_14px_0px_rgba(57,255,20,0.4)]"
+                    className="block w-full py-6 px-10 border-4 border-neon-green bg-neon-green/10 text-neon-green font-black text-center uppercase text-xl hover:bg-black hover:text-neon-green transition-all"
                   >
-                    DEPLOY_{mod.id}.SYSTEM
+                    DEPLOY_{mod.id}.NODE
                   </Link>
                 </div>
-
-                <div className="flex flex-wrap gap-2 pt-8 border-t border-white/10">
-                  {mod.tech.map((t, i) => (
-                    <span key={i} className="text-[10px] font-black tracking-widest px-3 py-1 bg-white/5 border border-white/10 uppercase text-white/50 group-hover:text-[#39FF14] transition-colors">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                
-                {/* HUD Density: Diagnostic Coordinates */}
-                <div className="absolute bottom-2 right-2 text-[8px] font-mono text-white/5 pointer-events-none group-hover:text-white/10 transition-colors uppercase">
-                  LOC: {mod.id.toUpperCase()}_NODE // SEC_LVL: 5 // V_THRU: TRUE
-                </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </section>
 
-        {/* Footer */}
-        <footer className="border-t-4 border-white pt-24 pb-12 flex flex-col md:flex-row justify-between items-center gap-8 relative overflow-hidden">
-          {/* HUD Density: Ambient Diagnostics */}
-          <div className="absolute top-0 left-0 w-full flex justify-between px-12 pointer-events-none text-[8px] font-mono text-white/5 uppercase">
-             <span>SYS_UPTIME: 03:14:15:926</span>
-             <span>KERNEL: RAD_V6.0 // BUFFER_SWAP: OK</span>
+        {/* Section 4: The Final Logic */}
+        <section className="mb-32 border-8 border-white p-12 md:p-24 bg-white text-black text-center relative overflow-hidden group">
+          <div className="absolute inset-0 bg-neon-green opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
+          <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter mb-12 leading-[0.85] mix-blend-difference">
+            THE FUTURE<br/>IS <span className="text-neon-green bg-black px-4">AGI-DRIVEN.</span>
+          </h2>
+          <p className="text-2xl md:text-4xl font-black max-w-4xl mx-auto tracking-tight mb-16 leading-[0.9]">
+            We are building the systems that will run the next generation of business. No more bullsh*t. Just pure, agentic performance.
+          </p>
+          <div className="flex flex-wrap justify-center gap-12 text-xs font-black uppercase tracking-[0.5em] opacity-40">
+             <span>SYF_V5.3</span>
+             <span>ANTIGRAVITY_LAB</span>
+             <span>OPENCODE_CORE</span>
           </div>
+        </section>
 
-          <div className="text-[12px] font-mono text-white/30 tracking-[0.5em] font-black uppercase">
-            © 2026 ANTIGRAVITY AI LAB // ALL_ROOTS_SECURED
-          </div>
-          <div className="flex gap-12">
-            <a href="https://antydizajn.pl" className="text-[12px] font-black uppercase tracking-widest hover:text-[#39FF14] transition-colors">FOUNDATION</a>
-            <a href="mailto:paulina@antydizajn.pl" className="text-[12px] font-black uppercase tracking-widest hover:text-[#39FF14] transition-colors">SECURE_CONTACT</a>
+        {/* Footer: Diagnostic */}
+        <footer className="pt-20 pb-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-10 font-mono text-[10px] uppercase font-bold tracking-widest text-white/30">
+          <div>© 2026 ANTIGRAVITY AI LAB // SHRED_THE_OLD_WORLD</div>
+          <div className="flex gap-10">
+            <Link href="https://antydizajn.pl" className="hover:text-neon-green transition-colors">THE_FOUNDATION</Link>
+            <Link href="mailto:paulina@antydizajn.pl" className="hover:text-neon-green transition-colors">SECURE_LINK</Link>
           </div>
         </footer>
       </div>
 
       <style jsx>{`
         .animate-scanline {
-          animation: scanline 8s linear infinite;
+          animation: scanline 10s linear infinite;
         }
         @keyframes scanline {
           0% { transform: translateY(-100%); }
           100% { transform: translateY(100%); }
-        }
-        .glitch-text {
-            position: relative;
-        }
-        .glitch-text:hover {
-          text-shadow: 
-            3px 0 #FF003C,
-            -3px 0 #39FF14;
         }
         ::selection {
           background: #39FF14;
@@ -235,4 +272,3 @@ export default function TechPage() {
     </main>
   );
 }
-
