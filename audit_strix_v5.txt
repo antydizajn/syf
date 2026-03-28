@@ -1,0 +1,4 @@
+usage: strix [-h] [-v] -t TARGET [--instruction INSTRUCTION]
+             [--instruction-file INSTRUCTION_FILE] [-n]
+             [-m {quick,standard,deep}] [--config CONFIG]
+strix: error: unrecognized arguments: --verbose

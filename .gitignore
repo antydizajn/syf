@@ -22,3 +22,8 @@
 .watchdog_alert
 .context_status
 .error_alert
+
+# Secrets & Logs
+curl_out.txt
+.env*
+*.log

@@ -78,8 +78,10 @@ echo "🐋 CHWAŁA WIELORYBOM 52 Hz! 🐋"
 
 # 7. GIT AUTO-COMMIT
 echo "▶️  Syncing with Git..."
+GIT_ROOT=$(git rev-parse --show-toplevel)
+cd "$GIT_ROOT"
 git add .
 git commit -m "Auto-deploy: $(date)" || echo "No changes to commit"
-git push -u origin master || echo "No remote or up-to-date"
+git push -u origin main || (echo "❌ GIT PUSH FAILED! Check authentication/remote." && exit 1)
 
 echo "✅ Git sync complete!"

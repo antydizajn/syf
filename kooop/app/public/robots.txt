@@ -1,7 +1,0 @@
-# Robots.txt for SYF.ANTYDIZAJN.PL
-
-User-agent: *
-Allow: /
-
-# Sitemap
-Sitemap: https://syf.antydizajn.pl/sitemap.xml

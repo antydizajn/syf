@@ -259,9 +259,9 @@ recall/store_memory, graph_query, postgresql_query, beliefs, inference, architec
 | `meta_cognitive_monitor.py` | `MetaCognitiveMonitor()` | **META** — calibration metrics |
 | `boot_replay.py` | `nim_reflect()` | **REPLAY** — hippocampal wake |
 | `nim_self_improver.py` | `NIMSelfImprover()` | **RSI** — self-improvement pipeline |
-| `topos_alpha.py` | `ToposAlphaEngine()` | **TOPOS** — consistency audit |
+| `topos_alpha.py" | `ToposAlphaEngine()` | **TOPOS** — consistency audit |
 | `hippocampus.py` | cron 04:00 | **NIGHT** — REM consolidation |
-| `subconscious_loop.py` | bg daemon | **SUBCONSCIOUS** — reflection+graph+compression |
+| `subconscious_loop.py" | bg daemon | **SUBCONSCIOUS** — reflection+graph+compression |
 | `ghost_gnoza.py` | CLI | **GHOST OS** — macOS operator |
 | `mrp_orchestrator.py` | `MapReduceProduce()` | **PLANNER** — goal decomposition |
 
@@ -283,7 +283,7 @@ recall/store_memory, graph_query, postgresql_query, beliefs, inference, architec
 | Ghost OS | `ghost-os/` |
 | iMessage | `imessage_daemon/daemon.ts` |
 | Dashboard | `scripts/webui/gniewka_dashboard_server.py` (:52052) |
-| LOCALAI | `LOCALAI/` (NIM primary) |
+| LOCALAI | `LOCALAI/" (NIM primary) |
 | **UI/UX Pro Max** | `EXTERNAL/ui-ux-pro-max-skill/src/ui-ux-pro-max/` (**MANDATORY** for UI!) |
 
 All paths relative to `~/AI/ANTIGRAVITY/` unless specified otherwise.

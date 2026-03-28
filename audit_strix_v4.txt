@@ -1,0 +1,25 @@
+
+
+╭─ STRIX ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                                                                                                                                                   │
+│  DOCKER NOT AVAILABLE                                                                                                                                                                                                                                             │
+│                                                                                                                                                                                                                                                                   │
+│  Cannot connect to Docker daemon.                                                                                                                                                                                                                                 │
+│  Please ensure Docker Desktop is installed and running, and try running strix again.                                                                                                                                                                              │
+│                                                                                                                                                                                                                                                                   │
+│                                                                                                                                                                                                                                                                   │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+
+Traceback (most recent call last):
+  File "/Users/paulinajanowska/AI/ANTIGRAVITY/EXTERNAL/strix/venv/bin/strix", line 6, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/Users/paulinajanowska/AI/ANTIGRAVITY/EXTERNAL/strix/repo/strix/interface/main.py", line 530, in main
+    pull_docker_image()
+  File "/Users/paulinajanowska/AI/ANTIGRAVITY/EXTERNAL/strix/repo/strix/interface/main.py", line 468, in pull_docker_image
+    client = check_docker_connection()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/paulinajanowska/AI/ANTIGRAVITY/EXTERNAL/strix/repo/strix/interface/utils.py", line 765, in check_docker_connection
+    raise RuntimeError("Docker not available") from None
+RuntimeError: Docker not available
