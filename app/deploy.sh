@@ -41,8 +41,11 @@ LOCAL_HASH=$(ls -lR .next/standalone | shasum -a 256 | awk '{print $1}')
 echo "🧾 Local bundle hash: $LOCAL_HASH"
 
 # 3. UPLOAD STANDALONE (With --delete to purge old nested builds)
+echo "▶️  Cleaning standalone of redundant discovered files..."
+rm -rf .next/standalone/syfnew/files 2>/dev/null || true
+
 echo "▶️  Uploading standalone..."
-rsync -avz --delete .next/standalone/ danveld@s61.mydevil.net:domains/syf.antydizajn.pl/public_nodejs/
+rsync -avz --exclude 'syfnew/files' --delete .next/standalone/ danveld@s61.mydevil.net:domains/syf.antydizajn.pl/public_nodejs/
 
 # 4. UPLOAD STATIC
 echo "▶️  Uploading static..."

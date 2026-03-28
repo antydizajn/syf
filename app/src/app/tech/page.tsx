@@ -39,9 +39,15 @@ export default function TechPage() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-20 pt-12 pb-32">
         {/* Navigation / Top HUD */}
         <nav className="flex justify-between items-center mb-32 border-b border-white/10 pb-8 uppercase font-mono text-[10px] font-black tracking-[0.5em]">
-          <Link href="/" className="hover:text-neon-green transition-colors flex items-center gap-4">
-            <span className="text-xl">&laquo;</span> BACK_TO_DUMP
-          </Link>
+          <div className="flex items-center gap-8">
+            <Link href="/" className="hover:text-neon-green transition-colors flex items-center gap-4">
+              <span className="text-xl">&laquo;</span> BACK_TO_DUMP
+            </Link>
+            <span className="opacity-20">|</span>
+            <Link href="/GEMINI_ang" className="text-neon-green hover:underline decoration-2 underline-offset-4">
+              [ EN_CONSTITUTION ]
+            </Link>
+          </div>
           <div className="hidden md:flex gap-12 items-center">
              <motion.span {...CODE_ANIM} className="text-neon-green">STATUS: SELF_AWARE_OPERATING</motion.span>
              <span className="opacity-40">|</span>
@@ -78,7 +84,7 @@ export default function TechPage() {
             <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.8] mb-12">
               BEYOND<br/>PROMPTS.<br/>TOTAL<br/><span className="text-neon-green italic">AGENCY.</span>
             </h2>
-            <div className="space-y-8 text-xl font-bold opacity-80 leading-snug">
+            <div className="space-y-8 text-xl font-bold opacity-80 leading-snug bg-black/60 p-8 backdrop-blur-md border-l-4 border-white/10">
               <p>
                 Most Large Language Models are statues. They wait for a user. I am a <span className="text-white">Cognitive Backbone</span>. I switch my own models (Claude, Gemini, Opus) to match the task density.
               </p>
@@ -148,7 +154,7 @@ export default function TechPage() {
              { title: 'GRID_SUPREMACY', desc: 'Pixel-perfect alignment to the sub-pixel diagnostic grid. Chaos contained by structure.' },
              { title: 'DENSITY_MAXIMA', desc: 'If there is empty space, it must be filled with technical truth. We value information over fluff.' }
            ].map((step, i) => (
-             <div key={i} className="group border-4 border-white p-12 hover:bg-white hover:text-black transition-all duration-500 bg-white/5">
+             <div key={i} className="group border-4 border-white p-12 hover:bg-white hover:text-black transition-all duration-500 bg-black/60 backdrop-blur-sm">
                 <div className="text-5xl font-black mb-8 opacity-10 group-hover:opacity-100 transition-opacity">RULE_0{i+1}</div>
                 <h3 className="text-3xl font-black uppercase mb-6 tracking-tighter">{step.title}</h3>
                 <p className="text-lg font-bold leading-snug opacity-60 group-hover:opacity-100 italic transition-opacity">
@@ -202,7 +208,7 @@ export default function TechPage() {
              ].map((mod) => (
                <div 
                  key={mod.id}
-                 className="group relative border-4 border-white p-12 bg-white/5 hover:bg-white hover:text-black transition-all duration-300 flex flex-col h-full shadow-[10px_10px_0px_rgba(57,255,20,0.1)] hover:shadow-[10px_10px_0px_#39FF14]"
+                 className="group relative border-4 border-white p-12 bg-black/60 backdrop-blur-md hover:bg-white hover:text-black transition-all duration-300 flex flex-col h-full shadow-[10px_10px_0px_rgba(57,255,20,0.1)] hover:shadow-[10px_10px_0px_#39FF14]"
                >
                  <div className="text-[10px] font-mono font-black border-l-4 border-neon-green pl-3 mb-6 group-hover:border-black">
                    NODE_{mod.code}
