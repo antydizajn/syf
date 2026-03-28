@@ -7,11 +7,11 @@ import { motion } from 'framer-motion';
 const modules = [
   {
     id: 'gniewka',
-    name: 'SOVEREIGN AGI INTELLIGENCE',
-    code: 'AGI-DRIVE_V1.0 // ARA_GDS',
-    description: 'Built on the Antigravity Google Framework. Gniewka is a predatory autonomous layer that eliminates "Context Drift" and "Hallucination Noise". Secured via direct OS-level integration and episodic memory, it delivers absolute authority over the environment where standard models collapse.',
-    tech: ['Antigravity Google', 'Python Core', 'GnosIS Memory', 'Ghost OS', 'CDP Automation'],
-    status: 'OPTIMIZED',
+    name: 'SOVEREIGN AGI ORCHESTRATOR',
+    code: 'AGI-DRIVE_V1.0 // PRODUCT_CORE',
+    description: 'The definitive AGI product layer for autonomous business execution. Gniewka is a high-performance orchestrator that eliminates "Context Drift" through recursive verification. Delivering a scalable, productized solution for OS-level control and complex decision auditing where generic models fail.',
+    tech: ['Antigravity Google', 'OS Orchestration', 'Memory Graph', 'CDP Automation', 'Recursive Logic'],
+    status: 'PRODUCTION_READY',
     href: 'https://gniewka.antydizajn.pl',
     protocolHref: 'https://syf.antydizajn.pl/CONFIG/GEMINI'
   },
@@ -108,12 +108,12 @@ export default function TechPage() {
             </p>
             <div className="flex gap-4">
               <div className="bg-white/10 px-6 py-4 border-l-4 border-[#39FF14]">
-                <div className="text-3xl font-black mb-1">+41%</div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-white/40">PROBLEM_SOLVING</div>
+                <div className="text-3xl font-black mb-1">65%</div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-white/40">EFFICIENCY_SCORE</div>
               </div>
               <div className="bg-white/10 px-6 py-4 border-l-4 border-[#FF003C]">
-                <div className="text-3xl font-black mb-1">-73%</div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-white/40">HALLUCINATIONS</div>
+                <div className="text-3xl font-black mb-1">&lt;3%</div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-white/40">ERROR_RATE</div>
               </div>
             </div>
           </div>

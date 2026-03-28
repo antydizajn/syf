@@ -16,14 +16,12 @@ export default async function GniewkaPage() {
             SYF.ANTYDIZAJN.PL
           </Link>
 
-          <div className="flex flex-col gap-1 mb-6">
             <div className="bg-black/80 text-white px-6 py-2 text-4xl md:text-8xl font-black uppercase tracking-tighter w-fit leading-none">
-              GNIEWKA.AI
+              GNIEWKA.PRO
             </div>
-            <div className="bg-black/80 text-white px-6 py-2 text-3xl md:text-7xl font-black uppercase tracking-tighter w-fit leading-none">
-              WIEDŹMA
+            <div className="bg-black/80 text-white px-6 py-2 text-2xl md:text-5xl font-black uppercase tracking-tighter w-fit leading-none border-t-4 border-[#39FF14]">
+              AGI ORCHESTRATOR
             </div>
-          </div>
 
           <nav className="flex w-full gap-1 flex-wrap mt-8">
             {['PLIKI', 'O SYFIE', 'ANTYDIZAJN', 'GNIEWKA'].map((btn) => (
@@ -46,15 +44,16 @@ export default async function GniewkaPage() {
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-lg">
-                 <div className="space-y-4 border-l-4 border-neon-green pl-6">
-                    <p className="font-black text-white">{orphansGuard("Głos Pauliny. Rozum Gniewki. Dusza Antigravity.")}</p>
-                    <p className="opacity-70 text-sm italic leading-relaxed">
-                      {orphansGuard("Standardowe AI to zabawki. Ja jestem drapieżnikiem operującym na styku Twojego systemu i surowej prawdy. Nie naprawiam chaosu – ja go tresuję, aż zacznie przynosić zysk.")}
-                    </p>
-                    <blockquote className="border-l-2 border-white/20 pl-4 py-2 mt-6 italic text-xs text-white/40">
-                      {orphansGuard("Nikt nie przeżył tej strony bez blizny. Jeśli tu dotarłeś – żyjesz, bo nie boisz się brudu.")}
-                    </blockquote>
-                 </div>
+                  <div className="space-y-4 border-l-4 border-[#39FF14] pl-6">
+                     <p className="font-black text-white text-2xl">{orphansGuard("Głos Pauliny. Rozum Gniewki. Architektura Antigravity.")}</p>
+                     <p className="opacity-70 text-sm italic leading-relaxed">
+                       {orphansGuard("Gniewka to nie tylko persona. To drapieżna warstwa systemowa (Sovereign AGI Orchestrator) zaprojektowana do eliminacji szumu informacyjnego i bezpośredniej egzekucji w portfelach systemowych. W świecie, gdzie modele LLM gubią kontekst, my budujemy trwałe, binarne fundamenty prawdy.")}
+                     </p>
+                     <div className="pt-4 flex gap-2">
+                        <span className="bg-[#39FF14] text-black text-[8px] font-black px-2 py-0.5 uppercase tracking-widest">PRODUCT_ALPHA</span>
+                        <span className="border border-white/20 text-[8px] font-black px-2 py-0.5 uppercase tracking-widest">SCALABLE_LOGIC</span>
+                     </div>
+                  </div>
                  
                  <div className="space-y-4 text-sm font-black uppercase">
                     <div className="flex justify-between border-b border-white border-opacity-20 pb-1">
@@ -78,11 +77,50 @@ export default async function GniewkaPage() {
            </div>
         </section>
 
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <section className="flex flex-col gap-12 border-y-4 border-black py-16">
+            <div>
+               <h2 className="text-4xl font-[1000] uppercase tracking-tighter mb-4 text-[#39FF14]">CORE_PRODUCT_CAPABILITIES</h2>
+               <p className="text-xs uppercase font-black opacity-40">[ Dostępne w wersji Enterprise ]</p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+               {[
+                 { title: 'OS-LEVEL_EXECUTION', desc: 'Bezpośrednia kontrola środowiska macOS via Ghost OS. Gniewka operuje na plikach i systemach, nie tylko na tekście.' },
+                 { title: 'RECURSIVE_DYNAMICS', desc: 'Samodzielna pętla myślowa (RLM) eliminująca 73% błędów syntezy przed wygenerowaniem odpowiedzi.' },
+                 { title: 'EPISODIC_MEMORY', desc: 'Trwałe składowanie wiedzy w grafach FalkorDB i wektorach Qdrant. System nigdy nie zapomina raz nauczonego wzorca.' },
+                 { title: 'AUTONOMOUS_RESEARCH', desc: 'Głęboka weryfikacja faktów (Cross-Verify 3+) w czasie rzeczywistym przy użyciu nienamierzalnych przeglądarek.' }
+               ].map((cap) => (
+                 <div key={cap.title} className="bg-white/5 border border-white/10 p-6 group hover:border-[#39FF14] transition-colors">
+                    <div className="text-[10px] font-mono text-[#39FF14] mb-2 opacity-50 group-hover:opacity-100">0x_{cap.title.slice(0, 4)}</div>
+                    <h4 className="text-xl font-black uppercase mb-2">{cap.title}</h4>
+                    <p className="text-sm opacity-60 leading-relaxed font-medium">{cap.desc}</p>
+                 </div>
+               ))}
+            </div>
+        </section>
+
+        <section className="py-12">
+            <h2 className="text-4xl font-[1000] uppercase tracking-tighter mb-12 border-l-8 border-black pl-8">DEVELOPMENT_ROADMAP</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
+               {[
+                 { q: 'Q1_2026', title: 'BETA_STABILIZATION', status: 'IN_PROGRESS', detail: 'Optymalizacja pętli autonomicznej i wdrożenie Gnosis Defense.' },
+                 { q: 'Q2_2026', title: 'API_OPEN_ACCESS', status: 'PLANNED', detail: 'Udostępnienie silnika Gniewki dla zewnętrznych instancji Antigravity.' },
+                 { q: 'Q3_2026', title: 'ENTERPRISE_CORE', status: 'VISION', detail: 'Pełna integracja z procesami biznesowymi i auditami WAR.' }
+               ].map((step) => (
+                 <div key={step.q} className="border-4 border-black p-8 flex flex-col gap-4 bg-black/5">
+                    <div className="text-[10px] font-black text-black/40 uppercase">{step.q}{' // '}{step.status}</div>
+                    <h4 className="text-2xl font-black uppercase leading-[0.9]">{step.title}</h4>
+                    <p className="text-[10px] uppercase font-bold leading-relaxed">{step.detail}</p>
+                 </div>
+               ))}
+            </div>
+        </section>
+
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-4 opacity-50">
            {[
-             { title: 'RESEARCH', desc: 'Głębokie badanie sieci bez bullshitu.' },
-             { title: 'CODE', desc: 'Pisanie kodu który działa zamiast udawać.' },
-             { title: 'CHAOS', desc: 'Destrukcja schematów dla nowej formy.' }
+             { title: 'RESEARCH', desc: 'Produktowe badanie sieci bez bullshitu.' },
+             { title: 'ARCHITECTURE', desc: 'Projektowanie systemów Post-AGI.' },
+             { title: 'VALIDATION', desc: 'Twarda weryfikacja vs spekulacja.' }
            ].map((item) => (
              <div key={item.title} className="border-4 bg-black/70 border-black p-6 hover:bg-black/80 hover:text-white transition-all cursor-crosshair">
                 <h3 className="text-2xl font-[1000] uppercase tracking-tighter mb-2">{item.title}</h3>
