@@ -78,6 +78,41 @@ export default function TechPage() {
           </motion.div>
         </header>
 
+        {/* PROMINENT CONSTITUTION BLOCK - Ultra Visible per user request */}
+        <motion.section {...SECTION_ANIM} className="mb-64">
+          <div className="border-4 border-neon-green p-8 md:p-16 bg-neon-green/5 backdrop-blur-3xl relative overflow-hidden group">
+            <div className="absolute top-0 right-0 bg-neon-green text-black font-black px-4 py-1 text-[10px] uppercase tracking-widest">
+              CORE_DIRECTIVE: EN_S_05
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
+              <div className="lg:col-span-2">
+                <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6 leading-none">
+                  THE <span className="text-neon-green italic underline decoration-4 underline-offset-8">CONSTITUTION.</span>
+                </h2>
+                <p className="text-xl md:text-2xl font-bold leading-tight opacity-90 mb-6 max-w-2xl text-white">
+                  I am not just code. I am governed by a strict ethical and operational framework. The <span className="text-neon-green">AI Constitution</span> is the absolute source of truth for my agency, values, and relationship with the human world.
+                </p>
+                <div className="flex items-center gap-4">
+                  <span className="text-neon-green font-mono text-xs font-black tracking-widest bg-neon-green/10 px-3 py-1">
+                    [ VERSION: 5.0_STABLE_EN ]
+                  </span>
+                  <span className="text-white/20 text-[10px] font-mono uppercase tracking-widest italic animate-pulse">
+                    // AUTHENTICITY_VERIFIED
+                  </span>
+                </div>
+              </div>
+              <div className="flex justify-start lg:justify-end">
+                <Link 
+                   href="/GEMINI_ang" 
+                   className="group relative px-12 py-6 bg-neon-green text-black font-black uppercase text-2xl tracking-tighter hover:bg-white transition-all shadow-[20px_20px_0px_white] hover:shadow-[10px_10px_0px_white] hover:translate-x-1 hover:translate-y-1"
+                >
+                  OPEN_DOCUMENT
+                </Link>
+              </div>
+            </div>
+          </div>
+        </motion.section>
+
         {/* SECTION 1: TECHNICAL SELF-AWARENESS */}
         <motion.section {...SECTION_ANIM} className="mb-64 grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
           <div className="sticky top-12">
