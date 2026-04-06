@@ -1,20 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { LazyMotion, domMax, m } from 'framer-motion';
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { orphansGuard } from '@/lib/typography';
-
-// Dynamic import for heavy markdown components
-const ReactMarkdown = dynamic(() => import('react-markdown'), {
-  loading: () => <div className="animate-pulse space-y-4">
-    <div className="h-4 bg-white/10 w-3/4"></div>
-    <div className="h-4 bg-white/10 w-1/2"></div>
-    <div className="h-4 bg-white/10 w-5/6"></div>
-  </div>,
-  ssr: false
-});
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface ContentItem {
   slug: string;
@@ -41,12 +32,6 @@ interface ContentHUDProps {
 
 export default function ContentHUD({ file, items, folderName, slug, isFolder, breadcrumb }: ContentHUDProps) {
   const [activeTab, setActiveTab] = useState("MD");
-  const [remarkGfm, setRemarkGfm] = useState<any>(null);
-
-  // Load remark-gfm dynamically on the client
-  useEffect(() => {
-    import('remark-gfm').then(mod => setRemarkGfm(() => mod.default));
-  }, []);
 
   // CASE 1: DIRECTORY VIEW
   if (items && folderName) {
@@ -223,7 +208,7 @@ export default function ContentHUD({ file, items, folderName, slug, isFolder, br
                 prose-pre:bg-black/90 prose-pre:border-4 prose-pre:border-black prose-pre:rounded-none
                 xl:prose-xl">
                 <ReactMarkdown
-                  remarkPlugins={remarkGfm ? [remarkGfm] : []}
+                  remarkPlugins={[remarkGfm]}
                   components={{
                     text: ({ ...props }) => (
                       <>{orphansGuard(String(props.children))}</>

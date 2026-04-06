@@ -9,9 +9,7 @@ import {
 import { orphansGuard } from '@/lib/typography';
 import dynamic from 'next/dynamic';
 
-const ContentHUD = dynamic(() => import('@/components/ContentHUD'), {
-  ssr: true,
-});
+import ContentHUD from '@/components/ContentHUD';
 
 export async function generateStaticParams() {
   const slugs = await getAllSlugs();
@@ -35,8 +33,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description,
       openGraph: {
         title: `${title} | SYF.ANTYDIZAJN.PL`,
-        description: orphansGuard(`Eksploruj zawartość folderu ${item.title}.`),
+        description,
         type: 'website',
+        images: ["/og-image.png"],
       }
     };
   }
@@ -54,6 +53,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         type: 'article',
         publishedTime: item.date,
         modifiedTime: item.modifiedDate,
+        images: ["/og-image.png"],
       }
     };
   }
@@ -75,11 +75,15 @@ export default async function Page({ params }: { params: Promise<{ slug: string[
   
   const breadcrumb = await getBreadcrumb(slugArray);
 
+  // Pre-process orphans on server for Performance 100
+  if (item.content) {
+    item.content = orphansGuard(item.content);
+  }
+
   if (item.type === 'folder') {
     // Get items within this folder
     const allItems = await getAllItems();
     const folderItems = allItems.filter(child => {
-      // Must start with parent slug + /
       const prefix = `${slug}/`;
       return child.slug.startsWith(prefix) && 
              !child.slug.slice(prefix.length).includes('/');

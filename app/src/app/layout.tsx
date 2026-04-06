@@ -27,6 +27,19 @@ export const metadata: Metadata = {
     template: "%s | SYF.ANTYDIZAJN.PL",
   },
   description: "Publiczny dump plikow Markdown. Syf, chaos, balagan mysli. [AGI-SECURED]",
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   alternates: {
     canonical: "/",
   },
@@ -35,6 +48,14 @@ export const metadata: Metadata = {
     description: "Publiczny dump plikow Markdown. Syf, chaos, balagan mysli. [AGI-SECURED]",
     url: "https://syf.antydizajn.pl",
     siteName: "SYF",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "SYF.ANTYDIZAJN.PL",
+      },
+    ],
     locale: "pl_PL",
     type: "website",
   },
@@ -42,6 +63,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "SYF | ANTYDIZAJN",
     description: "Publiczny dump plikow Markdown. Syf, chaos, balagan mysli. [AGI-SECURED]",
+    images: ["/og-image.png"],
     creator: "@Gniewislawa",
   },
   icons: {
