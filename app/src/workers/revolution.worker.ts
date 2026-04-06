@@ -18,6 +18,38 @@ let animationFrameId = 0;
 let canvas: OffscreenCanvas;
 const uniformData = new Float32Array(8); // 8 floats = 32 bytes
 
+// 2D FALLBACK (Off-Main-Thread)
+function initFallback2D(canvas: OffscreenCanvas) {
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  const particles = Array.from({ length: 40 }, () => ({
+    x: Math.random() * width,
+    y: Math.random() * height,
+    s: Math.random() * 2 + 1,
+    o: Math.random()
+  }));
+
+  const render2D = (currentTime: number) => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'rgba(0, 212, 255, 0.15)'; // Matrix Blue matching 10-ATOMÓWKA
+    
+    particles.forEach(p => {
+      p.y -= p.s * 0.2;
+      if (p.y < -10) p.y = height + 10;
+      
+      const opacity = (Math.sin(currentTime * 0.001 + p.o * 10) * 0.5 + 0.5) * 0.2;
+      ctx.globalAlpha = opacity;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.s, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    
+    animationFrameId = requestAnimationFrame(render2D);
+  };
+  animationFrameId = requestAnimationFrame(render2D);
+}
+
 self.onmessage = async (event: MessageEvent) => {
   const { type, payload } = event.data;
 
@@ -26,21 +58,20 @@ self.onmessage = async (event: MessageEvent) => {
     width = payload.width || canvas.width;
     height = payload.height || canvas.height;
     
-    // Explicitly set the initial dimensions if provided (defaulting to 300x150 otherwise)
     if (payload.width && payload.height) {
       canvas.width = payload.width;
       canvas.height = payload.height;
     }
 
     if (!navigator.gpu) {
-      console.warn('WebGPU nie jest wspierane w tej przeglądarce. Tło zostanie ukryte.');
+      initFallback2D(canvas);
       return;
     }
 
     try {
       const adapter = await navigator.gpu.requestAdapter({ powerPreference: 'high-performance' });
       if (!adapter) {
-        console.warn('Nie udało się uzyskać adaptera WebGPU.');
+        initFallback2D(canvas);
         return;
       }
 
@@ -103,8 +134,6 @@ self.onmessage = async (event: MessageEvent) => {
 
       const render = () => {
         time = (performance.now() - startTime) * 0.001;
-
-        // Smoothly interpolate intensity (GSAP equivalent inside worker)
         currentIntensity += (targetIntensity - currentIntensity) * 0.1;
 
         uniformData[0] = time;
@@ -113,13 +142,11 @@ self.onmessage = async (event: MessageEvent) => {
         uniformData[3] = mouseY;
         uniformData[4] = width;
         uniformData[5] = height;
-        uniformData[6] = 0; // padding
-        uniformData[7] = 0; // padding
 
         device.queue.writeBuffer(uniformBuffer, 0, uniformData.buffer);
 
         const commandEncoder = device.createCommandEncoder();
-        const textureView = context.getCurrentTexture().createView();
+        const textureView = (context.getCurrentTexture() as any).createView();
         
         const colorAttachment = renderPassDescriptor.colorAttachments as GPURenderPassColorAttachment[];
         colorAttachment[0].view = textureView;
@@ -137,7 +164,8 @@ self.onmessage = async (event: MessageEvent) => {
 
       render();
     } catch (e) {
-      console.error('Wystąpił błąd inicjalizacji WebGPU:', e);
+      console.warn('WebGPU failed, using 2D fallback in worker:', e);
+      initFallback2D(canvas);
     }
   } else if (type === 'resize') {
     width = payload.width;
@@ -150,11 +178,7 @@ self.onmessage = async (event: MessageEvent) => {
     mouseX = payload.x;
     mouseY = payload.y;
     targetIntensity = 1.15;
-    
-    // Auto-decay back to 1.0 after brief moment
-    setTimeout(() => {
-      targetIntensity = 1.0;
-    }, 300);
+    setTimeout(() => { targetIntensity = 1.0; }, 300);
   } else if (type === 'cleanup') {
     cancelAnimationFrame(animationFrameId);
   }

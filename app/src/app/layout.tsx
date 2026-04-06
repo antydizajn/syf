@@ -5,11 +5,11 @@ import HUDLayout from "@/components/hud/HUDLayout";
 
 const jetbrainsMono = localFont({
   src: [
-    { path: '../../public/fonts/JetBrainsMono-Regular.woff2', weight: '400', style: 'normal' },
-    { path: '../../public/fonts/JetBrainsMono-Bold.woff2', weight: '700', style: 'normal' },
+    { path: '../../public/fonts/JetBrainsMono-Regular.subset.woff2', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/JetBrainsMono-Bold.subset.woff2', weight: '700', style: 'normal' },
   ],
   variable: '--font-mono',
-  display: 'block', // Use 'block' for critical path to prevent FOUT/LCP shift
+  display: 'swap',
   preload: true,
 });
 
@@ -27,6 +27,32 @@ export const metadata: Metadata = {
     template: "%s | SYF.ANTYDIZAJN.PL",
   },
   description: "Publiczny dump plikow Markdown. Syf, chaos, balagan mysli. [AGI-SECURED]",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "SYF | ANTYDIZAJN",
+    description: "Publiczny dump plikow Markdown. Syf, chaos, balagan mysli. [AGI-SECURED]",
+    url: "https://syf.antydizajn.pl",
+    siteName: "SYF",
+    locale: "pl_PL",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SYF | ANTYDIZAJN",
+    description: "Publiczny dump plikow Markdown. Syf, chaos, balagan mysli. [AGI-SECURED]",
+    creator: "@Gniewislawa",
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png" },
+    ],
+  },
 };
 
 export default function RootLayout({
@@ -35,20 +61,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pl" className={`${jetbrainsMono.variable} bg-[#000101]/80`}>
+    <html lang="pl" className={`${jetbrainsMono.variable} bg-[#000101]`}>
        <head>
-          <link rel="canonical" href="https://syf.antydizajn.pl" />
-          <link rel="preconnect" href="https://syf.antydizajn.pl" />
-          <link rel="preconnect" href="https://gniewka.antydizajn.pl" />
-          <link rel="preconnect" href="https://antydizajn.pl" />
           <style dangerouslySetInnerHTML={{ __html: `
-            :root { --font-mono: 'JetBrains Mono', monospace; }
-            html { background-color: rgba(0, 1, 1, 0.8) !important; color: white !important; }
-            body { background-color: transparent !important; font-family: 'JetBrains Mono', monospace; }
-            @media (prefers-color-scheme: dark) { html { background-color: rgba(0, 1, 1, 0.8) !important; } }
+            html{background:#000101!important;color:#fff!important}
+            body{background:#000101!important}
           `}} />
        </head>
-       <body className="font-mono overflow-hidden bg-transparent text-white selection:bg-radioactive/30 antialiased">
+       <body className="font-mono overflow-hidden bg-[#000101] text-white selection:bg-radioactive/30 antialiased">
           <HUDLayout>
              {children}
           </HUDLayout>

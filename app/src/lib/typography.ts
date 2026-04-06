@@ -2,12 +2,17 @@
  * SYF_CORE Typography Guardian
  * Unifies Polish orphans (Sierotki) and ASCII normalization for SYF branding.
  */
+
+const orphansCache = new Map<string, string>();
+
 export function orphansGuard(text: string | null | undefined): string {
   if (!text) return "";
+  
+  if (orphansCache.has(text)) return orphansCache.get(text)!;
 
   // 1. Normalize Dashes (—, – -> -) and Quotes (“”, „” -> ")
   // This is critical for hydration sync and SYF aesthetic.
-  let result = text
+  const result = text
     .replace(/[\u2013\u2014]/g, '-')
     .replace(/[\u201C\u201D\u201E]/g, '"');
 
@@ -15,20 +20,18 @@ export function orphansGuard(text: string | null | undefined): string {
   const connectors = [
     'a', 'i', 'o', 'u', 'w', 'z', 
     'że', 'bo', 'czy', 'lecz', 'nad', 'pod', 'dla', 'przy', 
-    'ale', 'do', 'po', 'są', 'za'
+    'ale', 'do', 'po', 'są', 'za', 'na', 'we', 'ze', 'od', 
+    'ku', 'by', 'aż', 'niż', 'lub'
   ];
 
-  // Robust recursive replacement for consecutive connectors
-  // We use a regex that matches a connector followed by space(s) and replaces with NBSP.
-  // Then we repeat to catch the next one if it was part of a sequence.
-  const pattern = `(^|[\\s\\(\\)\\[\\]\\{\\}"'])(${connectors.join('|')})\\s+`;
-  const regex = new RegExp(pattern, 'gi');
+  // Two passes are sufficient to handle consecutive connectors (e.g., "a i o")
+  // without risk of infinite loops and with predictable performance.
+  const regex = new RegExp(`(^|[\\s\\(\\)\\[\\]\\{\\}"'])(${connectors.join('|')})[ ]+`, 'gi');
+  
+  const finalResult = result
+    .replace(regex, (match, p1, p2) => `${p1}${p2}\u00A0`)
+    .replace(regex, (match, p1, p2) => `${p1}${p2}\u00A0`);
 
-  let prevResult;
-  do {
-    prevResult = result;
-    result = result.replace(regex, (match, p1, p2) => `${p1}${p2}\u00A0`);
-  } while (result !== prevResult);
-
-  return result;
+  orphansCache.set(text, finalResult);
+  return finalResult;
 }

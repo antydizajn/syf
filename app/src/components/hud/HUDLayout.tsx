@@ -1,32 +1,15 @@
-'use client';
-
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import dynamic from 'next/dynamic';
+import React from 'react';
 import Footer from '@/components/Footer';
-import { TypographyGuardian } from '@/components/TypographyGuardian';
-import { initConsoleFlex } from '@/lib/consoleFlex';
-import { initTypographyGuardian } from '@/lib/typographyGuardian';
-
-const RevolutionBackground = dynamic(() => import("@/components/RevolutionBackground"), {
-  ssr: false,
-});
+import { HUDDecorations } from '@/components/hud/HUDDecorations';
 
 interface HUDLayoutProps {
   children: React.ReactNode;
 }
 
 export default function HUDLayout({ children }: HUDLayoutProps) {
-  useEffect(() => {
-    // CRITICAL: CONSOLE_FLEX - ZAKAZ USUWANIA (USER RULES)
-    initConsoleFlex();
-    initTypographyGuardian();
-  }, []);
-
   return (
     <div className="h-screen w-screen flex flex-col text-white relative overflow-hidden coordinate-grid selection:bg-radioactive/30">
-      <RevolutionBackground />
-      <div className="dither-overlay" />
+      <HUDDecorations />
       
       {/* MAIN CONTENT SURFACE: ONE SURFACE DESIGN */}
       <main className="flex-1 overflow-y-auto custom-scrollbar relative z-10">
@@ -36,22 +19,10 @@ export default function HUDLayout({ children }: HUDLayoutProps) {
              <div className="flex-1 font-mono text-zinc-300 leading-relaxed selection:bg-radioactive selection:text-black relative z-10">
                 {children}
              </div>
-
-            {/* DIAGNOSTIC OVERLAYS AS FLOATING ELEMENTS */}
-            <div className="fixed top-20 right-8 text-[8px] font-mono opacity-60 tracking-widest pointer-events-none uppercase hidden lg:block">
-               <ClientViewport />
-            </div>
          </div>
 
          <Footer />
       </main>
     </div>
   );
-}
-
-function ClientViewport() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  if (!mounted) return <span>VIEW_PORT: CALC...</span>;
-  return <span>VIEW_PORT: {window.innerWidth}x{window.innerHeight}</span>;
 }

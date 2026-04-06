@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { getAllItems, getTotalSize } from '@/lib/files';
 import { HomeAesthetic } from '@/components/HomeAesthetic';
 import { HomeHeader } from '@/components/HomeHeader';
+import { orphansGuard } from '@/lib/typography';
 
 async function HomeDataWrapper() {
   const allItems = await getAllItems();

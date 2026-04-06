@@ -1,11 +1,9 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
 import Link from 'next/link';
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
   const [stats, setStats] = useState<{ uptime: number; latency: number; packets: string } | null>(null);
   const [vitals, setVitals] = useState<{ lcp: string; cls: string; inp: string }>({ lcp: '...', cls: '...', inp: '...' });
 
@@ -42,11 +40,7 @@ export default function Footer() {
   }, []);
   
   return (
-    <motion.footer 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="relative z-10 mt-auto border-t-8 border-black bg-white/10 backdrop-blur-xl w-full"
-    >
+    <footer className="relative z-10 mt-auto border-t-8 border-black bg-black w-full text-white">
       <div className="max-w-7xl mx-auto px-6 md:px-20 py-6 space-y-12 md:space-y-6">
         {/* Top Section: Links & Main Quote (Green Box height reference) */}
         <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-4 md:h-[190px] md:max-h-[190px]">
@@ -107,19 +101,19 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-x-8 gap-y-2 text-[10px] font-black uppercase tracking-widest text-white/90">
-            <span>on NEXT.JS {currentYear > 2025 ? "16" : "16"}</span>
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-2 text-[10px] font-black uppercase tracking-widest text-white">
+            <span>on NEXT.JS 16</span>
             <span className="opacity-40">•</span>
-            <a href="https://www.antydizajn.pl" className="hover:line-through transition-all border-b border-black/20">www.antydizajn.pl</a>
+            <a href="https://www.antydizajn.pl" className="hover:line-through transition-all border-b border-white/20 text-white">www.antydizajn.pl</a>
             <span className="opacity-40">•</span>
             <span className="italic opacity-80">Zabronione kopiowanie stylu. Kradzież duszy dozwolona.</span>
           </div>
         </div>
 
         {/* Bottom Section: Copyright */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-[9px] font-black uppercase tracking-[0.4em] opacity-60 text-black">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-[9px] font-black uppercase tracking-[0.4em] opacity-80 text-white/60">
         </div>
       </div>
-    </motion.footer>
+    </footer>
   );
 }

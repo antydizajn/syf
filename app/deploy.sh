@@ -12,7 +12,7 @@ set -e
 echo "🐋 GNIEWKA DEPLOY 🐋"
 echo "═══════════════════════════════════════════════════════════════"
 
-cd /Users/paulinajanowska/AI/ANTIGRAVITY/syfnew/app
+cd /Users/paulinajanowska/AI/ANTIGRAVITY/WORKSPACE/syfnew/app
 
 # 1. BUILD
 echo "▶️  Building Next.js 16..."
@@ -26,17 +26,15 @@ fi
 
 echo "✅ Build complete!"
 
-# 2. FLATTEN STANDALONE BUNDLE (Move syfnew/app to root)
-echo "▶️  Flattening standalone bundle..."
-# We copy contents from syfnew/app to the root of standalone, then remove the folder to be clean
-cp -r .next/standalone/syfnew/app/.next .next/standalone/
-cp -r .next/standalone/syfnew/app/node_modules .next/standalone/ 2>/dev/null || true
-cp .next/standalone/syfnew/app/server.js .next/standalone/
-cp .next/standalone/syfnew/app/package.json .next/standalone/
-# Note: syfnew/app folder remains but server.js is now also at the root
+# 2. OPTIMIZE STANDALONE BUNDLE
+echo "▶️  Optimizing standalone bundle structure..."
+# Move core files from subfolder to standalone root
+mv .next/standalone/syfnew/app/* .next/standalone/ 2>/dev/null || true
+mv .next/standalone/syfnew/app/.next .next/standalone/ 2>/dev/null || true
+rm -rf .next/standalone/syfnew
 
-# Compute SHA‑256 of the SHA‑256 of the standalone bundle (Optimized: server.js + .next/ content)
-echo "🔐 Computing SHA‑256 of build artifacts..."
+# Compute SHA-256 of the standalone bundle (server.js + .next/ content)
+echo "🔐 Computing SHA-256 of build artifacts..."
 LOCAL_HASH=$(ls -lR .next/standalone | shasum -a 256 | awk '{print $1}')
 echo "🧾 Local bundle hash: $LOCAL_HASH"
 

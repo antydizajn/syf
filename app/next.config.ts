@@ -20,7 +20,7 @@ const nextConfig: NextConfig = {
   transpilePackages: [],
 
   // Production Source Maps (Satisfies Lighthouse diagnostic)
-  productionBrowserSourceMaps: true,
+  productionBrowserSourceMaps: false,
 
   // Compiler optimizations
   compiler: {
@@ -59,6 +59,10 @@ const nextConfig: NextConfig = {
         ],
       },
     ];
+  },
+  // Fix workspace root for Turbopack (avoids scanning unrelated directories like XENO)
+  turbopack: {
+    root: "./",
   },
 };
 

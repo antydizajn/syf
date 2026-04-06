@@ -6,7 +6,12 @@ import {
   getAllItems, 
   getBreadcrumb 
 } from '@/lib/files';
-import ContentHUD from '@/components/ContentHUD';
+import { orphansGuard } from '@/lib/typography';
+import dynamic from 'next/dynamic';
+
+const ContentHUD = dynamic(() => import('@/components/ContentHUD'), {
+  ssr: true,
+});
 
 export async function generateStaticParams() {
   const slugs = await getAllSlugs();
@@ -22,24 +27,30 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const item = await getFileBySlug(slug);
   
   if (item?.type === 'folder') {
+    const title = `${item.title.toUpperCase()} /`;
+    const description = orphansGuard(`Katalog ${item.title} zawierający ${item.itemCount} plików w systemie SYF.`);
+    
     return {
-      title: `${item.title.toUpperCase()} /`,
-      description: `Katalog ${item.title} zawierający ${item.itemCount} plików w systemie SYF.`,
+      title,
+      description,
       openGraph: {
-        title: `${item.title.toUpperCase()} | SYF.ANTYDIZAJN.PL`,
-        description: `Eksploruj zawartość folderu ${item.title}.`,
+        title: `${title} | SYF.ANTYDIZAJN.PL`,
+        description: orphansGuard(`Eksploruj zawartość folderu ${item.title}.`),
         type: 'website',
       }
     };
   }
 
   if (item?.type === 'file') {
+    const title = orphansGuard(item.title);
+    const description = orphansGuard(item.preview || `Dokument ${item.title} w dumpie SYF.`);
+
     return {
-      title: item.title,
-      description: item.preview || `Dokument ${item.title} w dumpie SYF.`,
+      title,
+      description,
       openGraph: {
-        title: `${item.title} | SYF.ANTYDIZAJN.PL`,
-        description: item.preview,
+        title: `${title} | SYF.ANTYDIZAJN.PL`,
+        description,
         type: 'article',
         publishedTime: item.date,
         modifiedTime: item.modifiedDate,
